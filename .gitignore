@@ -1,0 +1,4 @@
+bin/*
+pom.xml
+.vscode/tasks.json
+.vscode/launch.json
