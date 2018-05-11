@@ -11,13 +11,16 @@ Given "bbbbb", the answer is "b", with the length of 1.
 Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 */
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LongestSubstringWithoutRepeatingCharacters {
     public int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() < 1) {
             return 0;
         }
         
-        boolean[] map = new boolean[26];
+        Set<Character> set = new HashSet<>();
 
         int l = 0;
         int r = 0;
@@ -25,14 +28,14 @@ public class LongestSubstringWithoutRepeatingCharacters {
 
         while (r < s.length()) {
             char c = s.charAt(r);
-            if (map[c - 'a']) {
+            if (set.contains(c)) {
                 while(s.charAt(l) != c) {
-                    map[s.charAt(l) - 'a'] = false;
+                    set.remove(s.charAt(l));
                     l++;
                 }
                 l++;
             }
-            map[c - 'a'] = true;
+            set.add(c);
             ans = Math.max(ans, r - l + 1);
             r++;
         }
