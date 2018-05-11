@@ -43,8 +43,32 @@ public class LongestSubstringWithoutRepeatingCharacters {
         return ans;
     }
 
+    
+    public int lengthOfLongestSubstringOneWhile(String s) {
+        if (s == null || s.length() < 1) {
+            return 0;
+        }
+
+        Set<Character> set = new HashSet<>();
+
+        int r = 0, l = 0, ans = 0;
+
+
+        while (r < s.length()) {
+            if (set.contains(s.charAt(r))) {
+                set.remove(s.charAt(l++));
+            }
+            else {
+                ans = Math.max(ans, r - l + 1);
+                set.add(s.charAt(r));
+                r++;
+            }
+        }
+
+        return ans;
+    }
     public static void main(String[] args) {
         LongestSubstringWithoutRepeatingCharacters s = new LongestSubstringWithoutRepeatingCharacters();
-        System.out.println(s.lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(s.lengthOfLongestSubstringOneWhile("abcabcbb"));
     }
 }
