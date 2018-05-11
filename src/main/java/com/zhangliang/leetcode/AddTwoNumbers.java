@@ -31,7 +31,7 @@ public class AddTwoNumbers {
         int step = 0;
         ListNode dummy = new ListNode(-1);
         ListNode cur = dummy;
-        while (l1 != null || l2 != null) {
+        while (l1 != null || l2 != null || step != 0) {
             int result = ( l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0);
             result += step;
             cur.next = new ListNode(result % 10);
@@ -43,16 +43,15 @@ public class AddTwoNumbers {
             if (l2 != null)
                 l2 = l2.next;
         }
-        
+       
         return dummy.next;
     }
 
     public static void main(String[] args) {
         AddTwoNumbers s = new AddTwoNumbers();
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(8);
+        ListNode l1 = new ListNode(5);
 
-        ListNode l2 = new ListNode(0);
+        ListNode l2 = new ListNode(5);
         
         ListNode ans = s.addTwoNumbers(l1, l2);
         
