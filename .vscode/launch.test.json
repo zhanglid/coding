@@ -1,0 +1,28 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "leetcode",
+                "projectName": "leetcode",
+                "workingDirectory": "/Users/zhangliangdong/leetcode/leetcode-300",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "leetcode",
+                "projectName": "leetcode",
+                "workingDirectory": "/Users/zhangliangdong/leetcode/leetcode-300",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
