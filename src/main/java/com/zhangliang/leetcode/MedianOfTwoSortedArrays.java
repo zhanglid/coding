@@ -42,29 +42,29 @@ public class MedianOfTwoSortedArrays {
 
     private int findTopKthInTwoArrays(int[] nums1, int start1, int end1, int[] nums2, int start2, int end2, int k) {
         if (k == 1) {
-            return Math.min(nums1[0], nums2[0]);
+            return Math.min(nums1[start1], nums2[start2]);
         }
 
         int halfKIndex = k / 2 - 1;
         int len1 = end1 - start1 + 1;
         int len2 = end2 - start2 + 1;
         if (halfKIndex >= len1) {
-            return findTopKthInTwoArrays(nums1, start1, end1, nums2, halfKIndex + 1, end2, k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1, end1, nums2, start2 + halfKIndex + 1, end2, k - halfKIndex - 1);
         }
 
         if (halfKIndex >= len2) {
-            return findTopKthInTwoArrays(nums1, halfKIndex + 1, end1, nums2, start2, end2, k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2, end2, k - halfKIndex - 1);
         }
 
         int value1 = nums1[halfKIndex];
         int value2 = nums2[halfKIndex];
 
         if (value1 > value2) {
-            return findTopKthInTwoArrays(nums1, start1, halfKIndex, nums2, halfKIndex + 1, end2, k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1, start1 + halfKIndex, nums2, start2 + halfKIndex + 1, end2, k - halfKIndex - 1);
         }
 
         if (value2 > value1) {
-            return findTopKthInTwoArrays(nums1, halfKIndex + 1, end1, nums2, start2, halfKIndex, k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2, start2 + halfKIndex, k - halfKIndex - 1);
         }
 
         return value1;
