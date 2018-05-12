@@ -73,11 +73,15 @@ public class MedianOfTwoSortedArrays {
             return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2, start2 + halfKIndex, k - halfKIndex - 1);
         }
 
-        return value1;
+        if (k - 2 * halfKIndex - 2 == 0) {
+            return value1;
+        }
+
+        return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2 + halfKIndex + 1, end2, k - 2 * halfKIndex - 2);
     }
 
     public static void main(String[] args) {
         MedianOfTwoSortedArrays s = new MedianOfTwoSortedArrays();
-        System.out.println(s.findMedianSortedArrays(new int[]{1, 3}, new int[]{2}));
+        System.out.println(s.findMedianSortedArrays(new int[]{1, 2}, new int[]{1, 2}));
     }
 }
