@@ -29,10 +29,10 @@ public class MedianOfTwoSortedArrays {
         int len2 = nums2.length;
 
         if ((len1 + len2) % 2 == 0) {
-            int index1 = (len1 + len2) / 2;
-            int index2 = index1 - 1;
-            int mid1 = findTopKthInTwoArrays(nums1, 0, nums1.length - 1, nums2, 0, nums2.length - 1, index1);
-            int mid2 = findTopKthInTwoArrays(nums1, 0, nums1.length - 1, nums2, 0, nums2.length - 1, index2);
+            int rank1 = (len1 + len2) / 2;
+            int rank2 = rank1 + 1;
+            int mid1 = findTopKthInTwoArrays(nums1, 0, nums1.length - 1, nums2, 0, nums2.length - 1, rank1);
+            int mid2 = findTopKthInTwoArrays(nums1, 0, nums1.length - 1, nums2, 0, nums2.length - 1, rank2);
 
             return ((double)mid1 + mid2) / 2;
         }
@@ -41,6 +41,12 @@ public class MedianOfTwoSortedArrays {
     }
 
     private int findTopKthInTwoArrays(int[] nums1, int start1, int end1, int[] nums2, int start2, int end2, int k) {
+        if (start1 >= nums1.length) {
+            return nums2[k - 1];
+        }
+        if (start2 >= nums2.length) {
+            return nums1[k - 1];
+        }
         if (k == 1) {
             return Math.min(nums1[start1], nums2[start2]);
         }
