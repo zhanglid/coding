@@ -42,10 +42,10 @@ public class MedianOfTwoSortedArrays {
 
     private int findTopKthInTwoArrays(int[] nums1, int start1, int end1, int[] nums2, int start2, int end2, int k) {
         if (start1 > end1) {
-            return nums2[start1 + k - 1];
+            return nums2[start2 + k - 1];
         }
         if (start2 > end2) {
-            return nums1[start2 + k - 1];
+            return nums1[start1 + k - 1];
         }
         if (k == 1) {
             return Math.min(nums1[start1], nums2[start2]);
@@ -85,6 +85,6 @@ public class MedianOfTwoSortedArrays {
 
     public static void main(String[] args) {
         MedianOfTwoSortedArrays s = new MedianOfTwoSortedArrays();
-        System.out.println(s.findMedianSortedArrays(new int[] { 2 }, new int[] { 1, 3, 4 }));
+        System.out.println(s.findMedianSortedArrays(new int[] { 1, 2 }, new int[] { 3, 4 }));
     }
 }
