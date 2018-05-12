@@ -51,40 +51,40 @@ public class MedianOfTwoSortedArrays {
             return Math.min(nums1[start1], nums2[start2]);
         }
 
-        int halfKIndex = k / 2 - 1;
+        int num1 = k / 2;
+        int num2 = k - num1;
+
+        int index1 = num1 - 1;
+        int index2 = num2 - 1;
+
         int len1 = end1 - start1 + 1;
         int len2 = end2 - start2 + 1;
-        if (halfKIndex >= len1) {
-            return findTopKthInTwoArrays(nums1, start1, end1, nums2, start2 + halfKIndex + 1, end2, k - halfKIndex - 1);
+        if (index1 >= len1) {
+            return findTopKthInTwoArrays(nums1, start1, end1, nums2, start2 + index2 + 1, end2, k - index2 - 1);
         }
 
-        if (halfKIndex >= len2) {
-            return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2, end2, k - halfKIndex - 1);
+        if (index2 >= len2) {
+            return findTopKthInTwoArrays(nums1, start1 + index1 + 1, end1, nums2, start2, end2, k - index1 - 1);
         }
 
-        int value1 = nums1[start1 + halfKIndex];
-        int value2 = nums2[start2 + halfKIndex];
+        int value1 = nums1[start1 + index1];
+        int value2 = nums2[start2 + index2];
 
         if (value1 > value2) {
-            return findTopKthInTwoArrays(nums1, start1, start1 + halfKIndex, nums2, start2 + halfKIndex + 1, end2,
-                    k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1, start1 + index1, nums2, start2 + index2 + 1, end2,
+                    k - index2 - 1);
         }
 
         if (value2 > value1) {
-            return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2, start2 + halfKIndex,
-                    k - halfKIndex - 1);
+            return findTopKthInTwoArrays(nums1, start1 + index1 + 1, end1, nums2, start2, start2 + index2,
+                    k - index1 - 1);
         }
 
-        if (k - 2 * halfKIndex - 2 == 0) {
-            return value1;
-        }
-
-        return findTopKthInTwoArrays(nums1, start1 + halfKIndex + 1, end1, nums2, start2 + halfKIndex + 1, end2,
-                k - 2 * halfKIndex - 2);
+        return value1;
     }
 
     public static void main(String[] args) {
         MedianOfTwoSortedArrays s = new MedianOfTwoSortedArrays();
-        System.out.println(s.findMedianSortedArrays(new int[] { 1, 2 }, new int[] { 3, 4 }));
+        System.out.println(s.findMedianSortedArrays(new int[] { 1, 3 }, new int[] { 2 }));
     }
 }
