@@ -19,4 +19,11 @@ public class LongestPalindromicSubstringTest {
         String ans = s.longestPalindrome("aaaa");
         assertTrue("Default pass", ans.equals("aaaa"));
     }
+
+    @Test
+    public void testCaseString() {
+        LongestPalindromicSubstring s = new LongestPalindromicSubstring();
+        String ans = s.longestPalindrome("cbbd");
+        assertTrue("Default pass", ans.equals("bb"));
+    }
 }

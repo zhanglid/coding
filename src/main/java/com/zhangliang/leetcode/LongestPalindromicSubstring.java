@@ -32,12 +32,11 @@ public class LongestPalindromicSubstring {
             if (pairIndex >= 0 && chars[pairIndex] == chars[i]) {
                 prev += 2;
                 left = pairIndex;
-            }
-            else if (isSame && pairIndexSecond >= 0 && chars[pairIndexSecond] == chars[i]) {
+                isSame = isSame && chars[pairIndex + 1] == chars[i];
+            } else if (isSame && pairIndexSecond >= 0 && chars[pairIndexSecond] == chars[i]) {
                 prev += 1;
                 left = pairIndexSecond;
-            }
-            else {
+            } else {
                 prev = 1;
                 isSame = true;
             }
@@ -47,7 +46,6 @@ public class LongestPalindromicSubstring {
                 interval[1] = i;
                 max = prev;
             }
-            isSame = isSame && pairIndex + 1 >= 0 && chars[pairIndex + 1] == chars[i];
         }
 
         return s.substring(interval[0], interval[1] + 1);
@@ -56,6 +54,6 @@ public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
         LongestPalindromicSubstring s = new LongestPalindromicSubstring();
-        System.out.println(s.longestPalindrome("babad"));
+        System.out.println(s.longestPalindrome("cbbd"));
     }
 }
