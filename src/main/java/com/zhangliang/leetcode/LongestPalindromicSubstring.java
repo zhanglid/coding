@@ -19,37 +19,37 @@ public class LongestPalindromicSubstring {
             return s;
         }
         char[] chars = s.toCharArray();
-
-        int prev = 1;
-        int max = 1;
-        int[] interval = new int[2];
-        boolean isSame = true;
+        int[] resultInterval = new int[2];
 
         for (int i = 0; i < chars.length; i++) {
-            int pairIndex = i - prev - 1;
-            int pairIndexSecond = i - prev;
-            int left = 0;
-            if (pairIndex >= 0 && chars[pairIndex] == chars[i]) {
-                prev += 2;
-                left = pairIndex;
-                isSame = isSame && chars[pairIndex + 1] == chars[i];
-            } else if (isSame && pairIndexSecond >= 0 && chars[pairIndexSecond] == chars[i]) {
-                prev += 1;
-                left = pairIndexSecond;
-            } else {
-                prev = 1;
-                isSame = true;
+            int[] ans1 = extendPalindrome(i, i, chars);
+            int[] ans2 = extendPalindrome(i, i + 1, chars);
+
+            if (ans1[1] - ans1[0] > resultInterval[1] - resultInterval[0]) {
+                resultInterval[0] = ans1[0];
+                resultInterval[1] = ans1[1];
             }
 
-            if (prev > max) {
-                interval[0] = left;
-                interval[1] = i;
-                max = prev;
+            if (ans2[1] - ans2[0] > resultInterval[1] - resultInterval[0]) {
+                resultInterval[0] = ans2[0];
+                resultInterval[1] = ans2[1];
             }
         }
 
-        return s.substring(interval[0], interval[1] + 1);
+        return s.substring(resultInterval[0], resultInterval[1] + 1);
+    }
 
+    private int[] extendPalindrome(int l, int r, char[] chars) {
+        while(l >=0 && r < chars.length && chars[l] == chars[r]) {
+            l--;
+            r++;
+        }
+
+        int[] ans = new int[2];
+        ans[0] = l + 1;
+        ans[1] = r - 1;
+
+        return ans;
     }
 
     public static void main(String[] args) {
