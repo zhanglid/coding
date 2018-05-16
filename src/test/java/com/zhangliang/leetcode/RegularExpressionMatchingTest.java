@@ -38,4 +38,10 @@ public class RegularExpressionMatchingTest {
         boolean ans = s.isMatch("mississippi", "mis*is*p*.");
         assertEquals(ans, false);
     }
+
+    @Test
+    public void errCase() {
+        boolean ans = s.isMatch("aaa", "ab*a");
+        assertEquals(ans, false);
+    }
 }

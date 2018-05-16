@@ -86,9 +86,9 @@ public class RegularExpressionMatching {
                 }
 
                 // case meet *
-                if (i != 0 && j >= 2 && pChars[j - 1] == '*') {
+                if (j >= 2 && pChars[j - 1] == '*') {
                     // char is equal to previous one
-                    if (isCharMatch(sChars[i - 1], pChars[j - 2])) {
+                    if (i != 0 && isCharMatch(sChars[i - 1], pChars[j - 2])) {
                         if (dp[i - 1][j - 1]) {
                             dp[i][j] = true;
                             continue;
@@ -96,7 +96,7 @@ public class RegularExpressionMatching {
                     }
 
                     // previos one is not useful, 0 match
-                    if (j >= 2 && dp[i - 1][j - 2]) {
+                    if (j >= 2 && dp[i][j - 2]) {
                         dp[i][j] = true;
                         continue;
                     }
@@ -109,6 +109,6 @@ public class RegularExpressionMatching {
 
     public static void main(String[] args) {
         RegularExpressionMatching s = new RegularExpressionMatching();
-        System.out.println(s.isMatch("aab", "c*a*b"));
+        System.out.println(s.isMatch("aaa", "ab*a"));
     }
 }
