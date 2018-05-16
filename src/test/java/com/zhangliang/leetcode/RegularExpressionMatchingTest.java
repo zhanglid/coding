@@ -1,4 +1,5 @@
 package com.zhangliang.leetcode;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -43,5 +44,11 @@ public class RegularExpressionMatchingTest {
     public void errCase() {
         boolean ans = s.isMatch("aaa", "ab*a");
         assertEquals(ans, false);
+    }
+
+    @Test
+    public void errCase2() {
+        boolean ans = s.isMatch("aaa", "ab*a*c*a");
+        assertEquals(ans, true);
     }
 }

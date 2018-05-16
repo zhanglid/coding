@@ -89,7 +89,7 @@ public class RegularExpressionMatching {
                 if (j >= 2 && pChars[j - 1] == '*') {
                     // char is equal to previous one
                     if (i != 0 && isCharMatch(sChars[i - 1], pChars[j - 2])) {
-                        if (dp[i - 1][j - 1]) {
+                        if (dp[i - 1][j]) {
                             dp[i][j] = true;
                             continue;
                         }
