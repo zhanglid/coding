@@ -30,6 +30,9 @@ P     I
 
 public class ZigZagConversion {
     public String convert(String s, int numRows) {
+        if (s == null || s.length() < 1 || numRows <= 1) {
+            return s;
+        }
         StringBuilder[] sbs = new StringBuilder[numRows];
         for (int i = 0; i < sbs.length; i++) {
             sbs[i] = new StringBuilder();

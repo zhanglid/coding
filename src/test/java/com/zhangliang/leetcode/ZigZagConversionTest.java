@@ -18,4 +18,11 @@ public class ZigZagConversionTest{
 		String ans = s.convert("PAYPALISHIRING", 4);
         assertEquals(ans, "PINALSIGYAHRPI");
     }
+
+    @Test
+    public void errCase() {
+		ZigZagConversion s = new ZigZagConversion();
+		String ans = s.convert("A", 1);
+        assertEquals(ans, "A");
+    }
 }
