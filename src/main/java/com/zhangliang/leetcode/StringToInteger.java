@@ -88,6 +88,6 @@ public class StringToInteger {
 
     public static void main(String[] args) {
         StringToInteger s = new StringToInteger();
-        System.out.println(s.myAtoi());
+        System.out.println(s.myAtoi("12"));
     }
 }

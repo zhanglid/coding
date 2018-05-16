@@ -43,6 +43,6 @@ public class ReverseInteger {
 
     public static void main(String[] args) {
         ReverseInteger s = new ReverseInteger();
-        System.out.println(s.reverse());
+        System.out.println(s.reverse(12));
     }
 }
