@@ -96,11 +96,9 @@ public class RegularExpressionMatching {
                     }
 
                     // previos one is not useful, 0 match
-                    if (j >= 3 && isCharMatch(sChars[i - 1], pChars[j - 3])) {
-                        if (dp[i - 1][j - 3]) {
-                            dp[i][j] = true;
-                            continue;
-                        }
+                    if (j >= 2 && dp[i - 1][j - 2]) {
+                        dp[i][j] = true;
+                        continue;
                     }
                 }
             }
@@ -111,6 +109,6 @@ public class RegularExpressionMatching {
 
     public static void main(String[] args) {
         RegularExpressionMatching s = new RegularExpressionMatching();
-        System.out.println(s.isMatch("aa", "a*"));
+        System.out.println(s.isMatch("aab", "c*a*b"));
     }
 }
