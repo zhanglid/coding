@@ -56,7 +56,7 @@ public class DivideTwoIntegers {
             return 0;
         }
         int base = 1;
-        while (dividend > divisor + divisor) {
+        while (dividend - divisor >  divisor) {
             divisor = divisor << 1;
             base = base << 1;
         }
