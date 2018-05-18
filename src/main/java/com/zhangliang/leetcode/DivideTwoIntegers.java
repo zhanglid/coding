@@ -56,18 +56,18 @@ public class DivideTwoIntegers {
             return 0;
         }
         int base = 1;
-        while (dividend - divisor >  divisor) {
+        while (dividend - divisor >=  divisor) {
             divisor = divisor << 1;
             base = base << 1;
         }
 
         int ans = 0;
         while (base >= 1) {
-            ans = 2 * ans;
+            ans = ans + ans;
             if (dividend >= divisor) {
                 ans += 1;
+                dividend -= divisor;
             }
-            dividend -= divisor;
             divisor = divisor >> 1;
             base = base >> 1;
         }
@@ -77,6 +77,6 @@ public class DivideTwoIntegers {
 
     public static void main(String[] args) {
         DivideTwoIntegers s = new DivideTwoIntegers();
-        System.out.println(s.divide(10, 3));
+        System.out.println(s.divide(2147483647, 3));
     }
 }
