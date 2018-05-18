@@ -31,15 +31,15 @@ public class DivideTwoIntegers {
 
         if (dividend < 0) {
             if (dividend == Integer.MIN_VALUE) {
-                if (sign) {
+                if (sign && divisor == -1) {
                     return Integer.MAX_VALUE;
                 }
                 
                 if (divisor < 0) {
-                    return divide(dividend - divisor, divisor) - 1;
+                    return divide(dividend - divisor, divisor) + 1;
                 }
                 else {
-                    return divide(dividend + divisor, divisor) + 1;
+                    return divide(dividend + divisor, divisor) - 1;
                 }
             }
             dividend = -dividend;

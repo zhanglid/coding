@@ -31,4 +31,11 @@ public class DivideTwoIntegersTest{
         int ans = s.divide(2147483647, 1);
         assertEquals(ans, 2147483647);
     }
+
+    @Test
+    public void errCase3() {
+        DivideTwoIntegers s = new DivideTwoIntegers();
+        int ans = s.divide(-2147483648, 1);
+        assertEquals(ans, -2147483648);
+    }
 }
