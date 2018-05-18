@@ -34,15 +34,26 @@ public class NextPermutation {
             return;
         }
 
-        Arrays.sort(nums, 0, nums.length);
+        Arrays.sort(nums, i + 1, nums.length);
 
-        int temp = nums[i];
-        nums[i] = nums[i + 1];
-        nums[i + 1] = temp;
+        int j = i + 1;
+        while (j < nums.length && nums[j] <= nums[i]) {
+            j++;
+        }
+
+        swap(nums, i, j);
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 
     public static void main(String[] args) {
         NextPermutation s = new NextPermutation();
-        s.nextPermutation(new int[] { 1, 3, 2 });
+        int[] ans = new int[] { 2, 3, 1 };
+        s.nextPermutation(ans);
+        System.out.println(Arrays.toString(ans));
     }
 }

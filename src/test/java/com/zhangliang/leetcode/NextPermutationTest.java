@@ -19,4 +19,20 @@ public class NextPermutationTest {
         s.nextPermutation(ans);
         assertArrayEquals(ans, new int[] { 2, 1, 3 });
     }
+
+    @Test
+    public void errCase2() {
+        NextPermutation s = new NextPermutation();
+        int[] ans = new int[] { 2, 1, 3 };
+        s.nextPermutation(ans);
+        assertArrayEquals(ans, new int[] { 2, 3, 1 });
+    }
+
+    @Test
+    public void errCase3() {
+        NextPermutation s = new NextPermutation();
+        int[] ans = new int[] { 2, 3, 1 };
+        s.nextPermutation(ans);
+        assertArrayEquals(ans, new int[] { 3, 1, 2 });
+    }
 }
