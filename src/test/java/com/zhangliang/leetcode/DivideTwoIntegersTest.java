@@ -1,8 +1,9 @@
 package com.zhangliang.leetcode;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-public class DivideTwoIntegersTest{
+public class DivideTwoIntegersTest {
 
     @Test
     public void testCase() {
@@ -44,5 +45,12 @@ public class DivideTwoIntegersTest{
         DivideTwoIntegers s = new DivideTwoIntegers();
         int ans = s.divide(2147483647, 3);
         assertEquals(ans, 715827882);
+    }
+
+    @Test
+    public void errCase5() {
+        DivideTwoIntegers s = new DivideTwoIntegers();
+        int ans = s.divide(-1010369383, -2147483648);
+        assertEquals(ans, 0);
     }
 }

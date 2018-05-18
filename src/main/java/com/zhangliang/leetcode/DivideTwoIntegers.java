@@ -46,7 +46,7 @@ public class DivideTwoIntegers {
         }
 
         if (divisor < 0) {
-            if (dividend == Integer.MIN_VALUE) {
+            if (divisor == Integer.MIN_VALUE) {
                 return 0;
             }
             divisor = -divisor;
