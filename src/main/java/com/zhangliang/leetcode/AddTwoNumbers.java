@@ -13,14 +13,6 @@ Explanation: 342 + 465 = 807.
 */
 
 //  Definition for singly-linked list.
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-    }
-}
 
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
