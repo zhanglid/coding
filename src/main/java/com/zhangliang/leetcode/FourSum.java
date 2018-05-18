@@ -35,7 +35,13 @@ public class FourSum {
         Arrays.sort(nums);
 
         for (int i = 0; i < nums.length - 3; i++) {
+            if (i != 0 && nums[i - 1] == nums[i]) {
+                continue;
+            }
             for (int j = i + 1; j < nums.length - 2; j++) {
+                if (j != i + 1 && nums[j - 1] == nums[j]) {
+                    continue;
+                }
                 int left = j + 1;
                 int right = nums.length - 1; 
 
@@ -52,7 +58,7 @@ public class FourSum {
                         record.add(nums[right]);
                         ans.add(record);
                         left++;
-                        while(left < right && nums[left + 1] == nums[left]) {
+                        while(left < right && nums[left] == nums[left - 1]) {
                             left++;
                         }
                     }

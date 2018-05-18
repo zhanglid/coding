@@ -16,8 +16,9 @@ public class FourSumTest {
 
     @Test
     public void errCase() {
+        // 产生重复
         FourSum s = new FourSum();
         List<List<Integer>> ans = s.fourSum(new int[] { -3, -2, -1, 0, 0, 1, 2, 3 }, 0);
-        assertEquals(ans, "[[-3,-2,2,3],[-3,-1,1,3],[-3,0,0,3],[-3,0,1,2],[-2,-1,0,3],[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]");
+        assertEquals(ans.toString(), "[[-3, -2, 2, 3], [-3, -1, 1, 3], [-3, 0, 0, 3], [-3, 0, 1, 2], [-2, -1, 0, 3], [-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]");
     }
 }
