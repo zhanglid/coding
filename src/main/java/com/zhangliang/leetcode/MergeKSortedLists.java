@@ -30,7 +30,8 @@ public class MergeKSortedLists {
         });
 
         for (ListNode node : lists) {
-            pq.add(node);
+            if (node != null)
+                pq.add(node);
         }
 
         ListNode cur = ans;
