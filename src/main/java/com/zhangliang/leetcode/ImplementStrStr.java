@@ -28,15 +28,15 @@ public class ImplementStrStr {
             return -1;
         }
 
-        if (haystack == "" && needle == "") {
+        if (haystack.equals("") && needle.equals("")) {
             return 0;
         }
         char[] charsA = haystack.toCharArray();
         char[] charsB = needle.toCharArray();
-        for (int i = 0; i < charsA.length; i++) {
+        for (int i = 0; i + charsB.length < charsA.length; i++) {
             boolean flag = true;
-            for (int j = 0; j < charsB.length; j++) {
-                if (charsA[i] != charsB[j]) {
+            for (int j = 0; i + j < charsA.length && j < charsB.length; j++) {
+                if (charsA[i + j] != charsB[j]) {
                     flag = false;
                     break;
                 }
