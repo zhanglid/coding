@@ -33,7 +33,7 @@ public class ImplementStrStr {
         }
         char[] charsA = haystack.toCharArray();
         char[] charsB = needle.toCharArray();
-        for (int i = 0; i + charsB.length < charsA.length; i++) {
+        for (int i = 0; i + charsB.length - 1 < charsA.length; i++) {
             boolean flag = true;
             for (int j = 0; i + j < charsA.length && j < charsB.length; j++) {
                 if (charsA[i + j] != charsB[j]) {

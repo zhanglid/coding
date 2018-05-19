@@ -32,4 +32,11 @@ public class ImplementStrStrTest {
         int ans = s.strStr("aaa", "aaaa");
         assertEquals(ans, -1);
     }
+
+    @Test
+    public void errCase3() {
+        ImplementStrStr s = new ImplementStrStr();
+        int ans = s.strStr("a", "a");
+        assertEquals(ans, 0);
+    }
 }
