@@ -18,4 +18,11 @@ public class ImplementStrStrTest {
         int ans = s.strStr("aaaaa", "bba");
         assertEquals(ans, -1);
     }
+
+    @Test
+    public void errCase() {
+        ImplementStrStr s = new ImplementStrStr();
+        int ans = s.strStr("", "");
+        assertEquals(ans, 0);
+    }
 }

@@ -28,6 +28,9 @@ public class ImplementStrStr {
             return -1;
         }
 
+        if (haystack == "" && needle == "") {
+            return 0;
+        }
         char[] charsA = haystack.toCharArray();
         char[] charsB = needle.toCharArray();
         for (int i = 0; i < charsA.length; i++) {
