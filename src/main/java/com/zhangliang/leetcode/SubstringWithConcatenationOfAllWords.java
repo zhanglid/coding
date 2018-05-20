@@ -39,7 +39,10 @@ public class SubstringWithConcatenationOfAllWords {
         for (int i = 0; i < words.length; i++) {
             map.put(words[i], i + 1);
         }
-        int targetSum = (words.length + 1) * words.length / 2;
+        int targetSum = 0;
+        for (String word : words) {
+            targetSum += map.get(word);
+        }
         int step = words[0].length();
         for (int offset = 0; offset < step; offset++) {
             int sum = 0;
