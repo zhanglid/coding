@@ -69,7 +69,7 @@ public class ValidSudoku {
         char[] col = new char[9];
         for (int i = 0; i < board[0].length; i++) {
             for (int j = 0; j < board.length; j++) {
-                col[j] = board[i][j];
+                col[j] = board[j][i];
             }
 
             if (!valid(col)) {

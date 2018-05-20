@@ -40,4 +40,22 @@ public class ValidSudokuTest {
         boolean ans = s.isValidSudoku(input);
         assertEquals(false, ans);
     }
+
+    @Test
+    public void errCase() {
+        ValidSudoku s = new ValidSudoku();
+        char[][] input = { 
+            { '.','.','4','.','.','.','6','3','.' },
+            { '.','.','.','.','.','.','.','.','.' },
+            { '5','.','.','.','.','.','.','9','.' },
+            { '.','.','.','5','6','.','.','.','.' },
+            { '4','.','3','.','.','.','.','.','1' },
+            { '.','.','.','7','.','.','.','.','.' },
+            { '.','.','.','5','.','.','.','.','.' },
+            { '.','.','.','.','.','.','.','.','.' },
+            { '.','.','.','.','.','.','.','.','.' }
+        };
+        boolean ans = s.isValidSudoku(input);
+        assertEquals(false, ans);
+    }
 }
