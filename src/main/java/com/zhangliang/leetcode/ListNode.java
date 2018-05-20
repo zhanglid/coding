@@ -18,10 +18,8 @@ public class ListNode {
     }
 
     public String toString() {
-        ListNode cur = next;
+        ListNode cur = this;
         StringBuilder sb = new StringBuilder();
-        sb.append(val);
-        sb.append("->");
 
         while (cur != null) {
             sb.append(cur.val);
