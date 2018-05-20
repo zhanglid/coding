@@ -45,24 +45,23 @@ public class SubstringWithConcatenationOfAllWords {
         }
         int step = words[0].length();
         for (int offset = 0; offset < step; offset++) {
+            int len = (s.length() - offset) / step;
+            int[] sums = new int[len];
             int sum = 0;
-            int i = offset;
-            int start = i;
-            while (i + step <= s.length()) {
-                int delta = map.getOrDefault(s.substring(i, i + step), targetSum + 1);
-                sum += delta;
-                if (sum == targetSum && start == i - step * (words.length - 1)) {
-                    ans.add(start);
+            for (int i = 0; i < len; i++) {
+                int index = offset + i * step;
+                sum += map.getOrDefault(s.substring(index, index + step), targetSum + 1);
+                sums[i] = sum;
+                if (i + 1 > words.length) {
+                    if (sum - sums[i - words.length] == targetSum) {
+                        ans.add(offset + (i - words.length + 1) * step);
+                    }
                 }
-                if (delta == targetSum + 1) {
-                    sum = 0;
-                    start = i + step;
-                } else if (start == i - step * (words.length - 1)) {
-                    String first = s.substring(start, start + step);
-                    sum -= map.get(first);
-                    start += step;
+                else if (i + 1 == words.length) {
+                    if (sum == targetSum) {
+                        ans.add(offset);
+                    }
                 }
-                i += step;
             }
         }
 
