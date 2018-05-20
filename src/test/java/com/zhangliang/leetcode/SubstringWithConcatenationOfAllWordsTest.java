@@ -32,4 +32,13 @@ public class SubstringWithConcatenationOfAllWordsTest {
         Arrays.sort(ans);
         assertArrayEquals(ans, new Integer[] { 0, 1, 2 });
     }
+
+    @Test
+    public void errCase2() {
+        SubstringWithConcatenationOfAllWords s = new SubstringWithConcatenationOfAllWords();
+        Integer[] ans = s.findSubstring("sheateateseatea", new String[] { "sea", "tea", "ate" })
+                .toArray(new Integer[0]);
+        Arrays.sort(ans);
+        assertArrayEquals(ans, new Integer[] { 6 });
+    }
 }

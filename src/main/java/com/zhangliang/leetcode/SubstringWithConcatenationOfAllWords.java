@@ -47,15 +47,20 @@ public class SubstringWithConcatenationOfAllWords {
         for (int offset = 0; offset < step; offset++) {
             int sum = 0;
             int i = offset;
+            int start = i;
             while (i + step <= s.length()) {
-                sum += map.getOrDefault(s.substring(i, i + step), targetSum + 1);
-                if (sum == targetSum) {
-                    int start = i - step * (words.length - 1);
+                int delta = map.getOrDefault(s.substring(i, i + step), targetSum + 1);
+                sum += delta;
+                if (sum == targetSum && start == i - step * (words.length - 1)) {
                     ans.add(start);
+                }
+                if (delta == targetSum + 1) {
+                    sum = 0;
+                    start = i + step;
+                } else if (start == i - step * (words.length - 1)) {
                     String first = s.substring(start, start + step);
                     sum -= map.get(first);
-                } else if (sum > targetSum) {
-                    sum = 0;
+                    start += step;
                 }
                 i += step;
             }
