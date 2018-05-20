@@ -29,7 +29,7 @@ public class ReverseNodesInKGroup {
         dummy.next = head;
         ListNode blockPrev = dummy;
         ListNode blockHead = head;
-        ListNode prev = dummy;
+        ListNode prev = null;
         ListNode cur = head;
         int count = 0;
         while(cur != null) {
@@ -46,6 +46,7 @@ public class ReverseNodesInKGroup {
                 count = 0;
             }
         }
+
         if (count != 0) {
             ListNode prev2 = null;
             while(prev != null) {
