@@ -65,6 +65,6 @@ public class RemoveElement {
 
     public static void main(String[] args) {
         RemoveElement s = new RemoveElement();
-        System.out.println(s.removeElement());
+        // System.out.println(s.removeElement());
     }
 }

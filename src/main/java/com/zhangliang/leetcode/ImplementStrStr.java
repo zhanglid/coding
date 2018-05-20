@@ -52,6 +52,6 @@ public class ImplementStrStr {
 
     public static void main(String[] args) {
         ImplementStrStr s = new ImplementStrStr();
-        System.out.println(s.solve());
+        // System.out.println(s.solve());
     }
 }

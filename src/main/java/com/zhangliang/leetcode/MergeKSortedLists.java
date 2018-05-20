@@ -48,6 +48,6 @@ public class MergeKSortedLists {
 
     public static void main(String[] args) {
         MergeKSortedLists s = new MergeKSortedLists();
-        System.out.println(s.mergeKLists());
+        // System.out.println(s.mergeKLists());
     }
 }
