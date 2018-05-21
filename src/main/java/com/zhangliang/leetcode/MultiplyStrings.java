@@ -64,14 +64,14 @@ public class MultiplyStrings {
 
         StringBuilder sb = new StringBuilder();
         int head = reversedAns.size() - 1;
-        while(reversedAns.get(head) == 0) {
+        while (head >= 0 && reversedAns.get(head) == 0) {
             head--;
         }
 
-        while(head >= 0) {
+        while (head >= 0) {
             sb.append(reversedAns.get(head--));
         }
 
-        return sb.toString();
+        return sb.length() > 0 ? sb.toString() : "0";
     }
 }

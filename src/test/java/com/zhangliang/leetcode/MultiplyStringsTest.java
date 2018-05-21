@@ -19,4 +19,11 @@ public class MultiplyStringsTest {
         String ans = s.multiply("123", "456");
         assertEquals(ans, "56088");
     }
+
+    @Test
+    public void errCase() {
+        MultiplyStrings s = new MultiplyStrings();
+        String ans = s.multiply("0", "0");
+        assertEquals(ans, "0");
+    }
 }
