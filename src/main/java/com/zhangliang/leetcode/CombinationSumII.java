@@ -53,7 +53,7 @@ public class CombinationSumII {
             return;
         }
 
-        if (start >= nums.length) {
+        if (start >= nums.length || sum > target) {
             return;
         }
 
