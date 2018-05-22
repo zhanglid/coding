@@ -40,7 +40,7 @@ public class MaximumSubarray {
 
     private ReturnType helper(int[] nums, int start, int end) {
         if (start == end) {
-            int num = Math.max(0, nums[start]);
+            int num = nums[start];
             return new ReturnType(num, num, num, nums[start]);
         }
 
