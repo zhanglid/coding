@@ -25,12 +25,17 @@ n is a 32-bit signed integer, within the range [−231, 231 − 1]
 public class PowXN {
     public double myPow(double x, int n) {
         boolean reversed = false;
+        boolean offset = false;
         if (n < 0) {
             reversed = true;
+            if (n == Integer.MIN_VALUE) {
+                n += 1;
+                offset = true;
+            }
             n = -n;
         }
 
-        double ans = 1;
+        double ans = offset ? x : 1;
         int base = 1;
         while (n > 0) {
             if (n % 2 == 1) {

@@ -27,4 +27,11 @@ public class PowXNTest {
         double ans = s.myPow(2.0, -2);
         assertEquals(0.25000, ans, Double.MIN_VALUE);
     }
+
+    @Test
+    public void errCase() {
+        PowXN s = new PowXN();
+        double ans = s.myPow(2.0, -2147483648);
+        assertEquals(0, ans, Double.MIN_VALUE);
+    }
 }
