@@ -42,7 +42,7 @@ public class MergeIntervals {
                 continue;
             }
 
-            ans.get(ans.size() - 1).end = interval.end;
+            ans.get(ans.size() - 1).end = Math.max(ans.get(ans.size() - 1).end, interval.end);
         }
 
         return ans;

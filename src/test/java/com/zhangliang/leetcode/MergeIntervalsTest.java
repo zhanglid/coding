@@ -16,11 +16,18 @@ public class MergeIntervalsTest {
     }
 
     @Test
-
     public void testCase2() {
         MergeIntervals s = new MergeIntervals();
         List<Interval> ans = s.merge(Interval.getIntervalsList(new int[][] { { 1, 4 }, { 4, 5 } }));
         List<Interval> expected = Interval.getIntervalsList(new int[][] { { 1, 5 } });
+        assertEquals(expected.toString(), ans.toString());
+    }
+
+    @Test
+    public void errCase() {
+        MergeIntervals s = new MergeIntervals();
+        List<Interval> ans = s.merge(Interval.getIntervalsList(new int[][] { { 1, 4 }, { 2, 3 } }));
+        List<Interval> expected = Interval.getIntervalsList(new int[][] { { 1, 4 } });
         assertEquals(expected.toString(), ans.toString());
     }
 }
