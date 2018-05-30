@@ -20,7 +20,7 @@ You can assume that you can always reach the last index.
 
 public class JumpGameII {
     public int jump(int[] nums) {
-        if (nums == null || nums.length < 1) {
+        if (nums == null || nums.length < 2) {
             return 0;
         }
 
