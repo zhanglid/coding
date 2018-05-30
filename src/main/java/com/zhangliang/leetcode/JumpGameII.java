@@ -25,11 +25,15 @@ public class JumpGameII {
         }
 
         int r = 0;
+        int nextR = 0;
         int step = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (i + nums[i] > r) {
-                r = i + nums[i];
+            if (i > r) {
                 step++;
+                r = nextR;
+            }
+            if (i + nums[i] > nextR) {
+                nextR = i + nums[i];
             }
             if (r >= nums.length - 1) {
                 return step;

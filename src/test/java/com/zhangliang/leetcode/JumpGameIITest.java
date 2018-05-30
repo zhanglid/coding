@@ -18,4 +18,11 @@ public class JumpGameIITest {
         int ans = s.jump(new int[] { 1 });
         assertEquals(0, ans);
     }
+
+    @Test
+    public void errCase2() {
+        JumpGameII s = new JumpGameII();
+        int ans = s.jump(new int[] { 7, 0, 9, 6, 9, 6, 1, 7, 9, 0, 1, 2, 9, 0, 3 });
+        assertEquals(2, ans);
+    }
 }
