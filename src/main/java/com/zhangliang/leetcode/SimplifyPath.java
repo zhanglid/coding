@@ -41,8 +41,8 @@ public class SimplifyPath {
 
         StringBuilder sb = new StringBuilder();
         while (!stack.isEmpty()) {
-            sb.append("/");
-            sb.append(stack.pop());
+            sb.insert(0, stack.pop());
+            sb.insert(0, "/");
         }
 
         return sb.length() > 0 ? sb.toString() : "/";

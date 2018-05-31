@@ -19,4 +19,11 @@ public class SimplifyPathTest {
         String ans = s.simplifyPath("/a/./b/../../c/");
         assertEquals("/c", ans);
     }
+
+    @Test
+    public void errCase() {
+        SimplifyPath s = new SimplifyPath();
+        String ans = s.simplifyPath("/abc/...");
+        assertEquals("/abc/...", ans);
+    }
 }
