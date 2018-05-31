@@ -48,13 +48,13 @@ public class SpiralMatrix {
             }
 
             if (m > 1) {
-                for (int j = sj + n - 2; j >= 0; j--) {
+                for (int j = sj + n - 2; j >= sj; j--) {
                     ans.add(matrix[si + m - 1][j]);
                 }
             }
 
             if (n > 1) {
-                for (int i = si + m - 2; i >= 1; i--) {
+                for (int i = si + m - 2; i >= si + 1; i--) {
                     ans.add(matrix[i][sj]);
                 }
             }
