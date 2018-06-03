@@ -68,4 +68,11 @@ public class ValidNumberTest {
         boolean ans = s.isNumber("0e");
         assertEquals(false, ans);
     }
+
+    @Test
+    public void errCase3() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("3.");
+        assertEquals(true, ans);
+    }
 }

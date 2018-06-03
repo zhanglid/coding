@@ -42,7 +42,7 @@ public class ValidNumber {
         if (s.isEmpty()) {
             return false;
         }
-        if (s.charAt(s.length() - 1) == '.') {
+        if (s.equals(".")) {
             return false;
         }
 
@@ -70,7 +70,7 @@ public class ValidNumber {
                 }
                 hasMetE = true;
                 hasMetNumber = false;
-                hasMetPoint = false;
+                hasMetPoint = true;
             }
 
             else {
