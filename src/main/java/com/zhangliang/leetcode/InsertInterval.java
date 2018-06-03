@@ -29,7 +29,12 @@ public class InsertInterval {
 
         boolean hasNewIntervalMet = false;
         boolean hasNewIntervalAdded = false;
-        for (Interval interval : intervals) {
+        int insertPos = 0;
+        for (int i = 0; i < intervals.size(); i++) {
+            Interval interval = intervals.get(i);
+            if (interval.end < newInterval.start) {
+                insertPos = i + 1;
+            }
             if (interval.end < newInterval.start || interval.start > newInterval.end) {
                 if (hasNewIntervalMet) {
                     ans.add(newInterval);
@@ -45,7 +50,7 @@ public class InsertInterval {
         }
 
         if (!hasNewIntervalAdded) {
-            ans.add(newInterval);
+            ans.add(insertPos, newInterval);
         }
         return ans;
     }
