@@ -28,11 +28,13 @@ public class InsertInterval {
         }
 
         boolean hasNewIntervalMet = false;
+        boolean hasNewIntervalAdded = false;
         for (Interval interval : intervals) {
             if (interval.end < newInterval.start || interval.start > newInterval.end) {
                 if (hasNewIntervalMet) {
                     ans.add(newInterval);
                     hasNewIntervalMet = false;
+                    hasNewIntervalAdded = true;
                 }
                 ans.add(interval);
             } else {
@@ -42,7 +44,7 @@ public class InsertInterval {
             }
         }
 
-        if (hasNewIntervalMet) {
+        if (!hasNewIntervalAdded) {
             ans.add(newInterval);
         }
         return ans;
