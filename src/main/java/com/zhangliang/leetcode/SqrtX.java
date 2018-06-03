@@ -29,14 +29,17 @@ public class SqrtX {
         int r = x;
         while (l + 1 < r) {
             int mid = l + (r - l) / 2;
-            if (mid * mid > x) {
+            int currentSquare = mid * mid;
+            if (currentSquare / mid != mid) {
+                r = mid;
+            } else if (currentSquare > x) {
                 r = mid;
             } else {
                 l = mid;
             }
         }
 
-        if (r * r <= x) {
+        if (r * r / r == r && r * r <= x) {
             return r;
         }
 
