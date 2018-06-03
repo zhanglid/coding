@@ -35,6 +35,9 @@ public class ValidNumber {
             return true;
         }
 
+        if (c == '+') {
+            return true;
+        }
         return false;
     }
 
@@ -59,17 +62,17 @@ public class ValidNumber {
         boolean hasMetPoint = false;
         boolean hasMetE = false;
         boolean hasMetNumber = false;
-        boolean hasMetMinus = false;
+        boolean hasMetSign = false;
         for (char c : s.toCharArray()) {
             if (!isCharValid(c)) {
                 return false;
             }
-            if (c == '-') {
-                if (hasMetMinus || hasMetNumber || hasMetPoint) {
+            if (c == '-' || c == '+') {
+                if (hasMetSign || hasMetNumber || hasMetPoint) {
                     return false;
                 }
 
-                hasMetMinus = true;
+                hasMetSign = true;
             }
             if (c == '.') {
                 if (hasMetPoint) {
@@ -85,7 +88,7 @@ public class ValidNumber {
                 hasMetE = true;
                 hasMetNumber = false;
                 hasMetPoint = true;
-                hasMetMinus = false;
+                hasMetSign = false;
             }
 
             else {
