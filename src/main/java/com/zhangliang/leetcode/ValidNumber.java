@@ -38,7 +38,7 @@ public class ValidNumber {
         if (s == null) {
             return false;
         }
-        s = s.replace(" ", "");
+        s = s.trim();
         if (s.isEmpty()) {
             return false;
         }
