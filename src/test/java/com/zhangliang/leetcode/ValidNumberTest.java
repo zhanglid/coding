@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class ValidNumberTest {
@@ -44,7 +43,7 @@ public class ValidNumberTest {
     @Test
     public void testCase6() {
         ValidNumber s = new ValidNumber();
-        boolean ans = s.isNumber(" 1.5e2.5");
+        boolean ans = s.isNumber(" 1.5e2");
         assertEquals(true, ans);
     }
 
@@ -109,5 +108,12 @@ public class ValidNumberTest {
         ValidNumber s = new ValidNumber();
         boolean ans = s.isNumber(" -.");
         assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase8() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber(" 005047e+6");
+        assertEquals(true, ans);
     }
 }

@@ -76,7 +76,7 @@ public class ValidNumber {
             }
 
             else if (c == '.') {
-                if (hasMetPoint) {
+                if (hasMetPoint || hasMetE) {
                     return false;
                 }
                 hasMetPoint = true;
@@ -88,7 +88,7 @@ public class ValidNumber {
                 }
                 hasMetE = true;
                 hasMetNumber = false;
-                hasMetPoint = true;
+                hasMetPoint = false;
                 hasMetSign = false;
             }
 
