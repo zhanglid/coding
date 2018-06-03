@@ -25,4 +25,11 @@ public class SearchA2DMatrixTest {
         boolean ans = s.searchMatrix(new int[][] { { 1 } }, 1);
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase2() {
+        SearchA2DMatrix s = new SearchA2DMatrix();
+        boolean ans = s.searchMatrix(new int[][] { { 1 } }, 0);
+        assertEquals(false, ans);
+    }
 }

@@ -46,7 +46,9 @@ public class SearchA2DMatrix {
             rowResult = -rowResult;
             rowResult -= 2;
         }
-
+        if (rowResult < 0) {
+            return false;
+        }
         int colResult = Arrays.binarySearch(matrix[rowResult], target);
         return colResult >= 0;
     }
