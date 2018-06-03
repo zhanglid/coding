@@ -61,4 +61,11 @@ public class ValidNumberTest {
         boolean ans = s.isNumber(".1");
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase2() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("0e");
+        assertEquals(false, ans);
+    }
 }

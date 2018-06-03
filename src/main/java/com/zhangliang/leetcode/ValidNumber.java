@@ -42,7 +42,13 @@ public class ValidNumber {
         if (s.isEmpty()) {
             return false;
         }
+        if (s.charAt(s.length() - 1) == '.') {
+            return false;
+        }
 
+        if (s.charAt(s.length() - 1) == 'e') {
+            return false;
+        }
         boolean hasMetPoint = false;
         boolean hasMetE = false;
         boolean hasMetNumber = false;
@@ -53,9 +59,6 @@ public class ValidNumber {
 
             if (c == '.') {
                 if (hasMetPoint) {
-                    return false;
-                }
-                if (s.charAt(s.length() - 1) == '.') {
                     return false;
                 }
                 hasMetPoint = true;
