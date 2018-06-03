@@ -56,6 +56,13 @@ public class ValidNumberTest {
     }
 
     @Test
+    public void testCase8() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("-");
+        assertEquals(false, ans);
+    }
+
+    @Test
     public void errCase() {
         ValidNumber s = new ValidNumber();
         boolean ans = s.isNumber(".1");
@@ -81,5 +88,12 @@ public class ValidNumberTest {
         ValidNumber s = new ValidNumber();
         boolean ans = s.isNumber(". 1");
         assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase5() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("-1.");
+        assertEquals(true, ans);
     }
 }

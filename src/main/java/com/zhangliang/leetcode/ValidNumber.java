@@ -31,6 +31,10 @@ public class ValidNumber {
             return true;
         }
 
+        if (c == '-') {
+            return true;
+        }
+
         return false;
     }
 
@@ -49,14 +53,24 @@ public class ValidNumber {
         if (s.charAt(s.length() - 1) == 'e') {
             return false;
         }
+        if (s.charAt(s.length() - 1) == '-') {
+            return false;
+        }
         boolean hasMetPoint = false;
         boolean hasMetE = false;
         boolean hasMetNumber = false;
+        boolean hasMetMinus = false;
         for (char c : s.toCharArray()) {
             if (!isCharValid(c)) {
                 return false;
             }
+            if (c == '-') {
+                if (hasMetMinus || hasMetNumber || hasMetPoint) {
+                    return false;
+                }
 
+                hasMetMinus = true;
+            }
             if (c == '.') {
                 if (hasMetPoint) {
                     return false;
@@ -71,6 +85,7 @@ public class ValidNumber {
                 hasMetE = true;
                 hasMetNumber = false;
                 hasMetPoint = true;
+                hasMetMinus = false;
             }
 
             else {
