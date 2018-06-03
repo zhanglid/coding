@@ -103,4 +103,11 @@ public class ValidNumberTest {
         boolean ans = s.isNumber("+.8");
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase7() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber(" -.");
+        assertEquals(false, ans);
+    }
 }
