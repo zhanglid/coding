@@ -27,6 +27,7 @@ public class MinimumWindowSubstring {
 
         int l = 0;
         String ans = s;
+        boolean hasAns = false;
         for (int i = 0; i < s.length(); i++) {
             counters[s.charAt(i)]--;
             if (counters[s.charAt(i)] >= 0) {
@@ -34,6 +35,7 @@ public class MinimumWindowSubstring {
             }
 
             if (count == 0) {
+                hasAns = true;
                 while (counters[s.charAt(l)] != 0) {
                     counters[s.charAt(l)]++;
                     l++;
@@ -43,6 +45,6 @@ public class MinimumWindowSubstring {
             }
         }
 
-        return ans;
+        return hasAns ? ans : "";
     }
 }

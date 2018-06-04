@@ -11,4 +11,11 @@ public class MinimumWindowSubstringTest {
         String ans = s.minWindow("ADOBECODEBANC", "ABC");
         assertEquals("BANC", ans);
     }
+
+    @Test
+    public void testCase2() {
+        MinimumWindowSubstring s = new MinimumWindowSubstring();
+        String ans = s.minWindow("a", "aa");
+        assertEquals("", ans);
+    }
 }
