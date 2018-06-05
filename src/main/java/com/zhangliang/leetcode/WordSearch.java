@@ -32,7 +32,7 @@ public class WordSearch {
             for (int j = 0; j < board[0].length; j++) {
                 Set<Integer> historyPos = new HashSet<>();
                 historyPos.add(i * board.length + j);
-                if (board[i][j] == word.charAt(0) && helper(board, word, 1, i, j, historyPos)) {
+                if (board[i][j] == word.charAt(0) && helper(board, word, 0, i, j, historyPos)) {
                     return true;
                 }
             }
@@ -43,16 +43,16 @@ public class WordSearch {
     private static final int[][] dirs = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
     private boolean helper(char[][] board, String word, int cur, int si, int sj, Set<Integer> historyPosSet) {
-        if (cur == word.length()) {
+        if (cur == word.length() - 1) {
             return true;
         }
 
         for (int[] dir : dirs) {
             int i = si + dir[0];
             int j = sj + dir[1];
-            int key = i * board.length + j;
+            int key = i * board[0].length + j;
             if (i >= 0 && i < board.length && j >= 0 && j < board[0].length && !historyPosSet.contains(key)) {
-                if (board[i][j] == word.charAt(cur)) {
+                if (board[i][j] == word.charAt(cur + 1)) {
                     historyPosSet.add(key);
                     if (helper(board, word, cur + 1, i, j, historyPosSet)) {
                         return true;
