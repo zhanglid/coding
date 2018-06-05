@@ -32,12 +32,21 @@ public class WordSearchTest {
     @Test
     public void errCase() {
         WordSearch s = new WordSearch();
-        boolean ans = s.exist(new char[][] { 
-            { 'A', 'B', 'C', 'E' }, 
-            { 'S', 'F', 'E', 'S' }, 
-            { 'A', 'D', 'E', 'E' } 
-        },
+        boolean ans = s.exist(new char[][] { { 'A', 'B', 'C', 'E' }, { 'S', 'F', 'E', 'S' }, { 'A', 'D', 'E', 'E' } },
                 "ABCESEEEFS");
         assertEquals(true, ans);
+    }
+
+    @Test
+    public void errCase2() {
+        WordSearch s = new WordSearch();
+        boolean ans = s.exist(new char[][] { 
+            { 'a', 'a', 'a', 'a' }, 
+            { 'a', 'a', 'a', 'a' }, 
+            { 'a', 'a', 'a', 'a' },
+            { 'a', 'a', 'a', 'a' }, 
+            { 'a', 'a', 'a', 'b' } 
+        }, "aaaaaaaaaaaaaaaaaaaa");
+        assertEquals(false, ans);
     }
 }
