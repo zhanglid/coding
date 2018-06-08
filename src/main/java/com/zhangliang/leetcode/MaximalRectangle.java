@@ -25,15 +25,35 @@ public class MaximalRectangle {
         int[] dp = new int[matrix[0].length];
         int ans = 0;
         for (int i = 0; i < matrix.length; i++) {
+            int[] left = new int[matrix[0].length];
             Stack<Integer> stack = new Stack<>();
             for (int j = 0; j < matrix[0].length; j++) {
                 dp[j] = matrix[i][j] == '1' ? dp[j] + 1 : 0;
                 while (!stack.isEmpty() && dp[stack.peek()] >= dp[j]) {
                     stack.pop();
                 }
-                int left = stack.isEmpty() ? 0 : (stack.peek() + 1);
-                ans = Math.max(ans, dp[j] * (j - left + 1));
+                if (!stack.isEmpty()) {
+                    left[j] = stack.peek();
+                } else {
+                    left[j] = -1;
+                }
                 stack.push(j);
+            }
+
+            stack.clear();
+
+            int right = matrix[0].length;
+            for (int j = matrix[0].length - 1; j >= 0; j--) {
+                while (!stack.isEmpty() && dp[stack.peek()] >= dp[j]) {
+                    stack.pop();
+                }
+                if (!stack.isEmpty()) {
+                    right = stack.peek();
+                } else {
+                    right = matrix[0].length;
+                }
+                stack.push(j);
+                ans = Math.max(ans, dp[j] * (right - left[j] - 1));
             }
         }
         return ans;
