@@ -23,7 +23,7 @@ public class PartitionList {
         ListNode cur = head;
         ListNode prevCur = dummy;
         while (cur != null) {
-            if (cur.val < x) {
+            if (cur.val < x && cur != prev.next) {
                 ListNode next = cur.next;
                 prevCur.next = next;
                 cur.next = prev.next;
@@ -31,6 +31,9 @@ public class PartitionList {
                 prev = prev.next;
                 cur = next;
             } else {
+                if (cur.val < x && cur == prev.next) {
+                    prev = prev.next;
+                }
                 prevCur = cur;
                 cur = cur.next;
             }
