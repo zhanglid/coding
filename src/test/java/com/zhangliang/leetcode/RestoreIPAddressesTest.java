@@ -31,4 +31,12 @@ public class RestoreIPAddressesTest {
         Collections.sort(ans);
         assertArrayEquals(new String[] { "0.10.0.10","0.100.1.0" }, ans.toArray(new String[0]));
     }
+
+    @Test
+    public void errCase3() {
+        RestoreIPAddresses s = new RestoreIPAddresses();
+        List<String> ans = s.restoreIpAddresses("");
+        Collections.sort(ans);
+        assertArrayEquals(new String[] {}, ans.toArray(new String[0]));
+    }
 }

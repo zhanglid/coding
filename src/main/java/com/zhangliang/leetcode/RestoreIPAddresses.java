@@ -25,6 +25,9 @@ public class RestoreIPAddresses {
 
     private void helper(String s, int start, String[] parts, int cur, List<String> ans) {
         int part = 0;
+        if (start >= s.length()) {
+            return;
+        }
         if (s.length() - start > 3 * (4 - cur)) {
             return;
         }
