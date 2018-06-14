@@ -29,11 +29,18 @@ public class RestoreIPAddresses {
             return;
         }
         if (cur == 3) {
-            part = Integer.parseInt(s.substring(start));
-            if (part <= 255) {
+            String last = s.substring(start);
+            part = Integer.parseInt(last);
+            if (part <= 255 && (part == 0 && last.equals("0") || part > 0 && s.charAt(start) != '0')) {
                 parts[cur++] = Integer.toString(part);
                 ans.add(String.join(".", parts));
             }
+            return;
+        }
+
+        if (s.charAt(start) == '0') {
+            parts[cur] = "0";
+            helper(s, start + 1, parts, cur + 1, ans);
             return;
         }
 
