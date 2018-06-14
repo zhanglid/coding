@@ -27,10 +27,10 @@ import java.util.List;
 public class GrayCode {
     public List<Integer> grayCode(int n) {
         List<Integer> ans = new ArrayList<>();
+        ans.add(0);
         if (n < 1) {
             return ans;
         }
-        ans.add(0);
 
         int delta = 1;
         for (int i = 1; i <= n; i++) {
