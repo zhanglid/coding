@@ -30,7 +30,7 @@ public class DecodeWays {
         int[] dp = new int[chars.length + 1];
         dp[0] = 1;
         for (int i = 0; i < chars.length; i++) {
-            dp[i + 1] = dp[i];
+            dp[i + 1] = chars[i] == '0' ? 0 : dp[i];
             if (i - 1 >= 0 && (chars[i - 1] != '0' && (10 * (chars[i - 1] - '0') + chars[i] - '0' <= 26))) {
                 dp[i + 1] += dp[i - 1];
             }

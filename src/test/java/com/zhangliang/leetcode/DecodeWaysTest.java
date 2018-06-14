@@ -19,4 +19,11 @@ public class DecodeWaysTest {
         int ans = s.numDecodings("226");
         assertEquals(3, ans);
     }
+
+    @Test
+    public void errCase() {
+        DecodeWays s = new DecodeWays();
+        int ans = s.numDecodings("0");
+        assertEquals(0, ans);
+    }
 }
