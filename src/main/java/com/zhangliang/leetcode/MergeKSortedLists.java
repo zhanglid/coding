@@ -45,9 +45,4 @@ public class MergeKSortedLists {
 
         return ans.next;
     }
-
-    public static void main(String[] args) {
-        MergeKSortedLists s = new MergeKSortedLists();
-        // System.out.println(s.mergeKLists());
-    }
 }

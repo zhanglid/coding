@@ -47,8 +47,4 @@ public class FirstMissingPositive {
         return nums.length + 1;
     }
 
-    public static void main(String[] args) {
-        FirstMissingPositive s = new FirstMissingPositive();
-        System.out.println(s.firstMissingPositive());
-    }
 }

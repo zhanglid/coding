@@ -56,9 +56,4 @@ public class SearchInsertPosition {
 
         return right + 1;
     }
-
-    public static void main(String[] args) {
-        SearchInsertPosition s = new SearchInsertPosition();
-        // System.out.println(s.searchInsert());
-    }
 }

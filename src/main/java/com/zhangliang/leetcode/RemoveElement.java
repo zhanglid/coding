@@ -62,9 +62,4 @@ public class RemoveElement {
         }
         return left;
     }
-
-    public static void main(String[] args) {
-        RemoveElement s = new RemoveElement();
-        // System.out.println(s.removeElement());
-    }
 }

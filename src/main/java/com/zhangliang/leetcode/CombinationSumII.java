@@ -66,9 +66,4 @@ public class CombinationSumII {
             curList.remove(curList.size() - 1);
         }
     }
-
-    public static void main(String[] args) {
-        CombinationSumII s = new CombinationSumII();
-        System.out.println(s.combinationSum2());
-    }
 }

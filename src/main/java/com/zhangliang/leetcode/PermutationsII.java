@@ -52,9 +52,4 @@ public class PermutationsII {
             }
         }
     }
-
-    public static void main(String[] args) {
-        PermutationsII s = new PermutationsII();
-        System.out.println(s.permuteUnique());
-    }
 }

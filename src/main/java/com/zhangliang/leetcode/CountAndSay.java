@@ -50,9 +50,4 @@ public class CountAndSay {
 
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        CountAndSay s = new CountAndSay();
-        System.out.println(s.countAndSay());
-    }
 }

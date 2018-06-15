@@ -60,9 +60,4 @@ public class CombinationSum {
             row.remove(row.size() - 1);
         }
     }
-
-    public static void main(String[] args) {
-        CombinationSum s = new CombinationSum();
-        System.out.println(s.combinationSum());
-    }
 }

@@ -110,9 +110,4 @@ public class ValidSudoku {
         }
         return true;
     }
-
-    public static void main(String[] args) {
-        ValidSudoku s = new ValidSudoku();
-        System.out.println(s.isValidSudoku());
-    }
 }

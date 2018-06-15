@@ -84,9 +84,4 @@ public class SearchForARange {
 
         return -1;
     }
-
-    public static void main(String[] args) {
-        SearchForARange s = new SearchForARange();
-        // System.out.println(s.searchRange());
-    }
 }

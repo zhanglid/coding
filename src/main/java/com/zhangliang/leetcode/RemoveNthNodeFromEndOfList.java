@@ -39,9 +39,4 @@ public class RemoveNthNodeFromEndOfList {
 
         return dummy.next;
     }
-
-    public static void main(String[] args) {
-        RemoveNthNodeFromEndOfList s = new RemoveNthNodeFromEndOfList();
-        System.out.println(s.removeNthFromEnd());
-    }
 }

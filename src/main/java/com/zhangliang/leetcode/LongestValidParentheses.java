@@ -57,9 +57,4 @@ public class LongestValidParentheses {
 
         return ans;
     }
-
-    public static void main(String[] args) {
-        LongestValidParentheses s = new LongestValidParentheses();
-        System.out.println(s.longestValidParentheses());
-    }
 }

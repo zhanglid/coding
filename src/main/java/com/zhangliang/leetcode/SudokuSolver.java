@@ -112,9 +112,4 @@ public class SudokuSolver {
     public void solveSudoku(char[][] board) {
         helper(board);
     }
-
-    public static void main(String[] args) {
-        SudokuSolver s = new SudokuSolver();
-        System.out.println(s.solveSudoku());
-    }
 }

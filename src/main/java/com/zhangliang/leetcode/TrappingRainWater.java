@@ -36,9 +36,4 @@ public class TrappingRainWater {
 
         return ans;
     }
-
-    public static void main(String[] args) {
-        TrappingRainWater s = new TrappingRainWater();
-        System.out.println(s.solve());
-    }
 }

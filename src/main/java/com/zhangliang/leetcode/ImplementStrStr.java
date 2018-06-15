@@ -49,9 +49,4 @@ public class ImplementStrStr {
 
         return -1;
     }
-
-    public static void main(String[] args) {
-        ImplementStrStr s = new ImplementStrStr();
-        // System.out.println(s.solve());
-    }
 }

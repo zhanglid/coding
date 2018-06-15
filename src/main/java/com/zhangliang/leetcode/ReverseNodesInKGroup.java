@@ -59,9 +59,4 @@ public class ReverseNodesInKGroup {
         }
         return dummy.next;
     }
-
-    public static void main(String[] args) {
-        ReverseNodesInKGroup s = new ReverseNodesInKGroup();
-        System.out.println(s.reverseKGroup());
-    }
 }
