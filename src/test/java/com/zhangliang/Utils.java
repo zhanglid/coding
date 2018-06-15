@@ -13,6 +13,17 @@ public class Utils {
         return ans;
     }
 
+    public static <T> String[] getStrsFromList(List<T> list) {
+        String[] ans = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            ans[i] = list.get(i).toString();
+        }
+
+        Arrays.sort(ans);
+
+        return ans;
+    }
+
     public static String[] getStrsFrom2DIntArray(int[][] items) {
         String[] ans = new String[items.length];
         for (int i = 0; i < items.length; i++) {

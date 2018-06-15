@@ -1,5 +1,10 @@
 package com.zhangliang.utils;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class TreeNode {
     public int val;
     public TreeNode left;
@@ -56,5 +61,30 @@ public class TreeNode {
         }
 
         return true;
+    }
+
+    public String toString() {
+        Queue<TreeNode> queue = new LinkedList<>();
+
+        List<String> list = new ArrayList<>();
+        queue.add(this);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node == null) {
+                list.add("null");
+            } else {
+                list.add(Integer.toString(node.val));
+                if (node.left == null && node.right == null) {
+                    continue;
+                }
+                queue.add(node.left);
+                queue.add(node.right);
+            }
+        }
+
+        while(list.get(list.size() - 1).equals("null")) {
+            list.remove(list.size() - 1);
+        }
+        return list.toString();
     }
 }
