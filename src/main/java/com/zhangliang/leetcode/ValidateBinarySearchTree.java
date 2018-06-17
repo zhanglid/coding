@@ -36,7 +36,9 @@ public class ValidateBinarySearchTree {
     }
 
     public boolean isValidBST(TreeNode root) {
-        return helper(root).valid;
+        ReturnType rt = helper(root);
+
+        return rt == null || rt.valid;
     }
 
     private ReturnType helper(TreeNode root) {

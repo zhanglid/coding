@@ -21,4 +21,11 @@ public class ValidateBinarySearchTreeTest {
         boolean ans = s.isValidBST(new TreeNode(new Integer[] { 2147483647 }));
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase2() {
+        ValidateBinarySearchTree s = new ValidateBinarySearchTree();
+        boolean ans = s.isValidBST(null);
+        assertEquals(true, ans);
+    }
 }
