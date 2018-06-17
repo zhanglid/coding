@@ -18,4 +18,11 @@ public class InterleavingStringTest {
         boolean ans = s.isInterleave("aabcc", "dbbca", "aadbbbaccc");
         assertEquals(false, ans);
     }
+
+    @Test
+    public void errCase() {
+        InterleavingString s = new InterleavingString();
+        boolean ans = s.isInterleave("a", "", "a");
+        assertEquals(true, ans);
+    }
 }
