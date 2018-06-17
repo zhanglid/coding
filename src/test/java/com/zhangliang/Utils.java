@@ -4,13 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
-    public static <T> String[] getStrsFrom2DList(List<List<T>> list) {
+    public static <T> String[] getStrsFrom2DList(List<List<T>> list, boolean isSort) {
         String[] ans = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             ans[i] = list.get(i).toString();
         }
-        Arrays.sort(ans);
+
+        if (isSort)
+            Arrays.sort(ans);
         return ans;
+    }
+
+    public static <T> String[] getStrsFrom2DList(List<List<T>> list) {
+        return getStrsFrom2DList(list, true);
     }
 
     public static <T> String[] getStrsFromList(List<T> list) {

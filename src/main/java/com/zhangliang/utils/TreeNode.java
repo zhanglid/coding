@@ -16,23 +16,27 @@ public class TreeNode {
 
     public TreeNode(Integer[] arr) {
         val = arr[0];
-        left = insertLevelOrder(arr, this, 1, true);
-        right = insertLevelOrder(arr, this, 2, false);
-    }
 
-    private TreeNode insertLevelOrder(Integer[] arr, TreeNode root, int i, boolean isLeft) {
-        if (i >= arr.length || arr[i] == null) {
-            return null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(this);
+        for (int i = 1; i < arr.length; i++) {
+            TreeNode node = queue.poll();
+            if (arr[i] != null) {
+                node.left = new TreeNode(arr[i]);
+                queue.add(node.left);
+            }
+
+            if (i + 1 >= arr.length) {
+                break;
+            }
+
+            if (arr[i + 1] != null) {
+                node.right = new TreeNode(arr[i + 1]);
+                queue.add(node.right);
+            }
+
+            i++;
         }
-        TreeNode temp = new TreeNode(arr[i]);
-        root = temp;
-
-        // insert left child
-        root.left = insertLevelOrder(arr, root.left, i + (isLeft ? 2 : 1), isLeft);
-
-        // insert right child
-        root.right = insertLevelOrder(arr, root.right, i + (isLeft ? 2 : 3), isLeft);
-        return root;
     }
 
     public boolean equals(TreeNode other) {
