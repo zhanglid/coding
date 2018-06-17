@@ -16,11 +16,11 @@ public class TreeNode {
 
     public TreeNode(Integer[] arr) {
         val = arr[0];
-        left = insertLevelOrder(arr, this, 1);
-        right = insertLevelOrder(arr, this, 2);
+        left = insertLevelOrder(arr, this, 1, true);
+        right = insertLevelOrder(arr, this, 2, false);
     }
 
-    private TreeNode insertLevelOrder(Integer[] arr, TreeNode root, int i) {
+    private TreeNode insertLevelOrder(Integer[] arr, TreeNode root, int i, boolean isLeft) {
         if (i >= arr.length || arr[i] == null) {
             return null;
         }
@@ -28,10 +28,10 @@ public class TreeNode {
         root = temp;
 
         // insert left child
-        root.left = insertLevelOrder(arr, root.left, i + 1);
+        root.left = insertLevelOrder(arr, root.left, i + (isLeft ? 2 : 1), isLeft);
 
         // insert right child
-        root.right = insertLevelOrder(arr, root.right, i + 2);
+        root.right = insertLevelOrder(arr, root.right, i + (isLeft ? 2 : 3), isLeft);
         return root;
     }
 
@@ -82,7 +82,7 @@ public class TreeNode {
             }
         }
 
-        while(list.get(list.size() - 1).equals("null")) {
+        while (list.get(list.size() - 1).equals("null")) {
             list.remove(list.size() - 1);
         }
         return list.toString();
