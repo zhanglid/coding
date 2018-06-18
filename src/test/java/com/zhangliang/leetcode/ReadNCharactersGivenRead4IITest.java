@@ -15,7 +15,7 @@ public class ReadNCharactersGivenRead4IITest {
         ans = s.read(buf, 2);
         assertEquals(2, ans);
         ans = s.read(buf, 1);
-        assertEquals(1, ans);
+        assertEquals(0, ans);
     }
 
     @Test
@@ -34,5 +34,15 @@ public class ReadNCharactersGivenRead4IITest {
         char[] buf = new char[4];
         int ans = s.read(buf, 1);
         assertEquals(0, ans);
+    }
+
+    @Test
+    public void errCase2() {
+        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II(new char[] { 'a', 'b' });
+        char[] buf = new char[4];
+        int ans = s.read(buf, 1);
+        assertEquals(1, ans);
+        ans = s.read(buf, 2);
+        assertEquals(1, ans);
     }
 }

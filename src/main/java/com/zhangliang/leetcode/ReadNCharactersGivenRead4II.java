@@ -70,10 +70,12 @@ public class ReadNCharactersGivenRead4II {
                 n--;
             }
 
+            int cacheWriteIndex = cacheIndex;
             while (realReadNum > 0) {
-                cache[cacheIndex++] = buf4[buf4index++];
+                cache[cacheWriteIndex++] = buf4[buf4index++];
                 realReadNum--;
-                cacheIndex = cacheIndex % cache.length;
+                cacheWriteIndex = cacheWriteIndex % cache.length;
+                cacheSize++;
             }
         }
 
