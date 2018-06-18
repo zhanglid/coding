@@ -25,4 +25,11 @@ public class RecoverBinarySearchTreeTest {
         assertEquals(input.equals(new TreeNode(new Integer[] { 2, 1, 4, null, null, 3 })), true);
     }
 
+    @Test
+    public void errCase() {
+        RecoverBinarySearchTree s = new RecoverBinarySearchTree();
+        TreeNode input = new TreeNode(new Integer[] { 2, 3, 1 });
+        s.recoverTree(input);
+        assertEquals(input.equals(new TreeNode(new Integer[] { 2, 1, 3 })), true);
+    }
 }

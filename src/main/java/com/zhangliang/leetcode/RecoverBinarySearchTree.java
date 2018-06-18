@@ -45,39 +45,56 @@ Could you devise a constant space solution?
 
 */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zhangliang.utils.TreeNode;
 
 public class RecoverBinarySearchTree {
+
     public void recoverTree(TreeNode root) {
         if (root == null) {
             return;
         }
 
-        helper(root, null, null);
+        List<TreeNode> list = new ArrayList<>();
+        inorder(root, list);
+
+        TreeNode target = null;
+        for (int i = 1; i < list.size() - 1; i++) {
+            if (list.get(i).val < list.get(i - 1).val && list.get(i).val < list.get(i + 1).val) {
+                target = list.get(i);
+            }
+        }
+
+        if (list.get(list.size() - 1).val < list.get(list.size() - 2).val) {
+            target = list.get(list.size() - 1);
+        }
+
+        int index = 0;
+
+        while (list.get(index).val < target.val) {
+            index++;
+        }
+
+        int temp = list.get(index).val;
+        list.get(index).val = target.val;
+        target.val = temp;
     }
 
-    private boolean helper(TreeNode root, TreeNode max, TreeNode min) {
+    private void inorder(TreeNode root, List<TreeNode> list) {
         if (root == null) {
-            return false;
-        }
-        if (min != null && root.val < min.val) {
-            int temp = root.val;
-            root.val = min.val;
-            min.val = temp;
-            return true;
+            return;
         }
 
-        if (max != null && root.val > max.val) {
-            int temp = root.val;
-            root.val = max.val;
-            max.val = temp;
-            return true;
+        if (root.left != null) {
+            inorder(root.left, list);
         }
 
-        if (helper(root.left, root, min)) {
-            return true;
-        }
+        list.add(root);
 
-        return helper(root.right, max, root);
+        if (root.right != null) {
+            inorder(root.right, list);
+        }
     }
 }
