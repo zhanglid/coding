@@ -8,24 +8,31 @@ public class ReadNCharactersGivenRead4IITest {
 
     @Test
     public void testCase() {
-        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II();
-        char[] buf = new char[] { 'a', 'b', 'c' };
+        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II(new char[] { 'a', 'b', 'c' });
+        char[] buf = new char[4];
         int ans = s.read(buf, 1);
         assertEquals(1, ans);
         ans = s.read(buf, 2);
-        assertEquals(0, ans);
+        assertEquals(2, ans);
         ans = s.read(buf, 1);
-        assertEquals(0, ans);
+        assertEquals(1, ans);
     }
 
     @Test
     public void testCase2() {
-        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II();
-        char[] buf = new char[] { 'a', 'b', 'c' };
+        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II(new char[] { 'a', 'b', 'c' });
+        char[] buf = new char[4];
         int ans = s.read(buf, 4);
         assertEquals(3, ans);
         ans = s.read(buf, 1);
         assertEquals(0, ans);
     }
 
+    @Test
+    public void errCase() {
+        ReadNCharactersGivenRead4II s = new ReadNCharactersGivenRead4II(new char[] {});
+        char[] buf = new char[4];
+        int ans = s.read(buf, 1);
+        assertEquals(0, ans);
+    }
 }
