@@ -16,13 +16,28 @@ Output: false
 
 public class ValidPalindrome {
 
+    private boolean isChar(char x) {
+        return (x <= 'z' && x >= 'a') || (x <= 'Z' && x >= 'A');
+    }
+
     private boolean isValidChar(char x) {
-        if (x >= 'a' && x <= 'z') {
+        if (isChar(x)) {
             return true;
         }
 
-        if (x >= 'A' && x <= 'Z') {
+        if (x >= '0' && x <= '9') {
             return true;
+        }
+        return false;
+    }
+
+    private boolean isSame(char a, char b) {
+        if (a == b) {
+            return true;
+        }
+
+        if (isChar(a) && isChar(b)) {
+            return Math.abs((int) a - b) == Math.abs('A' - 'a');
         }
 
         return false;
@@ -46,8 +61,7 @@ public class ValidPalindrome {
                 continue;
             }
 
-            if (s.charAt(left) != s.charAt(right)
-                    && Math.abs((int) s.charAt(left) - s.charAt(right)) != Math.abs('A' - 'a')) {
+            if (!isSame(s.charAt(left), s.charAt(right))) {
                 return false;
             }
 

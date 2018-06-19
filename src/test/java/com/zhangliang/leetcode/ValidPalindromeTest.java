@@ -20,4 +20,11 @@ public class ValidPalindromeTest {
         assertEquals(false, ans);
     }
 
+    @Test
+    public void errCase() {
+        ValidPalindrome s = new ValidPalindrome();
+        boolean ans = s.isPalindrome("0P");
+        assertEquals(false, ans);
+    }
+
 }
