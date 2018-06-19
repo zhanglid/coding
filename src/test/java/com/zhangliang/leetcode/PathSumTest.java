@@ -16,4 +16,11 @@ public class PathSumTest {
         boolean ans = s.hasPathSum(input, 22);
         assertEquals(ans, true);
     }
+
+    @Test
+    public void errCase() {
+        PathSum s = new PathSum();
+        boolean ans = s.hasPathSum(null, 0);
+        assertEquals(ans, false);
+    }
 }

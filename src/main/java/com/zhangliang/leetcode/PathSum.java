@@ -24,9 +24,17 @@ import com.zhangliang.utils.TreeNode;
 public class PathSum {
     public boolean hasPathSum(TreeNode root, int sum) {
         if (root == null) {
+            return false;
+        }
+
+        return helper(root, sum);
+    }
+
+    private boolean helper(TreeNode root, int sum) {
+        if (root == null) {
             return sum == 0;
         }
 
-        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+        return helper(root.left, sum - root.val) || helper(root.right, sum - root.val);
     }
 }
