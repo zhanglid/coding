@@ -23,4 +23,12 @@ public class PathSumTest {
         boolean ans = s.hasPathSum(null, 0);
         assertEquals(ans, false);
     }
+
+    @Test
+    public void errCase2() {
+        PathSum s = new PathSum();
+        TreeNode input = new TreeNode(new Integer[] { 1, 2 });
+        boolean ans = s.hasPathSum(input, 1);
+        assertEquals(ans, false);
+    }
 }

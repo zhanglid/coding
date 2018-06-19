@@ -27,14 +27,10 @@ public class PathSum {
             return false;
         }
 
-        return helper(root, sum);
-    }
-
-    private boolean helper(TreeNode root, int sum) {
-        if (root == null) {
-            return sum == 0;
+        if (root.left == null && root.right == null && root.val == sum) {
+            return true;
         }
 
-        return helper(root.left, sum - root.val) || helper(root.right, sum - root.val);
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 }
