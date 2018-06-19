@@ -22,4 +22,11 @@ public class MinimumDepthOfBinaryTreeTest {
         int ans = s.minDepth(new TreeNode(new Integer[] { 1, 2 }));
         assertEquals(2, ans);
     }
+
+    @Test
+    public void errCase2() {
+        MinimumDepthOfBinaryTree s = new MinimumDepthOfBinaryTree();
+        int ans = s.minDepth(null);
+        assertEquals(0, ans);
+    }
 }

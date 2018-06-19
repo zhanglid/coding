@@ -23,7 +23,7 @@ import com.zhangliang.utils.TreeNode;
 public class MinimumDepthOfBinaryTree {
     public int minDepth(TreeNode root) {
         if (root == null) {
-            return -1;
+            return 0;
         }
 
         if (root.left == null && root.right == null) {
@@ -33,11 +33,11 @@ public class MinimumDepthOfBinaryTree {
         int left = minDepth(root.left);
         int right = minDepth(root.right);
 
-        if (left == -1) {
+        if (left == 0) {
             return right + 1;
         }
 
-        if (right == -1) {
+        if (right == 0) {
             return left + 1;
         }
 
