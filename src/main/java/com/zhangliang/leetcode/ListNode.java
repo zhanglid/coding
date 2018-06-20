@@ -30,4 +30,13 @@ public class ListNode {
 
         return sb.toString();
     }
+
+    public ListNode getLast() {
+        ListNode cur = this;
+        while (cur.next != null) {
+            cur = cur.next;
+        }
+
+        return cur;
+    }
 }
