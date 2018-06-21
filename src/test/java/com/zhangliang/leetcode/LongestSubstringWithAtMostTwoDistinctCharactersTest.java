@@ -18,4 +18,12 @@ public class LongestSubstringWithAtMostTwoDistinctCharactersTest {
         int ans = s.lengthOfLongestSubstringTwoDistinct("ccaabbb");
         assertEquals(ans, 5);
     }
+
+    @Test
+    public void errCase() {
+        LongestSubstringWithAtMostTwoDistinctCharacters s = new LongestSubstringWithAtMostTwoDistinctCharacters();
+        int ans = s.lengthOfLongestSubstringTwoDistinct(
+                "abZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZYX");
+        assertEquals(ans, 101);
+    }
 }

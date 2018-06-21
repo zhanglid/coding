@@ -20,21 +20,20 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters {
         if (s == null || s.length() < 1) {
             return 0;
         }
-
-        int[] counter = new int[26];
+        int[] counter = new int[256];
         int num = 0;
         int left = 0;
         int ans = 0;
         for (int i = 0; i < s.length(); i++) {
-            if (counter[s.charAt(i) - 'a'] == 0) {
+            if (counter[s.charAt(i)] == 0) {
                 num++;
             }
-            counter[s.charAt(i) - 'a']++;
+            counter[s.charAt(i)]++;
             while (num > 2) {
-                if (counter[s.charAt(left) - 'a'] == 1) {
+                if (counter[s.charAt(left)] == 1) {
                     num--;
                 }
-                counter[s.charAt(left) - 'a']--;
+                counter[s.charAt(left)]--;
                 left++;
             }
             ans = Math.max(ans, i - left + 1);
