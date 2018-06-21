@@ -24,21 +24,32 @@ public class MissingRanges {
 
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> ans = new ArrayList<>();
-        if (nums == null || lower >= upper) {
+        if (nums == null || lower > upper) {
             return ans;
         }
 
         int cur = lower;
         for (int i = 0; i < nums.length; i++) {
-            if (cur == nums[i]) {
-                cur++;
+            if (i != 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            if (cur >= nums[i]) {
+                if (cur != Integer.MAX_VALUE) {
+                    cur++;
+                } else {
+                    return ans;
+                }
                 continue;
             } else {
                 ans.add(getRangeString(cur, nums[i] - 1));
-                cur = nums[i] + 1;
+                if (nums[i] != Integer.MAX_VALUE) {
+                    cur = nums[i] + 1;
+                } else {
+                    return ans;
+                }
             }
         }
-        if (cur != upper) {
+        if (cur <= upper) {
             ans.add(getRangeString(cur, upper));
         }
         return ans;
