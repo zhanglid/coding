@@ -26,4 +26,18 @@ public class OneEditDistanceTest {
         boolean ans = s.isOneEditDistance("1203", "1213");
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase() {
+        OneEditDistance s = new OneEditDistance();
+        boolean ans = s.isOneEditDistance("", "");
+        assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase2() {
+        OneEditDistance s = new OneEditDistance();
+        boolean ans = s.isOneEditDistance("a", "");
+        assertEquals(true, ans);
+    }
 }

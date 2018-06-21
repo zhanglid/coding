@@ -32,23 +32,38 @@ public class OneEditDistance {
             return false;
         }
 
-        int[][] dp = new int[s.length() + 1][t.length() + 1];
-        for (int i = 1; i <= t.length(); i++) {
-            dp[0][i] = i;
-        }
-        for (int i = 1; i <= s.length(); i++) {
-            dp[i][0] = i;
-            for (int j = 1; j <= t.length(); j++) {
-                if (s.charAt(i - 1) == t.charAt(j - 1)) {
-                    dp[i][j] = dp[i - 1][j - 1];
-                } else {
-                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]);
-                    dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1]);
-                    dp[i][j]++;
+        boolean flag = false;
+        int lengthDiff = Math.abs(s.length() - t.length());
+        if (lengthDiff > 1) {
+            return false;
+        } else if (lengthDiff == 1) {
+            String small = s.length() > t.length() ? t : s;
+            String large = s.length() > t.length() ? s : t;
+
+            int smallCur = 0;
+            for (int i = 0; i < large.length(); i++) {
+                if (smallCur >= small.length() || large.charAt(i) != small.charAt(smallCur)) {
+                    if (!flag) {
+                        flag = true;
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+
+                smallCur++;
+            }
+        } else {
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) != t.charAt(i)) {
+                    if (flag) {
+                        return false;
+                    }
+                    flag = true;
                 }
             }
         }
 
-        return dp[s.length()][t.length()] < 2;
+        return flag;
     }
 }
