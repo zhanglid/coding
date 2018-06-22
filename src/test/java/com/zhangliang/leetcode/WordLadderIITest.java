@@ -32,4 +32,12 @@ public class WordLadderIITest {
         String[] expecteds = new String[] {};
         assertArrayEquals(expecteds, Utils.getStrsFrom2DList(ans));
     }
+
+    @Test
+    public void errCase2() {
+        WordLadderII s = new WordLadderII();
+        List<List<String>> ans = s.findLadders("hot", "dog", Arrays.asList("hot", "dog", "dot"));
+        String[] expecteds = new String[] { "[hot, dot, dog]" };
+        assertArrayEquals(expecteds, Utils.getStrsFrom2DList(ans));
+    }
 }

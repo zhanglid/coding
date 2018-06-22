@@ -51,10 +51,10 @@ public class WordLadderII {
         }
 
         Map<String, Integer> distDict = new HashMap<>();
-        distDict.put(beginWord, 0);
         for (String string : wordList) {
             distDict.put(string, -1);
         }
+        distDict.put(beginWord, 0);
 
         if (!distDict.containsKey(endWord)) {
             return ans;
