@@ -24,4 +24,26 @@ public class SurroundedRegionsTest {
         s.solve(board);
         assertArrayEquals(board, target);
     }
+
+    @Test
+    public void errCase2() {
+        SurroundedRegions s = new SurroundedRegions();
+        char[][] board = new char[][] { 
+            { 'X', 'O', 'X', 'X' }, 
+            { 'O', 'X', 'O', 'X' }, 
+            { 'X', 'O', 'X', 'O' },
+            { 'O', 'X', 'O', 'X' }, 
+            { 'X', 'O', 'X', 'O' }, 
+            { 'O', 'X', 'O', 'X' } 
+        };
+        char[][] target = new char[][] { 
+            { 'X', 'O', 'X', 'X' }, 
+            { 'O', 'X', 'X', 'X' }, 
+            { 'X', 'X', 'X', 'O' },
+            { 'O', 'X', 'X', 'X' }, 
+            { 'X', 'X', 'X', 'O' }, 
+            { 'O', 'X', 'O', 'X' } };
+        s.solve(board);
+        assertArrayEquals(board, target);
+    }
 }
