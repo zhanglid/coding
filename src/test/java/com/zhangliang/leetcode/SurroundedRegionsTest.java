@@ -15,4 +15,13 @@ public class SurroundedRegionsTest {
         s.solve(board);
         assertArrayEquals(board, target);
     }
+
+    @Test
+    public void errCase() {
+        SurroundedRegions s = new SurroundedRegions();
+        char[][] board = new char[][] { { 'O' } };
+        char[][] target = new char[][] { { 'O' } };
+        s.solve(board);
+        assertArrayEquals(board, target);
+    }
 }

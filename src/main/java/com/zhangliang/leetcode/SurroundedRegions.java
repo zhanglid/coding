@@ -35,7 +35,7 @@ public class SurroundedRegions {
                 pos[1] = i;
                 queue.add(pos);
             }
-            if (board[board.length - 1][i] == 'O') {
+            if (board.length != 1 && board[board.length - 1][i] == 'O') {
                 int[] pos = new int[2];
                 pos[0] = board.length - 1;
                 pos[1] = 1;
@@ -50,7 +50,7 @@ public class SurroundedRegions {
                 pos[1] = 0;
                 queue.add(pos);
             }
-            if (board[i][board.length - 1] == 'O') {
+            if (board[0].length != 1 && board[i][board[0].length - 1] == 'O') {
                 int[] pos = new int[2];
                 pos[0] = i;
                 pos[1] = board.length - 1;
