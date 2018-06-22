@@ -11,4 +11,11 @@ public class PalindromePartitioningIITest {
         int ans = s.minCut("aab");
         assertEquals(1, ans);
     }
+
+    @Test
+    public void errCase() {
+        PalindromePartitioningII s = new PalindromePartitioningII();
+        int ans = s.minCut("efe");
+        assertEquals(0, ans);
+    }
 }

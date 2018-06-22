@@ -18,8 +18,8 @@ public class PalindromePartitioningII {
             return 0;
         }
         boolean[][] isPalindromeDP = new boolean[s.length()][s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j < s.length(); j++) {
+        for (int j = 0; j < s.length(); j++) {
+            for (int i = j; i >= 0; i--) {
                 isPalindromeDP[i][j] = (s.charAt(i) == s.charAt(j)) && (i + 1 > j - 1 || isPalindromeDP[i + 1][j - 1]);
             }
         }
