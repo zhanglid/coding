@@ -62,6 +62,9 @@ public class WordLadderII {
 
         calculateDist(beginWord, endWord, distDict);
 
+        if (distDict.get(endWord) < 0) {
+            return ans;
+        }
         generatePaths(beginWord, endWord, distDict, ans);
 
         return ans;
@@ -111,7 +114,7 @@ public class WordLadderII {
         Set<String> wordsSet = new HashSet<>();
         wordsSet.add(beginWord);
         int count = 0;
-        while (!wordsSet.contains(endWord)) {
+        while (!wordsSet.isEmpty() && !wordsSet.contains(endWord)) {
             Set<String> nextSet = new HashSet<>();
             count++;
             for (String word : wordsSet) {
@@ -131,7 +134,6 @@ public class WordLadderII {
                     }
                 }
             }
-
             wordsSet = nextSet;
         }
     }
