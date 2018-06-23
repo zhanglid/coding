@@ -19,12 +19,18 @@ Output: 99
 
 public class SingleNumberII {
     private int[] getBits(int num) {
+        boolean negtive = num < 0;
+        if (negtive) {
+            num += 1;
+            num = -num;
+        }
         int[] ans = new int[32];
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < 31; i++) {
             ans[i] = num % 2;
             num = num >> 1;
         }
 
+        ans[31] = negtive ? 1 : 0;
         return ans;
     }
 
@@ -33,11 +39,14 @@ public class SingleNumberII {
 
         int ans = 0;
 
-        for (int i = 0; i < bits.length; i++) {
+        for (int i = 0; i < 31; i++) {
             ans += base * bits[i];
             base = base << 1;
         }
-
+        if (bits[31] == 1) {
+            ans = -ans;
+            ans -= 1;
+        }
         return ans;
     }
 
