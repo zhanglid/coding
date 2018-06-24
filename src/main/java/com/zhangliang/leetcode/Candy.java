@@ -27,40 +27,6 @@ public class Candy {
             return 0;
         }
 
-        int ldl = 0;
-        int count = 0;
-        int ans = 0;
-
-        for (int i = 0; i < ratings.length; i++) {
-            if (i == 0 || ratings[i] > ratings[i - 1]) {
-                count++;
-                ans += count;
-                ldl = 1;
-            } else if (ratings[i] == ratings[i - 1]) {
-                count = 1;
-                ans += count;
-                ldl = 1;
-            } else if (ratings[i] < ratings[i - 1]) {
-                if (count == 1) {
-                    ldl++;
-                    ans += ldl;
-                } else {
-                    if (ratings[i] - ratings[i - 1] == 1)
-                        ldl++;
-                    count = 1;
-                    ans += count;
-                }
-            }
-        }
-
-        return ans;
-    }
-
-    public int candy2(int[] ratings) {
-        if (ratings == null) {
-            return 0;
-        }
-
         int[] candies = new int[ratings.length];
 
         candies[0] = 1;
