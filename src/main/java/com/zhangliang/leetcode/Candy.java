@@ -45,7 +45,8 @@ public class Candy {
                     ldl++;
                     ans += ldl;
                 } else {
-                    ldl++;
+                    if (ratings[i] - ratings[i - 1] == 1)
+                        ldl++;
                     count = 1;
                     ans += count;
                 }
