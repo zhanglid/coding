@@ -25,4 +25,11 @@ public class CandyTest {
         int ans = s.candy(new int[] { 1, 3, 2, 2, 1 });
         assertEquals(7, ans);
     }
+
+    @Test
+    public void errCase2() {
+        Candy s = new Candy();
+        int ans = s.candy(new int[] { 1, 2, 87, 87, 87, 2, 1 });
+        assertEquals(13, ans);
+    }
 }

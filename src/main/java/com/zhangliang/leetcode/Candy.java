@@ -43,8 +43,8 @@ public class Candy {
 
         count = 0;
         for (int i = ratings.length - 2; i >= 0; i--) {
-            if (ratings[i + 1] < ratings[i] && candies[i + 1] == candies[i]) {
-                count++;
+            if (ratings[i + 1] < ratings[i] && candies[i + 1] >= candies[i]) {
+                count = candies[i + 1] - candies[i] + 1;
             } else {
                 count = 0;
             }
