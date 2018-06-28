@@ -81,7 +81,7 @@ public class LRUCache {
     }
 
     public void put(int key, int value) {
-        while (map.size() + 1 > capacity) {
+        while (map.size() + 1 > capacity && !nodeMap.containsKey(key)) {
             int valueToRemove = head.next.val;
             if (head.next == tail) {
                 tail = head;
