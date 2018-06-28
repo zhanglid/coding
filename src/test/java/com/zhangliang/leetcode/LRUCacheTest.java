@@ -24,4 +24,17 @@ public class LRUCacheTest {
         assertEquals(3, a4);
         assertEquals(4, a5);
     }
+
+    @Test
+    public void errCase() {
+        LRUCache s = new LRUCache(1);
+        s.put(2, 1);
+        int a1 = s.get(2);
+        s.put(3, 2);
+        int a2 = s.get(2);
+        int a3 = s.get(3);
+        assertEquals(1, a1);
+        assertEquals(-1, a2);
+        assertEquals(2, a3);
+    }
 }

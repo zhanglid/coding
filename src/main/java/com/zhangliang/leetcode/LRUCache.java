@@ -69,6 +69,9 @@ public class LRUCache {
         if (node == null) {
             return -1;
         }
+        if (node == tail) {
+            tail = node.prev;
+        }
         node.remove();
         tail.next = node;
         node.prev = tail;
