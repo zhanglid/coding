@@ -18,4 +18,11 @@ public class PartitionListTest {
         ListNode ans = s.partition(new ListNode(new int[] { 1, 1 }), 2);
         assertEquals("1->1", ans.toString());
     }
+
+    @Test
+    public void errCase() {
+        PartitionList s = new PartitionList();
+        ListNode ans = s.partition(new ListNode(new int[] { 2, 1 }), 2);
+        assertEquals("1->2", ans.toString());
+    }
 }

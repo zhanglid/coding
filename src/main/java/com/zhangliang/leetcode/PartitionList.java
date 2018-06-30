@@ -13,29 +13,29 @@ Output: 1->2->2->4->3->5
 
 public class PartitionList {
     public ListNode partition(ListNode head, int x) {
-        if (head == null || head.next == null) {
+        if (head == null) {
             return head;
         }
 
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode prev = dummy;
-        ListNode cur = head;
-        ListNode prevCur = dummy;
-        while (cur != null) {
-            if (cur.val < x && cur != prev.next) {
-                ListNode next = cur.next;
-                prevCur.next = next;
-                cur.next = prev.next;
-                prev.next = cur;
-                prev = prev.next;
-                cur = next;
-            } else {
-                if (cur.val < x && cur == prev.next) {
-                    prev = prev.next;
+        ListNode left = dummy;
+        ListNode curPrev = dummy;
+
+        while (curPrev != null && curPrev.next != null) {
+            if (curPrev.next.val < x) {
+                if (curPrev.next == left.next) {
+                    left = left.next;
+                    curPrev = curPrev.next;
+                } else {
+                    ListNode node = curPrev.next;
+                    curPrev.next = node.next;
+                    node.next = left.next;
+                    left.next = node;
+                    left = left.next;
                 }
-                prevCur = cur;
-                cur = cur.next;
+            } else {
+                curPrev = curPrev.next;
             }
         }
 
