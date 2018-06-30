@@ -57,44 +57,35 @@ public class RecoverBinarySearchTree {
             return;
         }
 
-        List<TreeNode> list = new ArrayList<>();
-        inorder(root, list);
+        List<TreeNode> inorderList = getInOrderList(root);
 
-        TreeNode target = null;
-        for (int i = 1; i < list.size() - 1; i++) {
-            if (list.get(i).val < list.get(i - 1).val && list.get(i).val < list.get(i + 1).val) {
-                target = list.get(i);
+        int index = 0;
+        for (int i = 1; i < inorderList.size(); i++) {
+            if (inorderList.get(i).val < inorderList.get(i - 1).val) {
+                index = i;
             }
         }
 
-        if (list.get(list.size() - 1).val < list.get(list.size() - 2).val) {
-            target = list.get(list.size() - 1);
+        for (int i = 0; i < index; i++) {
+            if (inorderList.get(i).val > inorderList.get(index).val) {
+                int bigVal = inorderList.get(i).val;
+                inorderList.get(i).val = inorderList.get(index).val;
+                inorderList.get(index).val = bigVal;
+                break;
+            }
         }
-
-        int index = 0;
-
-        while (list.get(index).val < target.val) {
-            index++;
-        }
-
-        int temp = list.get(index).val;
-        list.get(index).val = target.val;
-        target.val = temp;
     }
 
-    private void inorder(TreeNode root, List<TreeNode> list) {
+    private List<TreeNode> getInOrderList(TreeNode root) {
         if (root == null) {
-            return;
+            return new ArrayList<>();
         }
 
-        if (root.left != null) {
-            inorder(root.left, list);
-        }
+        List<TreeNode> left = getInOrderList(root.left);
+        List<TreeNode> right = getInOrderList(root.right);
 
-        list.add(root);
-
-        if (root.right != null) {
-            inorder(root.right, list);
-        }
+        left.add(root);
+        left.addAll(right);
+        return left;
     }
 }
