@@ -24,3 +24,5 @@
 /nbdist/
 /.nb-gradle/
 .vscode/settings.json
+.nyc_output/
+coverage
