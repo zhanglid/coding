@@ -25,35 +25,35 @@ import com.zhangliang.utils.TreeNode;
 
 public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        if (inorder == null || inorder.length < 1 || postorder == null || postorder.length < 1
+        if (inorder == null || postorder == null || inorder.length < 1 || postorder.length < 1
                 || inorder.length != postorder.length) {
             return null;
         }
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> orderMap = new HashMap<>();
 
         for (int i = 0; i < postorder.length; i++) {
-            map.put(postorder[i], i);
+            orderMap.put(postorder[i], i);
         }
 
-        return helper(inorder, 0, inorder.length, map);
+        return helper(inorder, 0, inorder.length - 1, orderMap);
     }
 
-    private TreeNode helper(int[] inorder, int start, int end, Map<Integer, Integer> dict) {
-        if (start >= end) {
+    private TreeNode helper(int[] inorder, int start, int end, Map<Integer, Integer> orderMap) {
+        if (start > end) {
             return null;
         }
+
         int rootIndex = start;
-        for (int i = start; i < end; i++) {
-            if (dict.get(inorder[i]) > dict.get(inorder[rootIndex])) {
+        for (int i = start; i <= end; i++) {
+            if (orderMap.get(inorder[i]) > orderMap.get(inorder[rootIndex])) {
                 rootIndex = i;
             }
         }
 
         TreeNode root = new TreeNode(inorder[rootIndex]);
-
-        root.left = helper(inorder, start, rootIndex, dict);
-        root.right = helper(inorder, rootIndex + 1, end, dict);
+        root.left = helper(inorder, start, rootIndex - 1, orderMap);
+        root.right = helper(inorder, rootIndex + 1, end, orderMap);
 
         return root;
     }
