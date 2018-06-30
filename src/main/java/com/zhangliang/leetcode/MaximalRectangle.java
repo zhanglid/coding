@@ -19,43 +19,56 @@ import java.util.Stack;
 
 public class MaximalRectangle {
     public int maximalRectangle(char[][] matrix) {
-        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+        if (matrix == null || matrix.length < 1 || matrix[0] == null || matrix[0].length < 1) {
             return 0;
         }
-        int[] dp = new int[matrix[0].length];
+
         int ans = 0;
-        for (int i = 0; i < matrix.length; i++) {
+        int[] count = new int[matrix[0].length];
+        for (char[] row : matrix) {
+            for (int i = 0; i < row.length; i++) {
+                if (row[i] == '1') {
+                    count[i]++;
+                } else {
+                    count[i] = 0;
+                }
+            }
+
             int[] left = new int[matrix[0].length];
+
             Stack<Integer> stack = new Stack<>();
-            for (int j = 0; j < matrix[0].length; j++) {
-                dp[j] = matrix[i][j] == '1' ? dp[j] + 1 : 0;
-                while (!stack.isEmpty() && dp[stack.peek()] >= dp[j]) {
+            for (int i = 0; i < row.length; i++) {
+                while (!stack.isEmpty() && count[stack.peek()] >= count[i]) {
                     stack.pop();
                 }
-                if (!stack.isEmpty()) {
-                    left[j] = stack.peek();
+
+                if (stack.isEmpty()) {
+                    left[i] = -1;
                 } else {
-                    left[j] = -1;
+                    left[i] = stack.peek();
                 }
-                stack.push(j);
+
+                stack.push(i);
             }
 
             stack.clear();
 
-            int right = matrix[0].length;
-            for (int j = matrix[0].length - 1; j >= 0; j--) {
-                while (!stack.isEmpty() && dp[stack.peek()] >= dp[j]) {
+            for (int i = row.length - 1; i >= 0; i--) {
+                while (!stack.isEmpty() && count[stack.peek()] >= count[i]) {
                     stack.pop();
                 }
+
+                int right = row.length;
                 if (!stack.isEmpty()) {
                     right = stack.peek();
-                } else {
-                    right = matrix[0].length;
                 }
-                stack.push(j);
-                ans = Math.max(ans, dp[j] * (right - left[j] - 1));
+
+                ans = Math.max(ans, (right - left[i] - 1) * count[i]);
+
+                stack.push(i);
             }
         }
+
         return ans;
     }
 }
