@@ -21,25 +21,29 @@ Explanation: The square root of 8 is 2.82842..., and since
 
 public class SqrtX {
     public int mySqrt(int x) {
-        if (x < 1) {
-            return 0;
+        if (x <= 0) {
+            return x;
         }
 
-        int l = 0;
+        int l = 1;
         int r = x;
+
         while (l + 1 < r) {
             int mid = l + (r - l) / 2;
-            int currentSquare = mid * mid;
-            if (currentSquare / mid != mid) {
+            int midmid = mid * mid;
+            if (midmid / mid != mid) {
                 r = mid;
-            } else if (currentSquare > x) {
-                r = mid;
-            } else {
+                continue;
+            }
+
+            else if (midmid <= x) {
                 l = mid;
+            } else {
+                r = mid;
             }
         }
-
-        if (r * r / r == r && r * r <= x) {
+        int rr = r * r;
+        if (rr <= x && rr / r == r) {
             return r;
         }
 
