@@ -17,14 +17,14 @@ public class LongestPalindromicSubstringTest {
     public void testSameString() {
         LongestPalindromicSubstring s = new LongestPalindromicSubstring();
         String ans = s.longestPalindrome("aaaa");
-        assertTrue("Default pass", ans.equals("aaaa"));
+        assertTrue(ans.equals("aaaa"));
     }
 
     @Test
     public void testCaseString() {
         LongestPalindromicSubstring s = new LongestPalindromicSubstring();
         String ans = s.longestPalindrome("cbbd");
-        assertTrue("Default pass", ans.equals("bb"));
+        assertTrue(ans.equals("bb"));
     }
 
     @Test
