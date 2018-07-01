@@ -21,42 +21,44 @@ You may not alter the values in the list's nodes, only nodes itself may be chang
 
 public class ReverseNodesInKGroup {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || k < 1) {
+        if (head == null || k < 2) {
             return head;
         }
 
-        ListNode dummy = new ListNode(1);
+        ListNode dummy = new ListNode(-1);
         dummy.next = head;
+
         ListNode blockPrev = dummy;
-        ListNode blockHead = head;
-        ListNode prev = null;
-        ListNode cur = head;
-        int count = 0;
-        while(cur != null) {
-            ListNode next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
-            count++;
-            if (count == k) {
-                blockPrev.next = prev;
-                blockPrev = blockHead;
-                prev = null;
-                blockHead = cur;
-                count = 0;
+        while (blockPrev.next != null) {
+            ListNode cur = blockPrev;
+
+            int count = 0;
+            while (cur.next != null && count != k) {
+                count++;
+                cur = cur.next;
             }
+
+            if (count < k) {
+                break;
+            }
+
+            // reverse
+            ListNode tail = cur;
+            ListNode blockNext = tail.next;
+            cur = blockPrev.next;
+            ListNode blockPrevNext = cur;
+            ListNode prev = blockNext;
+            while (cur != blockNext) {
+                ListNode next = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = next;
+            }
+
+            blockPrev.next = tail;
+            blockPrev = blockPrevNext;
         }
 
-        if (count != 0) {
-            ListNode prev2 = null;
-            while(prev != null) {
-                ListNode next = prev.next;
-                prev.next = prev2;
-                prev2 = prev;
-                prev = next;
-            }
-            blockPrev.next = prev2;
-        }
         return dummy.next;
     }
 }
