@@ -25,4 +25,11 @@ public class SearchInRotatedSortedArrayIITest {
         boolean ans = s.search(new int[] { 3, 1, 1 }, 3);
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase2() {
+        SearchInRotatedSortedArrayII s = new SearchInRotatedSortedArrayII();
+        boolean ans = s.search(new int[] { 5, 1, 3 }, 3);
+        assertEquals(true, ans);
+    }
 }

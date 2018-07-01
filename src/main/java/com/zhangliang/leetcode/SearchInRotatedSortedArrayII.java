@@ -26,29 +26,45 @@ public class SearchInRotatedSortedArrayII {
         if (nums == null || nums.length < 1) {
             return false;
         }
+
         int l = 0;
         int r = nums.length - 1;
+
         while (l + 1 < r) {
             int mid = l + (r - l) / 2;
-            if (nums[l] == nums[r] && nums[mid] == nums[l]) {
-                while (l + 1 < r && nums[l] == nums[r]) {
-                    l++;
-                }
-            } else if (nums[mid] >= nums[l]) {
-                if (target < nums[l] || target >= nums[mid]) {
+            if (nums[l] < nums[r]) {
+                if (nums[mid] < target) {
                     l = mid;
                 } else {
                     r = mid;
                 }
+            } else if (nums[l] == nums[r]) {
+                l++;
             } else {
-                if (target >= nums[mid] && target <= nums[r]) {
-                    l = mid;
+                if (nums[mid] < target) {
+                    if (nums[mid] >= nums[l]) {
+                        l = mid;
+                    } else {
+                        if (target <= nums[r]) {
+                            l = mid;
+                        } else {
+                            r = mid;
+                        }
+                    }
+                } else if (nums[mid] == target) {
+                    return true;
                 } else {
-                    r = mid;
+                    if (nums[mid] <= nums[r]) {
+                        r = mid;
+                    } else if (target >= nums[l]) {
+                        r = mid;
+                    } else {
+                        l = mid;
+                    }
                 }
             }
         }
 
-        return (nums[l] == target || nums[r] == target);
+        return nums[l] == target || nums[r] == target;
     }
 }
