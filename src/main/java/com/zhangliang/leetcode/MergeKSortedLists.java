@@ -19,30 +19,32 @@ import java.util.PriorityQueue;
 
 public class MergeKSortedLists {
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode ans = new ListNode(-1);
-        if (lists == null || lists.length < 1) {
-            return ans.next;
+        ListNode dummy = new ListNode(-1);
+        if (lists == null) {
+            return dummy.next;
         }
+
         PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
             public int compare(ListNode a, ListNode b) {
                 return a.val - b.val;
             }
         });
-
         for (ListNode node : lists) {
-            if (node != null)
+            if (node != null) {
                 pq.add(node);
+            }
         }
 
-        ListNode cur = ans;
+        ListNode tail = dummy;
         while (!pq.isEmpty()) {
-            cur.next = pq.poll();
-            if (cur.next.next != null)
-                pq.add(cur.next.next);
-            cur.next.next = null;
-            cur = cur.next;
+            ListNode cur = pq.poll();
+            tail.next = cur;
+            tail = tail.next;
+            if (cur.next != null) {
+                pq.add(cur.next);
+            }
         }
 
-        return ans.next;
+        return dummy.next;
     }
 }

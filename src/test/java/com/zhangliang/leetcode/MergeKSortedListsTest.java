@@ -13,7 +13,7 @@ public class MergeKSortedListsTest {
         input[1] = new ListNode(new int[] { 1, 3, 4 });
         input[2] = new ListNode(new int[] { 2, 6 });
         ListNode ans = s.mergeKLists(input);
-        assertEquals( "1->1->2->3->4->4->5->6", ans.toString());
+        assertEquals("1->1->2->3->4->4->5->6", ans.toString());
     }
 
     @Test
