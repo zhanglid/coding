@@ -22,7 +22,8 @@ public class MaximumProductSubarray {
         }
         int[] mins = new int[nums.length + 1];
         int[] maxs = new int[nums.length + 1];
-
+        mins[0] = 1;
+        maxs[0] = 1;
         int ans = nums[0];
         for (int i = 1; i <= nums.length; i++) {
             mins[i] = Math.min(mins[i - 1] * nums[i - 1], nums[i - 1]);
