@@ -31,84 +31,50 @@ Explanation:
 */
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.zhangliang.utils.Point;
 
 public class MaxPointsOnALine {
-    private void reduce(int[] pair) {
-        if (pair[0] == 0 && pair[1] == 0) {
-            return;
-        }
-
-        if (pair[0] == 0) {
-            pair[1] = 1;
-            return;
-        }
-
-        if (pair[1] == 0) {
-            pair[0] = 1;
-            return;
-        }
-
-        if (pair[0] < 0 && pair[1] < 0) {
-            pair[0] = -pair[0];
-            pair[1] = -pair[1];
-        } else if (pair[0] < 0 && pair[1] > 0 || pair[0] > 0 && pair[1] < 0) {
-            pair[0] = Math.abs(pair[0]);
-            pair[1] = -Math.abs(pair[1]);
-        }
-
-        for (int i = 2; i <= Math.sqrt(pair[1]); i++) {
-            if (pair[0] % i == 0 && pair[1] % i == 0) {
-                pair[0] = pair[0] % i;
-                pair[1] = pair[1] % i;
-            }
-        }
-
-        if (pair[0] == pair[1]) {
-            pair[0] = 1;
-            pair[1] = 1;
-        }
-
-        if (pair[0] == -pair[1]) {
-            pair[0] = 1;
-            pair[1] = -1;
-        }
-    }
-
-    private String getKey(int[] pair) {
-        return pair[0] + "," + pair[1];
-    }
 
     public int maxPoints(Point[] points) {
         if (points == null || points.length < 1) {
             return 0;
         }
 
-        Map<String, Set<Point>> counter = new HashMap<>();
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                Point a = points[i];
-                Point b = points[j];
-                int[] diff = new int[] { a.x - b.x, a.y - b.y };
-                reduce(diff);
-                String key = getKey(diff);
-                if (!counter.containsKey(key)) {
-                    counter.put(key, new HashSet<>());
+        int ans = 0;
+        for (Point point : points) {
+            Map<String, Integer> countMap = new HashMap<>();
+            int duplicate = -1;
+            for (Point point2 : points) {
+                if (point.x == point2.x && point.y == point2.y) {
+                    duplicate++;
+                    ans = Math.max(ans, duplicate);
+                    continue;
                 }
-                counter.get(key).add(points[i]);
-                counter.get(key).add(points[j]);
+
+                int[] diff = new int[] { point.x - point2.x, point.y - point2.y };
+                int g = gcd(diff[0], diff[1]);
+                diff[0] /= g;
+                diff[1] /= g;
+
+                String key = diff[0] + "," + diff[1];
+                countMap.put(key, countMap.getOrDefault(key, 0) + 1);
+            }
+
+            for (int num : countMap.values()) {
+                ans = Math.max(ans, num + duplicate);
             }
         }
 
-        int ans = 1;
-        for (Set<Point> set : counter.values()) {
-            ans = Math.max(ans, set.size());
+        return ans + 1;
+    }
+
+    private int gcd(int x, int y) {
+        if (y == 0) {
+            return x;
         }
 
-        return ans;
+        return x % y == 0 ? y : gcd(y, x % y);
     }
 }
