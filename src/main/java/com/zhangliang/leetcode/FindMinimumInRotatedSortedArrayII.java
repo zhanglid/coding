@@ -46,6 +46,6 @@ public class FindMinimumInRotatedSortedArrayII {
             }
         }
 
-        return Math.min(nums[l], nums[l + 1]);
+        return Math.min(nums[l], nums[r]);
     }
 }
