@@ -30,18 +30,19 @@ public class CompareVersionNumbers {
         int cur1 = 0;
         int cur2 = 0;
 
-        while (cur1 < version1.length() && cur2 < version2.length()) {
+        while (cur1 < version1.length() || cur2 < version2.length()) {
             int end1 = cur1;
             while (end1 < version1.length() && version1.charAt(end1) != '.') {
                 end1++;
             }
-            int part1 = Integer.parseInt(version1.substring(cur1, end1));
+            int part1 = cur1 >= version1.length() ? 0 :  Integer.parseInt(version1.substring(cur1, end1));
 
             int end2 = cur2;
             while (end2 < version2.length() && version2.charAt(end2) != '.') {
                 end2++;
             }
-            int part2 = Integer.parseInt(version2.substring(cur2, end2));
+            int part2 = cur2 >= version2.length() ? 0 :  Integer.parseInt(version2.substring(cur2, end2));
+
 
             if (part1 < part2) {
                 return -1;
@@ -51,14 +52,6 @@ public class CompareVersionNumbers {
 
             cur1 = end1 + 1;
             cur2 = end2 + 1;
-        }
-
-        if (cur1 < version1.length()) {
-            return 1;
-        }
-
-        if (cur2 < version2.length()) {
-            return -1;
         }
 
         return 0;
