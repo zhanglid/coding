@@ -19,4 +19,18 @@ public class FactorialTrailingZeroesTest {
         int ans = s.trailingZeroes(5);
         assertEquals(1, ans);
     }
+
+    @Test
+    public void errCase() {
+        FactorialTrailingZeroes s = new FactorialTrailingZeroes();
+        int ans = s.trailingZeroes(30);
+        assertEquals(7, ans);
+    }
+
+    @Test
+    public void errCase2() {
+        FactorialTrailingZeroes s = new FactorialTrailingZeroes();
+        int ans = s.trailingZeroes(300);
+        assertEquals(74, ans);
+    }
 }

@@ -21,12 +21,12 @@ public class FactorialTrailingZeroes {
             return 0;
         }
         int ans = 0;
-
-        int base = 1;
         n /= 5;
+        int base = 0;
         while (n > 0) {
-            ans += (n % 5) * base;
-            base *= 5;
+            int digit = n % 5;
+            ans += digit * base + digit;
+            base = base * 5 + 5;
             n /= 5;
         }
 
