@@ -36,7 +36,7 @@ public class MaximumGap {
             max = Math.max(num, max);
         }
 
-        int bulketWidth = Math.max(1, (max - min) / nums.length);
+        int bulketWidth = Math.max(1, (max - min) / nums.length + 1);
 
         int[] bulketMin = new int[nums.length];
         int[] bulketMax = new int[nums.length];
