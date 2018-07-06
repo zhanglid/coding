@@ -25,4 +25,11 @@ public class ExcelSheetColumnTitleTest {
         String ans = s.convertToTitle(701);
         assertEquals("ZY", ans);
     }
+
+    @Test
+    public void errCase() {
+        ExcelSheetColumnTitle s = new ExcelSheetColumnTitle();
+        String ans = s.convertToTitle(703);
+        assertEquals("AAA", ans);
+    }
 }

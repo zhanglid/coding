@@ -33,16 +33,14 @@ public class ExcelSheetColumnTitle {
         }
         StringBuilder sb = new StringBuilder();
 
-        int base = 1;
         while (n > 0) {
             int digit = n % 26;
             if (digit == 0) {
                 digit = 26;
             }
             sb.insert(0, (char) (digit - 1 + 'A'));
-            n -= digit * base;
+            n -= digit;
             n /= 26;
-            base *= 26;
         }
 
         return sb.toString();
