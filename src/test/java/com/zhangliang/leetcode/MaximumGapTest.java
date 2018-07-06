@@ -41,4 +41,11 @@ public class MaximumGapTest {
                 2059, 12974, 9009, 3443, 7871, 12372, 18965 });
         assertEquals(824, ans);
     }
+
+    @Test
+    public void errCase2() {
+        MaximumGap s = new MaximumGap();
+        int ans = s.maximumGap(new int[] { 1, 10000000 });
+        assertEquals(9999999, ans);
+    }
 }

@@ -60,7 +60,7 @@ public class MaximumGap {
         }
 
         int ans = bulketMax[0] - bulketMin[0];
-        int prevMax = bulketMax[1];
+        int prevMax = bulketMax[0];
         for (int i = 1; i < bulketMax.length; i++) {
             int curMin = bulketMin[i];
             int curMax = bulketMax[i];
