@@ -12,4 +12,12 @@ public class DungeonGameTest {
         int ans = s.calculateMinimumHP(input);
         assertEquals(7, ans);
     }
+
+    @Test
+    public void errCase() {
+        DungeonGame s = new DungeonGame();
+        int[][] input = new int[][] { { 100 } };
+        int ans = s.calculateMinimumHP(input);
+        assertEquals(1, ans);
+    }
 }

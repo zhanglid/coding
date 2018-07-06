@@ -60,6 +60,6 @@ public class DungeonGame {
             }
         }
 
-        return -minDP[dungeon.length - 1][dungeon[0].length - 1] + 1;
+        return Math.max(0, -minDP[dungeon.length - 1][dungeon[0].length - 1]) + 1;
     }
 }
