@@ -38,28 +38,25 @@ public class DungeonGame {
             return 0;
         }
 
-        int[][] curDP = new int[dungeon.length][dungeon[0].length];
-        int[][] minDP = new int[dungeon.length][dungeon[0].length];
-        for (int i = 0; i < dungeon.length; i++) {
-            for (int j = 0; j < dungeon[0].length; j++) {
-                if (i == 0 && j == 0) {
-                    curDP[0][0] = dungeon[0][0];
-                    minDP[0][0] = dungeon[0][0];
-                    continue;
-                }
+        int[][] dp = new int[dungeon.length][dungeon[0].length];
 
-                if (j > 0 && (i == 0 || minDP[i - 1][j] < minDP[i][j - 1])) {
-                    // select left
-                    curDP[i][j] = curDP[i][j - 1] + dungeon[i][j];
-                    minDP[i][j] = Math.min(minDP[i][j - 1], curDP[i][j]);
-                } else {
-                    // select up
-                    curDP[i][j] = curDP[i - 1][j] + dungeon[i][j];
-                    minDP[i][j] = Math.min(minDP[i - 1][j], curDP[i][j]);
+        dp[dungeon.length - 1][dungeon[0].length - 1] = 1
+                - Math.min(0, dungeon[dungeon.length - 1][dungeon[0].length - 1]);
+
+        for (int i = dungeon.length - 1; i >= 0; i--) {
+            for (int j = dungeon[0].length - 1; j >= 0; j--) {
+                int target = dp[i][j];
+                if (j > 0) {
+                    int cur = Math.max(1, target - dungeon[i][j - 1]);
+                    dp[i][j - 1] = dp[i][j - 1] == 0 ? cur : Math.min(cur, dp[i][j - 1]);
+                }
+                if (i > 0) {
+                    int cur = Math.max(1, target - dungeon[i - 1][j]);
+                    dp[i - 1][j] = dp[i - 1][j] == 0 ? cur : Math.min(cur, dp[i - 1][j]);
                 }
             }
         }
 
-        return Math.max(0, -minDP[dungeon.length - 1][dungeon[0].length - 1]) + 1;
+        return dp[0][0];
     }
 }

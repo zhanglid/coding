@@ -20,4 +20,24 @@ public class DungeonGameTest {
         int ans = s.calculateMinimumHP(input);
         assertEquals(1, ans);
     }
+
+    @Test
+    public void errCase2() {
+        DungeonGame s = new DungeonGame();
+        int[][] input = new int[][] { { 0, 0, 0 }, { 1, 1, -1 } };
+        int ans = s.calculateMinimumHP(input);
+        assertEquals(1, ans);
+    }
+
+    @Test
+    public void errCase3() {
+        DungeonGame s = new DungeonGame();
+        int[][] input = new int[][] { 
+            { 1, -3, 3 }, 
+            { 0, -2, 0 }, 
+            { -3, -3, -3 } 
+        };
+        int ans = s.calculateMinimumHP(input);
+        assertEquals(3, ans);
+    }
 }
