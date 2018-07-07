@@ -25,4 +25,11 @@ public class LargestNumberTest {
         String ans = s.largestNumber(new int[] { 121, 12 });
         assertEquals("12121", ans);
     }
+
+    @Test
+    public void errCase2() {
+        LargestNumber s = new LargestNumber();
+        String ans = s.largestNumber(new int[] { 0 });
+        assertEquals("0", ans);
+    }
 }

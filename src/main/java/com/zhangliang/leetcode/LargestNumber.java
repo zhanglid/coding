@@ -39,7 +39,9 @@ public class LargestNumber {
         for (Integer value : converted) {
             sb.append(value.toString());
         }
-
-        return sb.toString();
+        while (sb.length() > 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+        return sb.length() > 0 ? sb.toString() : "0";
     }
 }
