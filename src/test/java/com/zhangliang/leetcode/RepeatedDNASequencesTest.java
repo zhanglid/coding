@@ -16,4 +16,12 @@ public class RepeatedDNASequencesTest {
         String[] expected = new String[] { "AAAAACCCCC", "CCCCCAAAAA" };
         assertArrayEquals(expected, ans.toArray(new String[0]));
     }
+
+    @Test
+    public void errCase() {
+        RepeatedDNASequences s = new RepeatedDNASequences();
+        List<String> ans = s.findRepeatedDnaSequences("AAAAAAAAAAAA");
+        String[] expected = new String[] { "AAAAAAAAAA" };
+        assertArrayEquals(expected, ans.toArray(new String[0]));
+    }
 }

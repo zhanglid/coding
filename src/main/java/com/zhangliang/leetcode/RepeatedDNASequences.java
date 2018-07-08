@@ -30,17 +30,18 @@ public class RepeatedDNASequences {
         }
 
         Set<String> set = new HashSet<>();
+        Set<String> ansSet = new HashSet<>();
         set.add(sb.toString());
         for (int i = 10; i < s.length(); i++) {
             sb.deleteCharAt(0);
             sb.append(s.charAt(i));
             String key = sb.toString();
             if (set.contains(key)) {
-                ans.add(key);
+                ansSet.add(key);
             }
             set.add(key);
         }
 
-        return ans;
+        return new ArrayList<>(ansSet);
     }
 }
