@@ -12,4 +12,11 @@ public class HappyNumberTest {
         boolean ans = s.isHappy(19);
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase() {
+        HappyNumber s = new HappyNumber();
+        boolean ans = s.isHappy(2);
+        assertEquals(false, ans);
+    }
 }
