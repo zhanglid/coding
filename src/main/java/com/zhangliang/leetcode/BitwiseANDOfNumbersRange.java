@@ -26,9 +26,9 @@ public class BitwiseANDOfNumbersRange {
             int nd = n % 2;
             m /= 2;
             n /= 2;
-            if (md != nd || nd == 0) {
+            if (md != nd) {
                 ans = 0;
-            } else {
+            } else if (md == 1) {
                 ans += base;
             }
 
