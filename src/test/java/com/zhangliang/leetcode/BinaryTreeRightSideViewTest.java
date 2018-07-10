@@ -17,4 +17,12 @@ public class BinaryTreeRightSideViewTest {
         List<Integer> ans = s.rightSideView(node);
         assertEquals(Arrays.asList(1, 3, 4), ans);
     }
+
+    @Test
+    public void testCase2() {
+        BinaryTreeRightSideView s = new BinaryTreeRightSideView();
+        TreeNode node = new TreeNode(new Integer[] { 1, 2, 3, 4 });
+        List<Integer> ans = s.rightSideView(node);
+        assertEquals(Arrays.asList(1, 3, 4), ans);
+    }
 }

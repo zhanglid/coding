@@ -18,7 +18,9 @@ Explanation:
 */
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import com.zhangliang.utils.TreeNode;
 
@@ -29,15 +31,23 @@ public class BinaryTreeRightSideView {
             return ans;
         }
 
-        while (root != null) {
-            ans.add(root.val);
-            if (root.right != null) {
-                root = root.right;
-            } else {
-                root = root.left;
-            }
-        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
 
+            TreeNode node = null;
+            for (int i = 0; i < size; i++) {
+                node = queue.poll();
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            ans.add(node.val);
+        }
         return ans;
     }
 }
