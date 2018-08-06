@@ -52,7 +52,7 @@ public class HandOfStraights {
             int total = counter.get(x);
 
             // to left
-            while(map.getOrDefault(c, 0) > 0) {
+            while (map.getOrDefault(c, 0) > 0) {
                 counter.put(c, map.get(c));
                 total += map.get(c);
                 map.put(c, 0);
@@ -63,7 +63,7 @@ public class HandOfStraights {
 
             // to right
             c = x + 1;
-            while(map.getOrDefault(c, 0) > 0 ) {
+            while (map.getOrDefault(c, 0) > 0) {
                 counter.put(c, map.get(c));
                 total += map.get(c);
                 map.put(c, 0);
@@ -83,14 +83,19 @@ public class HandOfStraights {
                         return false;
                     }
 
-                    if (num - 1 > 0 && ! foundNext) {
+                    if (num - 1 > 0 && !foundNext) {
                         next = smallest + j;
                         foundNext = true;
                     }
 
                     counter.put(smallest + j, num - 1);
                 }
-                smallest = next;
+
+                if (foundNext) {
+                    smallest = next;
+                } else {
+                    smallest = smallest + size;
+                }
             }
 
         }

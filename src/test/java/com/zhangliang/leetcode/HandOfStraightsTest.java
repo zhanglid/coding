@@ -19,4 +19,11 @@ public class HandOfStraightsTest {
         assertEquals(false, ans);
     }
 
+    @Test
+    public void errCase() {
+        HandOfStraights s = new HandOfStraights();
+        boolean ans = s.isNStraightHand(new int[] { 1, 2, 3, 4, 5, 6 }, 2);
+        assertEquals(true, ans);
+    }
+
 }
