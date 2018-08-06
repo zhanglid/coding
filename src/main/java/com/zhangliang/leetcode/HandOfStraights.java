@@ -32,7 +32,6 @@ public class HandOfStraights {
             return false;
         }
 
-        int size = hand.length / W;
         Map<Integer, Integer> map = new HashMap<>();
 
         for (int x : hand) {
@@ -70,14 +69,14 @@ public class HandOfStraights {
                 c++;
             }
 
-            if (total % size != 0) {
+            if (total % W != 0) {
                 return false;
             }
 
-            for (int i = 0; i < total / size; i++) {
+            for (int i = 0; i < total / W; i++) {
                 int next = smallest;
                 boolean foundNext = false;
-                for (int j = 0; j < size; j++) {
+                for (int j = 0; j < W; j++) {
                     int num = counter.getOrDefault(smallest + j, 0);
                     if (num < 1) {
                         return false;
@@ -94,7 +93,7 @@ public class HandOfStraights {
                 if (foundNext) {
                     smallest = next;
                 } else {
-                    smallest = smallest + size;
+                    smallest = smallest + W;
                 }
             }
 
