@@ -46,6 +46,7 @@ public class HandOfStraights {
             Map<Integer, Integer> counter = new HashMap<>();
 
             counter.put(x, map.getOrDefault(x, 0));
+            map.put(x, 0);
 
             int c = x - 1;
             int total = counter.get(x);
