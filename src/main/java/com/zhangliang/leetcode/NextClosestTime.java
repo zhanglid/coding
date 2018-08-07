@@ -58,7 +58,7 @@ public class NextClosestTime {
         // ten minutes
         int second = -1;
         for (int i = 0; i < digits.length; i++) {
-            if (digits[i] > digits[3] && digits[i] < 6 && (second == -1 || digits[i] < second)) {
+            if (digits[i] > digits[2] && digits[i] < 6 && (second == -1 || digits[i] < second)) {
                 second = digits[i];
             }
         }
@@ -72,7 +72,7 @@ public class NextClosestTime {
         // hour
         int hourSecond = -1;
         for (int i = 0; i < digits.length; i++) {
-            if (digits[i] > digits[1] && (digits[i] < 4 && digits[0] == 2 || digits[0] < 2)) {
+            if (digits[i] > digits[1] && (digits[i] < 4 && digits[0] == 2 || digits[0] < 2) && (hourSecond == -1 || digits[i] < hourSecond)) {
                 hourSecond = digits[i];
             }
         }
