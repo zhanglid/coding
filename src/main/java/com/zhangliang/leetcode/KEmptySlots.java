@@ -33,7 +33,7 @@ The given array will be in the range [1, 20000].
 import java.util.TreeSet;
 
 public class KEmptySlots {
-    public int kEmptySlots(int[] flowers, int k) {
+    public int kEmptySlots2(int[] flowers, int k) {
         if (flowers == null || k < 0 || flowers.length < 1) {
             return -1;
         }
@@ -57,5 +57,36 @@ public class KEmptySlots {
         }
 
         return -1;
+    }
+
+    public int kEmptySlots(int[] flowers, int k) {
+        if (flowers == null || k < 0 || k > flowers.length || flowers.length < 1) {
+            return -1;
+        }
+
+        int[] days = new int[flowers.length];
+        for (int i = 0; i < flowers.length; i++) {
+            days[flowers[i] - 1] = i + 1;
+        }
+
+        int left = 0;
+        int right = k + 1;
+        int ans = -1;
+        for (int i = 1; i < flowers.length; i++) {
+            if (right >= flowers.length) {
+                break;
+            }
+            if (days[i] <= days[left] || days[i] <= days[right]) {
+                if (i == right) {
+                    int current = Math.max(days[left], days[right]);
+                    ans = ans == -1 ? current : Math.min(current, ans);
+                }
+
+                left = i;
+                right = i + k + 1;
+            }
+        }
+
+        return ans;
     }
 }

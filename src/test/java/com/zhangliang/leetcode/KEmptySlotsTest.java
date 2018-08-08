@@ -28,4 +28,18 @@ public class KEmptySlotsTest {
                 16122, 17384, 17834, 11086, 7577, 8289, 14654, 5353, 4245, 838, 2738, 16879, 3325, 3377, 9149 }, 0);
         assertEquals(41, ans);
     }
+
+    @Test
+    public void errCase2() {
+        KEmptySlots s = new KEmptySlots();
+        int ans = s.kEmptySlots(new int[] { 6, 5, 8, 9, 7, 1, 10, 2, 3, 4 }, 2);
+        assertEquals(8, ans);
+    }
+
+    @Test
+    public void errCase3() {
+        KEmptySlots s = new KEmptySlots();
+        int ans = s.kEmptySlots(new int[] { 3, 9, 2, 8, 1, 6, 10, 5, 4, 7 }, 1);
+        assertEquals(6, ans);
+    }
 }
