@@ -27,8 +27,8 @@ public class RectangleOverlap {
     public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
         int left = Math.min(rec1[0], rec2[0]);
         int right = Math.max(rec1[2], rec2[2]);
-        int top = Math.max(rec1[1], rec2[1]);
-        int bottom = Math.max(rec1[3], rec2[3]);
+        int top = Math.max(rec1[3], rec2[3]);
+        int bottom = Math.min(rec1[1], rec2[1]);
 
         int length = right - left;
         int height = top - bottom;
