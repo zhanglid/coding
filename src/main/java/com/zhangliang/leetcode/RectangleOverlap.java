@@ -39,6 +39,6 @@ public class RectangleOverlap {
         int height1 = rec1[3] - rec1[1];
         int height2 = rec2[3] - rec2[1];
 
-        return (len1 + len2 > length) && (height1 + height2 > height);
+        return (len1 > length - len2) && (height1 > height - height2);
     }
 }

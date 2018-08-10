@@ -26,4 +26,11 @@ public class RectangleOverlapTest {
         boolean ans = s.isRectangleOverlap(new int[] { 5, 15, 8, 18 }, new int[] { 0, 3, 7, 9 });
         assertEquals(false, ans);
     }
+
+    @Test
+    public void errCase2() {
+        RectangleOverlap s = new RectangleOverlap();
+        boolean ans = s.isRectangleOverlap(new int[] { -257926405,-680763313,702840196,454409669 }, new int[] { -275916328,-417802221,22808107,675629469 });
+        assertEquals(true, ans);
+    }
 }
