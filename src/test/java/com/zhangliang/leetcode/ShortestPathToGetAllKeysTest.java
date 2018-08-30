@@ -19,4 +19,15 @@ public class ShortestPathToGetAllKeysTest {
         int ans = s.shortestPathAllKeys(new String[] { "@..aA", "..B#.", "....b" });
         assertEquals(6, ans);
     }
+
+    @Test
+    public void errCase() {
+        ShortestPathToGetAllKeys s = new ShortestPathToGetAllKeys();
+        int ans = s.shortestPathAllKeys(new String[] { 
+            "@...a", 
+            ".###A", 
+            "b.BCc" 
+        });
+        assertEquals(10, ans);
+    }
 }

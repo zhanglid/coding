@@ -105,8 +105,8 @@ public class ShortestPathToGetAllKeys {
                     }
                     char t = grid[ni].charAt(nj);
                     State cur = null;
-                    if (t == '.' || (t >= 'A' && t <= 'A' + 6 && s.isUnlocked(t))) {
-                        cur = new State(ni, nj, s.locks);
+                    if (t == '.' || t == '@' || (t >= 'A' && t <= 'A' + 6 && s.isUnlocked(t))) {
+                        cur = new State(ni, nj, new HashSet<>(s.locks));
                     } else if (t >= 'a' && t <= 'a' + 6) {
                         cur = new State(ni, nj, new HashSet<>(s.locks));
                         cur.locks.add(t);
