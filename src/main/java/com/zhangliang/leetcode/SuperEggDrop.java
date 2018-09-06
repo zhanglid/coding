@@ -44,22 +44,22 @@ public class SuperEggDrop {
         int[][] dp = new int[K + 1][N + 1];
         for (int i = 0; i <= N; i++) {
             dp[1][i] = i;
-            dp[0][i] = Integer.MAX_VALUE;
         }
-        for (int i = 2; i <= K; i++) {
-            for (int j = 1; j <= N; j++) {
-                int ans = j;
+        for (int j = 1; j <= N; j++) {
+            for (int i = 2; i <= K; i++) {
+                int ans = j - 1;
                 int l = 1;
-                int r = j - 1;
+                int r = j;
                 while (l + 1 < r) {
                     int m = l + (r - l) / 2;
-                    if (Math.max(dp[i - 1][m - 1], dp[i][j - m]) < Math.max(dp[i - 1][m], dp[i][j - m - 1])) {
-                        r = m;
-                    } else {
+                    int vl = dp[i - 1][m - 1];
+                    int vr = dp[i][j - m];
+                    if (vl < vr) {
                         l = m;
+                    } else {
+                        r = m;
                     }
                 }
-
                 ans = Math.max(dp[i - 1][l - 1], dp[i][j - l]);
                 if (l + 1 <= r) {
                     ans = Math.min(ans, Math.max(dp[i - 1][l], dp[i][j - l - 1]));

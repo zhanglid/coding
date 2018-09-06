@@ -29,7 +29,19 @@ public class SuperEggDropTest {
     @Test
     public void errCase() {
         SuperEggDrop s = new SuperEggDrop();
-        int ans = s.superEggDrop(9, 5000);
-        assertEquals(4, ans);
+        int ans = s.superEggDrop(3, 15);
+        assertEquals(5, ans);
+    }
+    @Test
+    public void errCase2() {
+        SuperEggDrop s = new SuperEggDrop();
+        int ans = s.superEggDrop(3, 25);
+        assertEquals(5, ans);
+    }
+    @Test
+    public void errCase3() {
+        SuperEggDrop s = new SuperEggDrop();
+        int ans = s.superEggDrop(3, 41);
+        assertEquals(6, ans);
     }
 }
