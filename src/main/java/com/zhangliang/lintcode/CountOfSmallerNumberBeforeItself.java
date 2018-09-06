@@ -59,7 +59,7 @@ public class CountOfSmallerNumberBeforeItself {
             return node.value;
         }
         
-        int mid = node.start + (node.end - node.start) / 2;
+        int mid = Math.max(start, Math.min(end, node.start + (node.end - node.start) / 2));
         
         return getValue(node.left, start, mid) + getValue(node.right, mid + 1, end);
     }
