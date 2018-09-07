@@ -20,22 +20,15 @@ You may assume the number of calls to update and sumRange function is distribute
 public class RangeSumQueryMutable {
     private int[] bitArray = null;
     private int[] oriArray = null;
+
     public RangeSumQueryMutable(int[] nums) {
         if (nums == null) {
             return;
         }
         bitArray = new int[nums.length + 1];
         oriArray = new int[nums.length];
-        int[] sums = new int[nums.length + 1];
-        int sum = 0;
         for (int i = 1; i <= nums.length; i++) {
-            oriArray[i - 1] = nums[i - 1];
-            sum += nums[i - 1];
-            sums[i] = sum;
-            // get parent for bit: 1. 2's complement; 2. AND with original; 3. subtract from
-            // original;
-            int parent = i - (i & -i);
-            bitArray[i] = sums[i] - sums[parent];
+            update(i - 1, nums[i - 1]);
         }
     }
 
@@ -56,6 +49,7 @@ public class RangeSumQueryMutable {
     }
 
     // get sum by add the node all the way to the root
+    // get parent for bit: 1. 2's complement; 2. AND with original; 3. subtract from
     private int sumRange(int i) {
         int bitIndex = i + 1;
         int sum = 0;
