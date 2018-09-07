@@ -18,4 +18,10 @@ public class RangeSumQueryMutableTest {
         s.update(1, 2);
         assertEquals(8, s.sumRange(0, 2));
     }
+
+    @Test
+    public void errCase() {
+        RangeSumQueryMutable s = new RangeSumQueryMutable(new int[] { -28, -39, 53, 65, 11, -56, -65, -39, -43, 97 });
+        assertEquals(-121, s.sumRange(5, 6));
+    }
 }

@@ -26,16 +26,16 @@ public class RangeSumQueryMutable {
         }
         bitArray = new int[nums.length + 1];
         oriArray = new int[nums.length];
-        int[] sums = new int[nums.length];
+        int[] sums = new int[nums.length + 1];
         int sum = 0;
         for (int i = 1; i <= nums.length; i++) {
             oriArray[i - 1] = nums[i - 1];
             sum += nums[i - 1];
-            sums[i - 1] = sum;
+            sums[i] = sum;
             // get parent for bit: 1. 2's complement; 2. AND with original; 3. subtract from
             // original;
             int parent = i - (i & -i);
-            bitArray[i] = sums[i - 1] - bitArray[parent];
+            bitArray[i] = sums[i] - sums[parent];
         }
     }
 
