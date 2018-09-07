@@ -67,7 +67,7 @@ public class CountOfSmallerNumbersAfterSelf {
 
         int[] array = new int[nums.length + 1];
         for (int i = nums.length - 1; i >= 0; i--) {
-            ans.add(0, get(array, nums[i]));
+            ans.add(0, get(array, nums[i] - 1));
             add(array, nums[i], 1);
         }
 

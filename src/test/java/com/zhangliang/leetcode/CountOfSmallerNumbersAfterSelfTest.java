@@ -14,4 +14,11 @@ public class CountOfSmallerNumbersAfterSelfTest {
         List<Integer> ans = s.countSmaller(new int[] { 5, 2, 6, 1 });
         assertArrayEquals(Arrays.asList(2, 1, 1, 0).toArray(new Integer[0]), ans.toArray(new Integer[0]));
     }
+
+    @Test
+    public void errCase() {
+        CountOfSmallerNumbersAfterSelf s = new CountOfSmallerNumbersAfterSelf();
+        List<Integer> ans = s.countSmaller(new int[] {-1, -1});
+        assertArrayEquals(Arrays.asList(0, 0).toArray(new Integer[0]), ans.toArray(new Integer[0]));
+    }
 }
