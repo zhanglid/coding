@@ -15,7 +15,6 @@ To the right of 1 there is 0 smaller element.
 */
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

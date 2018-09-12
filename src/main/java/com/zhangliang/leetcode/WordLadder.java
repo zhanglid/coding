@@ -35,7 +35,6 @@ Output: 0
 Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 */
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

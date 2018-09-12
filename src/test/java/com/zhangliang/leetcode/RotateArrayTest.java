@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertArrayEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class RotateArrayTest {
