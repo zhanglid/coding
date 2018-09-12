@@ -61,13 +61,9 @@ public class SequenceReconstruction {
             return false;
         }
 
-        if (org.length == 1) {
-            return true;
-        }
-
         Map<Integer, Set<Integer>> neighbors = new HashMap<>();
         Map<Integer, Set<Integer>> indegree = new HashMap<>();
-
+        Set<Integer> points = new HashSet<>();
         for (int x : org) {
             neighbors.put(x, new HashSet<>());
             indegree.put(x, new HashSet<>());
@@ -75,12 +71,15 @@ public class SequenceReconstruction {
 
         for (List<Integer> seq : seqs) {
             for (int i = 0; i < seq.size() - 1; i++) {
+                points.add(seq.get(i));
                 if (!neighbors.containsKey(seq.get(i)) || !neighbors.containsKey(seq.get(i + 1))) {
                     return false;
                 }
                 neighbors.get(seq.get(i)).add(seq.get(i + 1));
                 indegree.get(seq.get(i + 1)).add(seq.get(i));
             }
+            if (seq.size() > 0)
+                points.add(seq.get(seq.size() - 1));
         }
 
         int zeroIndegreeNum = 0;
@@ -93,7 +92,7 @@ public class SequenceReconstruction {
             indegreeCounter.put(key, num.size());
         }
 
-        if (zeroIndegreeNum > 1) {
+        if (zeroIndegreeNum > 1 || points.size() != org.length) {
             return false;
         }
 

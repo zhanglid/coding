@@ -36,4 +36,12 @@ public class SequenceReconstructionTest {
                 Arrays.asList(Arrays.asList(5, 2, 6, 3), Arrays.asList(4, 1, 5, 2)));
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase() {
+        SequenceReconstruction s = new SequenceReconstruction();
+        boolean ans = s.sequenceReconstruction(new int[] { 1 },
+                Arrays.asList(Arrays.asList(1), Arrays.asList(1), Arrays.asList(1)));
+        assertEquals(true, ans);
+    }
 }
