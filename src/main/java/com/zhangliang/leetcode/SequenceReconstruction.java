@@ -49,74 +49,70 @@ The seqs parameter had been changed to a list of list of strings (instead of a 2
 Please reload the code definition to get the latest changes.
 */
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class SequenceReconstruction {
     public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
-        if (org == null || org.length < 1 || seqs == null || seqs.size() < 1) {
+        if (org == null || seqs == null || org.length < 1 || seqs.size() < 1) {
             return false;
         }
 
-        Map<Integer, Set<Integer>> neighbors = new HashMap<>();
-        Map<Integer, Set<Integer>> indegree = new HashMap<>();
-        Set<Integer> points = new HashSet<>();
-        for (int x : org) {
-            neighbors.put(x, new HashSet<>());
-            indegree.put(x, new HashSet<>());
-        }
+        Map<Integer, Set<Integer>> outMap = new HashMap<>();
+        Map<Integer, Set<Integer>> inMap = new HashMap<>();
 
         for (List<Integer> seq : seqs) {
-            for (int i = 0; i < seq.size() - 1; i++) {
-                points.add(seq.get(i));
-                if (!neighbors.containsKey(seq.get(i)) || !neighbors.containsKey(seq.get(i + 1))) {
-                    return false;
+            for (int i = 0; i < seq.size(); i++) {
+                if (!outMap.containsKey(seq.get(i))) {
+                    outMap.put(seq.get(i), new HashSet<>());
+                    inMap.put(seq.get(i), new HashSet<>());
                 }
-                neighbors.get(seq.get(i)).add(seq.get(i + 1));
-                indegree.get(seq.get(i + 1)).add(seq.get(i));
+                if (i >= 1) {
+                    outMap.get(seq.get(i - 1)).add(seq.get(i));
+                    inMap.get(seq.get(i)).add(seq.get(i - 1));
+                }
             }
-            if (seq.size() > 0)
-                points.add(seq.get(seq.size() - 1));
         }
 
-        int zeroIndegreeNum = 0;
-        Map<Integer, Integer> indegreeCounter = new HashMap<>();
-        for (Integer key : indegree.keySet()) {
-            Set<Integer> num = indegree.get(key);
-            if (num.size() == 0) {
-                zeroIndegreeNum++;
-            }
-            indegreeCounter.put(key, num.size());
-        }
-
-        if (zeroIndegreeNum > 1 || points.size() != org.length) {
+        if (outMap.size() != org.length) {
             return false;
         }
 
-        for (int x : org) {
-            if (!neighbors.containsKey(x)) {
-                return false;
-            }
-            if (indegree.get(x).size() > 0) {
-                return false;
-            }
-            int nextNum = 0;
-            for (int other : neighbors.get(x)) {
-                indegree.get(other).remove(x);
-                indegreeCounter.put(other, indegree.get(other).size());
-                if (indegree.get(other).size() == 0) {
-                    nextNum++;
-                }
-            }
+        Deque<Integer> stack = new LinkedList<>();
 
-            if (nextNum > 1) {
-                return false;
+        for (int x : inMap.keySet()) {
+            if (inMap.get(x).size() == 0) {
+                stack.push(x);
             }
         }
 
-        return true;
+        if (stack.isEmpty()) {
+            return false;
+        }
+        int index = 0;
+        while (!stack.isEmpty()) {
+            if (stack.size() > 1) {
+                return false;
+            }
+
+            int x = stack.pop();
+            if (x != org[index++]) {
+                return false;
+            }
+
+            for (int y : outMap.get(x)) {
+                inMap.get(y).remove(x);
+                if (inMap.get(y).size() == 0) {
+                    stack.push(y);
+                }
+            }
+        }
+
+        return index == org.length;
     }
 }
