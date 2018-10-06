@@ -27,51 +27,54 @@ Note:
 
 */
 
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class BusRoutes {
-    public int numBusesToDestination(int[][] routes, int S, int T) {
+    public int numBusesToDestination(int[][] routes, int S, int T)  {
         if (routes == null || routes.length < 1) {
             return 0;
         }
 
-        Map<Integer, Set<int[]>> graph = new HashMap<>();
-
-        for (int[] route : routes) {
-            for (int point : route) {
-                if (!graph.containsKey(point)) {
-                    graph.put(point, new HashSet<>());
-                }
-                graph.get(point).add(route);
+        Map<Integer, List<Integer>> buses = new HashMap<>();
+        for (int i = 0; i < routes.length; i++) {
+            for (int stop : routes[i]) {
+                buses.putIfAbsent(stop, new ArrayList<>());
+                buses.get(stop).add(i);
             }
         }
 
-        LinkedList<Integer> queue = new LinkedList<>();
-        Set<Integer> visited = new HashSet<>();
-        visited.add(S);
+        Deque<Integer> queue = new LinkedList<>();
         queue.add(S);
-        int count = 0;
-        while (!queue.isEmpty()) {
+        int step = 0;
+        Set<Integer> vistedBuses = new HashSet<>();
+        Set<Integer> visitedStop = new HashSet<>();
+        while(!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                int point = queue.poll();
-                if (point == T) {
-                    return count;
+                Integer stop = queue.poll();
+                if (stop == T) {
+                    return step;
                 }
-                for (int[] others : graph.get(point)) {
-                    for (int other : others) {
-                        if (!visited.contains(other)) {
-                            queue.add(other);
-                            visited.add(other);
+                for (int bus : buses.get(stop)) {
+                    if (!vistedBuses.contains(bus)) {
+                        vistedBuses.add(bus);
+                        for (int  nextStop : routes[bus]) {
+                            if (!visitedStop.contains(nextStop)) {
+                                queue.add(nextStop);
+                                visitedStop.add(nextStop);
+                            }
                         }
                     }
                 }
             }
-            count++;
+            step++;
         }
 
         return -1;
