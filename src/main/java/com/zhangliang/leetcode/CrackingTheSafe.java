@@ -35,10 +35,8 @@ k^n will be at most 4096.
 "0"  "1"    "0"   "1"
 */
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CrackingTheSafe {
     public String crackSafe(int n, int k) {
@@ -46,80 +44,39 @@ public class CrackingTheSafe {
             return "";
         }
 
-        LinkedList<String> queue = new LinkedList<>();
-        queue.add("");
+        int totalCount = (int)Math.pow(k, n);
+        StringBuilder ansBuilder = new StringBuilder();
+        Set<String> visited = new HashSet<>();
         for (int i = 0; i < n; i++) {
-            int size = queue.size();
-            for (int j = 0; j < size; j++) {
-                String pre = queue.poll();
-                for (int t = 0; t < k; t++) {
-                    String choice = pre + t;
-                    queue.add(choice);
-                }
-            }
+            ansBuilder.append('0');
         }
+        visited.add(ansBuilder.toString());
 
-        String ans = null;
-        for (int i = 0; i < queue.size(); i++) {
-            String choice = getMinStringStartWith(i, queue);
-            if (ans == null || choice.length() < ans.length()) {
-                ans = choice;
-            }
-        }
+        dfs(ansBuilder, visited, n, k, totalCount);
 
-        return ans;
+        return ansBuilder.toString();
     }
-
-    private Map<String, Integer> cache = new HashMap<>();
-    private int calCommonLength(String a, String b) {
-        String key = a + b;
-        if (cache.containsKey(key)) {
-            return cache.get(key);
+    
+    private boolean dfs(StringBuilder sb, Set<String> visited, int n, int k, int totalCount) {
+        if (visited.size() == totalCount) {
+            return true;
         }
-        int ans = 0;
-        for (int i = 0; i < a.length(); i++) {
-            int count = 0;
-            int cur = i;
-            for (int j = 0; j < b.length() && cur < a.length(); j++) {
-                if (a.charAt(cur) != b.charAt(j)) {
-                    break;
+
+        String last = sb.substring(sb.length() - n + 1, sb.length());
+
+        for (int i = 0; i < k; i++) {
+            String choice = last + i;
+            if (!visited.contains(choice)) {
+                visited.add(choice);
+                sb.append(i);
+                if (dfs(sb, visited, n, k, totalCount)) {
+                    return true;
                 }
-                cur++;
-                count++;
-            }
-            if (cur == a.length()) {
-                ans = Math.max(ans, count);
+                visited.remove(choice);
+                sb.deleteCharAt(sb.length() - 1);
             }
         }
-        cache.put(key, ans);
-        return ans;
-    }
 
-
-    private Map<String, String> cacheSet = new HashMap<>();
-    private String getMinStringStartWith(int prefixIndex, List<String> choices) {
-        String key = prefixIndex + choices.toString();
-        if (cacheSet.containsKey(key)) {
-            return cacheSet.get(key);
-        }
-        String prefix = choices.get(prefixIndex);
-        String ans = null;
-        choices.remove(prefixIndex);
-        if (choices.isEmpty()) {
-            ans = prefix;
-        }
-        for (int i = 0; i < choices.size(); i++) {
-            String choice = choices.get(i);
-            int length = calCommonLength(prefix, choice);
-            String next = getMinStringStartWith(i, choices);
-            String nextCombine = prefix + next.substring(length);
-            if (ans == null || ans.length() > nextCombine.length()) {
-                ans = nextCombine;
-            }
-        }
-        choices.add(prefixIndex, prefix);
-
-        cacheSet.put(key, ans);
-        return ans;
+        return false;
     }
 }
