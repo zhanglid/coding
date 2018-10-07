@@ -9,24 +9,60 @@ package com.zhangliang.google;
 代码大概这样(get时不更新timestamp的写法):
 */
 
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * get O(1), put O(1), clean O(k), S(k), k is expiration
  */
 public class TaskWithExpiration {
-    public TaskWithExpiration(int expiration) {
+    class Task {
+        int timestamp;
+        int key;
+        int val;
 
+        public Task(int timestamp, int key, int val) {
+            this.timestamp = timestamp;
+            this.key = key;
+            this.val = val;
+        }
+
+        public boolean isExpired(int timestamp, int expiration) {
+            return ( timestamp - this.timestamp ) >= expiration;
+        }
+    }
+
+    int expiration;
+    Map<Integer, Task> cache;
+    Task[] tasks;
+
+    public TaskWithExpiration(int expiration) {
+        this.expiration = expiration;
+        this.cache = new HashMap<>();
+        this.tasks = new Task[expiration];
     }
 
     public int get(int key, int timestamp) {
-
+        if (cache.containsKey(key) && cache.get(key).isExpired(timestamp, expiration)) {
+            cache.remove(key);
+        }
+        return cache.containsKey(key) ? cache.get(key).val : -1;
     }
 
     public void put(int key, int val, int timestamp) {
-
+        int index = timestamp % expiration;
+        if (tasks[index] != null && cache.containsKey(tasks[index].key)) {
+            cache.remove(tasks[index].key);
+        }
+        tasks[index] = new Task(timestamp, key, val);
+        cache.put(key, tasks[index]);
     }
 
     public void clean(int timestamp) {
-
+        for (Task task : tasks) {
+            if (task.isExpired(timestamp, expiration)) {
+                cache.remove(task.key);
+            }
+        }
     }
 }
