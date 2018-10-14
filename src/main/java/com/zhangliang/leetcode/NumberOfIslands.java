@@ -24,54 +24,80 @@ Input:
 Output: 3
 */
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NumberOfIslands {
+    class UnionFind {
+        private Map<Integer, Integer> fathers;
+
+        public UnionFind() {
+            fathers = new HashMap<>();
+        }
+
+        public int getRoot(int node) {
+            if (fathers.get(node) == node) {
+                return node;
+            }
+
+            int root = getRoot(fathers.get(node));
+            fathers.put(node, root);
+            return root;
+        }
+
+        public boolean connect(int a, int b) {
+            int rootA = getRoot(a);
+            int rootB = getRoot(b);
+
+            if (rootA == rootB) {
+                return false;
+            }
+            fathers.put(rootA, rootB);
+            return true;
+        }
+
+        public void addNode(int key) {
+            fathers.put(key, key);
+        }
+    }
+
+    private static final int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length < 1 || grid[0].length < 1) {
             return 0;
         }
 
+        UnionFind uf = new UnionFind();
         int count = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '1') {
+                    uf.addNode(i * grid[0].length + j);
                     count++;
-                    expand(grid, i, j);
+                }
+            }
+        }
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    for (int[] dir : dirs) {
+                        int ni = i + dir[0];
+                        int nj = j + dir[1];
+
+                        if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != '1') {
+                            continue; 
+                        }
+
+                        if (uf.connect(ni * grid[0].length + nj, i * grid[0].length + j)) {
+                            count--;
+                        }
+                    }
                 }
             }
         }
 
         return count;
-    }
-
-    private static int[][] dirs = new int[][] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
-
-    private int[] getPos(int x, int n) {
-        int i = x / n;
-        int j = x % n;
-        return new int[] { i, j };
-    }
-
-    private void expand(char[][] grid, int i, int j) {
-        Queue<Integer> queue = new LinkedList<>();
-        grid[i][j] = '0';
-        queue.add(i * grid[0].length + j);
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            int[] curPos = getPos(cur, grid[0].length);
-            int ci = curPos[0];
-            int cj = curPos[1];
-            for (int[] dir : dirs) {
-                int ni = ci + dir[0];
-                int nj = cj + dir[1];
-                if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != '1') {
-                    continue;
-                }
-                grid[ni][nj] = '0';
-                queue.add(ni * grid[0].length + nj);
-            }
-        }
     }
 }
