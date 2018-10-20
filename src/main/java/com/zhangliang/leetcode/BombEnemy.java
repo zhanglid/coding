@@ -48,7 +48,7 @@ public class BombEnemy {
             }
         }
 
-        // down 
+        // down
         int[][] dpDown = new int[grid.length][grid[0].length];
         for (int i = dpDown.length - 2; i >= 0; i--) {
             for (int j = dpDown[0].length - 1; j >= 0; j--) {
@@ -74,11 +74,13 @@ public class BombEnemy {
         // find the ans
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                int sum = dpDown[i][j];
-                sum += dpUp[i][j];
-                sum += dpLeft[i][j];
-                sum += dpRight[i][j];
-                ans = Math.max(ans, sum);
+                if (grid[i][j] == '0') {
+                    int sum = dpDown[i][j];
+                    sum += dpUp[i][j];
+                    sum += dpLeft[i][j];
+                    sum += dpRight[i][j];
+                    ans = Math.max(ans, sum);
+                }
             }
         }
 
