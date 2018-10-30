@@ -13,7 +13,9 @@ Follow-up 2
 将val2NewIndex map的每个值变成List<Integer>就行了
 */
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ArrayShuffle {
@@ -30,6 +32,28 @@ public class ArrayShuffle {
         for (int i = 0; i < arr3.length; i++) {
             int newIndex = index2index.get(i);
             ans[newIndex] = arr3[i];
+        }
+        return ans;
+    }
+
+    public int[] solveWithDuplicate(int[] arr1, int[] arr2, int[] arr3) {
+        int[] ans = new int[arr1.length];
+        Map<Integer, List<Integer>> value2Index = new HashMap<>();
+        for (int i = 0; i < arr2.length; i++) {
+            if (!value2Index.containsKey(arr2[i])) {
+                value2Index.put(arr2[i], new ArrayList<>());
+            }
+            value2Index.get(arr2[i]).add(i);
+        }
+        Map<Integer, List<Integer>> index2index = new HashMap<>();
+        for (int i = 0; i < arr1.length; i++) {
+            index2index.put(i, value2Index.get(arr1[i]));
+            value2Index.put(arr1[i], new ArrayList<>());
+        }
+        for (int i = 0; i < arr3.length; i++) {
+            for (Integer nextIndex : index2index.get(i)) {
+                ans[nextIndex] = arr3[i];
+            }
         }
         return ans;
     }
