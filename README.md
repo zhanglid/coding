@@ -7,7 +7,7 @@ Leet code again
 | No  | Level  | Title                                                                                                              | Done |
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------ | ---- |
 | 762 | Easy   | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                                       | ✅    |
-| 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)         |      |
+| 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)         | ✅    |
 | 785 | Hard   | [basic-calculator-iii](https://leetcode.com/problems/basic-calculator-iii)                                         |      |
 | 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) |      |
 | 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)         |      |

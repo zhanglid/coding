@@ -25,7 +25,10 @@ serialize and deserialize algorithms should be stateless.
 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /*
 // Definition for a Node.
@@ -57,7 +60,7 @@ public class SerializeAndDeserializeNAryTree {
                 return false;
             }
             for (int i = 0; i < children.size(); i++) {
-                if (!children.get(i).isEqual(other)) {
+                if (!children.get(i).isEqual(other.children.get(i))) {
                     return false;
                 }
             }
@@ -69,12 +72,53 @@ public class SerializeAndDeserializeNAryTree {
 
         // Encodes a tree to a single string.
         public String serialize(Node root) {
-            
+            Queue<Node> queue = new LinkedList<>();
+            if (root != null) {
+                queue.add(root);
+            }
+            List<String> list = new LinkedList<>();
+            while (!queue.isEmpty()) {
+                Node node = queue.poll();
+                list.add(node.val + "," + node.children.size());
+                for (Node child : node.children) {
+                    queue.add(child);
+                }
+            }
+
+            return String.join("#", list);
+        }
+
+        private Node decode(String part) {
+            String[] data = part.split(",");
+            int size = Integer.parseInt(data[1]);
+            return new Node(Integer.parseInt(data[0]), Arrays.asList(new Node[size]));
         }
 
         // Decodes your encoded data to tree.
         public Node deserialize(String data) {
+            Node root = null;
+            if (data.equals("")) {
+                return null;
+            }
+            String[] parts = data.split("#");
+            if (parts.length < 1) {
+                return root;
+            }
+            root = decode(parts[0]);
+            Queue<Node> nodesToFill = new LinkedList<>();
+            nodesToFill.add(root);
+            int index = 1;
+            while (index < parts.length) {
+                Node node = nodesToFill.poll();
+                for (int i = 0; i < node.children.size(); i++) {
+                    Node child = decode(parts[index++]);
+                    nodesToFill.add(child);
+                    node.children.set(i, child);
+                }
 
+            }
+
+            return root;
         }
     }
 }
