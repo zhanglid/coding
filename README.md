@@ -2,12 +2,10 @@
 
 Leet code again
 
-## Week 1 - April 8, 2019
+## Week 2 Apr 26, 2019 - May 3, 2019
 
 | No  | Level  | Title                                                                                                              | Done |
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------ | ---- |
-| 762 | Easy   | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                                       | ✅    |
-| 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)         | ✅    |
 | 785 | Hard   | [basic-calculator-iii](https://leetcode.com/problems/basic-calculator-iii)                                         |      |
 | 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) |      |
 | 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)         |      |
@@ -15,6 +13,13 @@ Leet code again
 | 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                               |      |
 | 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                 |      |
 | 865 | Hard   | [robot-room-cleane](https://leetcode.com/problems/robot-room-cleane)                                               |      |
+
+## Week 1 - Apr 8, 2019
+
+| No  | Level | Title                                                                                                      | Done |
+| --- | ----- | ---------------------------------------------------------------------------------------------------------- | ---- |
+| 762 | Easy  | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                               | ✅   |
+| 765 | Hard  | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree) | ✅   |
 
 ## session google
 
