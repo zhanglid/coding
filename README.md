@@ -5,7 +5,7 @@ Leet code again
 ## Week 3 May 5, 2019 - May 12, 2019
 | No  | Level  | Title                                                                                | Done |
 | --- | ------ | ------------------------------------------------------------------------------------ | ---- |
-| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)           |      |
+| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)           | ✅    |
 | 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                     |      |
 | 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                     | ✅    |
 | 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                 |      |
