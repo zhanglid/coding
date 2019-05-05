@@ -8,7 +8,7 @@ Leet code again
 | 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)           | ✅    |
 | 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                     | ✅    |
 | 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                     | ✅    |
-| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                 |      |
+| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                 | ✅    |
 | 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array) |      |
 
 ## session wish
