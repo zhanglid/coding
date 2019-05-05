@@ -21,30 +21,28 @@ import java.util.List;
 
 public class MergeIntervals {
     public List<Interval> merge(List<Interval> intervals) {
-        List<Interval> ans = new ArrayList<>();
-        if (intervals == null) {
-            return ans;
-        }
-
         Collections.sort(intervals, new Comparator<Interval>() {
             public int compare(Interval a, Interval b) {
-                int diff = a.start - b.start;
-                if (diff == 0) {
+                if (a.start != b.start) {
+                    return a.start - b.start;
+                } else {
                     return a.end - b.end;
                 }
-                return diff;
             }
         });
 
-        for (Interval interval : intervals) {
-            if (ans.isEmpty() || ans.get(ans.size() - 1).end < interval.start) {
-                ans.add(interval);
-                continue;
+        List<Interval> result = new ArrayList<>();
+        Interval last = intervals.get(0);
+        result.add(last);
+        for (int i = 1; i < intervals.size(); i++) {
+            Interval cur = intervals.get(i);
+            if (last.end < cur.start) {
+                result.add(cur);
+                last = cur;
+            } else {
+                last.end = Math.max(last.end, cur.end);
             }
-
-            ans.get(ans.size() - 1).end = Math.max(ans.get(ans.size() - 1).end, interval.end);
         }
-
-        return ans;
+        return result;
     }
 }
