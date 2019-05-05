@@ -3,13 +3,18 @@
 Leet code again
 
 ## Week 3 May 5, 2019 - May 12, 2019
-| No  | Level  | Title                                                                                | Done |
-| --- | ------ | ------------------------------------------------------------------------------------ | ---- |
-| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)           | ✅    |
-| 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                     | ✅    |
-| 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                     | ✅    |
-| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                 | ✅    |
-| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array) | ✅    |
+| No  | Level  | Title                                                                                          | Done |
+| --- | ------ | ---------------------------------------------------------------------------------------------- | ---- |
+| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)                     | ✅    |
+| 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                               | ✅    |
+| 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                               | ✅    |
+| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                           | ✅    |
+| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array)           | ✅    |
+| 300 | Medium | [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence) |      |
+| 48  | Medium | [rotate-image](https://leetcode.com/problems/rotate-image)                                     |      |
+| 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     |      |
+| 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           |      |
+| 797 | Medium | [rabbits-in-forest](https://leetcode.com/problems/rabbits-in-forest)                           |      |
 
 ## session wish
 | No  | Level  | Title                                                                                          | Done |
@@ -23,11 +28,11 @@ Leet code again
 | 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     |      |
 | 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           |      |
 | 797 | Medium | [rabbits-in-forest](https://leetcode.com/problems/rabbits-in-forest)                           |      |
-| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)                     |      |
-| 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                               |      |
-| 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                               |      |
-| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                           |      |
-| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array)           |      |
+| 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)                     | ✅    |
+| 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                               | ✅    |
+| 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                               | ✅    |
+| 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                           | ✅    |
+| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array)           | ✅    |
 
 ## Week 2 Apr 26, 2019 - May 3, 2019
 
