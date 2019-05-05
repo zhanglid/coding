@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class MinStackTest {
@@ -9,7 +8,12 @@ public class MinStackTest {
     @Test
     public void testCase() {
         MinStack s = new MinStack();
-        String ans = s.solve();
-        assertEquals(ans, "");
+        s.push(-2);
+        s.push(0);
+        s.push(-3);
+        assertEquals(-3, s.getMin());
+        s.pop();
+        assertEquals(0, s.top());
+        assertEquals(-2, s.getMin());
     }
 }

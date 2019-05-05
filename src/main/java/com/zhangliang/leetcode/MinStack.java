@@ -6,6 +6,7 @@ push(x) -- Push element x onto stack.
 pop() -- Removes the element on top of the stack.
 top() -- Get the top element.
 getMin() -- Retrieve the minimum element in the stack.
+
 Example:
 MinStack minStack = new MinStack();
 minStack.push(-2);
@@ -20,31 +21,31 @@ minStack.getMin();   --> Returns -2.
 import java.util.Stack;
 
 public class MinStack {
-    /** initialize your data structure here. */
-    private Stack<Integer> minStack;
-    private Stack<Integer> storageStack;
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
 
+    /** initialize your data structure here. */
     public MinStack() {
-        minStack = new Stack<Integer>();
-        storageStack = new Stack<Integer>();
+        stack = new Stack<>();
+        minStack = new Stack<>();
     }
 
     public void push(int x) {
-        if (minStack.isEmpty() || minStack.peek() >= x) {
+        stack.push(x);
+        if (minStack.isEmpty() || x <= minStack.peek()) {
             minStack.push(x);
         }
-        storageStack.push(x);
     }
 
     public void pop() {
-        int ans = storageStack.pop();
-        if (!minStack.isEmpty() && minStack.peek() == ans) {
+        int val = stack.pop();
+        if (minStack.peek() == val) {
             minStack.pop();
         }
     }
 
     public int top() {
-        return storageStack.peek();
+        return stack.peek();
     }
 
     public int getMin() {
