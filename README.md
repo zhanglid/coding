@@ -9,7 +9,7 @@ Leet code again
 | 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                     | ✅    |
 | 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                     | ✅    |
 | 155 | Easy   | [min-stack](https://leetcode.com/problems/min-stack)                                 | ✅    |
-| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array) |      |
+| 875 | Medium | [longest-mountain-in-array](https://leetcode.com/problems/longest-mountain-in-array) | ✅    |
 
 ## session wish
 | No  | Level  | Title                                                                                          | Done |
