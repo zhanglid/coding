@@ -24,13 +24,8 @@ integer overflows.
 public class ReverseInteger {
     public int reverse(int x) {
         int ans = 0;
-        boolean sign = true;
-        if (x < 0) {
-            sign = false;
-            x = -x;
-        }
-        while (x > 0) {
-            int next = ans * 10 + x % 10;
+        while (x != 0) {
+            int next = 10 * ans + (x % 10);
             if (next / 10 != ans) {
                 return 0;
             }
@@ -38,11 +33,6 @@ public class ReverseInteger {
             x /= 10;
         }
 
-        return sign ? ans : -ans; 
-    }
-
-    public static void main(String[] args) {
-        ReverseInteger s = new ReverseInteger();
-        System.out.println(s.reverse(12));
+        return ans;
     }
 }
