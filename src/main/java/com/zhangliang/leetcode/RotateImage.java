@@ -45,29 +45,31 @@ rotate the input matrix in-place such that it becomes:
 */
 
 public class RotateImage {
-    public void rotate(int[][] matrix) {
-        if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
-            return;
-        }
-
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = i; j < matrix.length; j++) {
-                int tmp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = tmp;
-            }
-        }
-
-        for (int i = 0; i < matrix.length; i++) {
-            int left = 0;
-            int right = matrix.length - 1;
-            while(left < right) {
-                int tmp = matrix[i][left];
-                matrix[i][left] = matrix[i][right];
-                matrix[i][right] = tmp;
-                left++;
-                right--;
-            }
-        }
+  private void swapRowAndCol(int[][] matrix) {
+    int n = matrix.length;
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        int t = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = t;
+      }
     }
+  }
+
+  private void reverseRow(int[][] matrix) {
+    int l = 0;
+    int r = matrix.length - 1;
+    while (l < r) {
+      int[] t = matrix[l];
+      matrix[l] = matrix[r];
+      matrix[r] = t;
+      l++;
+      r--;
+    }
+  }
+
+  public void rotate(int[][] matrix) {
+    reverseRow(matrix);
+    swapRowAndCol(matrix);
+  }
 }
