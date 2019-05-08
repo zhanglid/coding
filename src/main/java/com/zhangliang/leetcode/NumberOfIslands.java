@@ -24,80 +24,39 @@ Input:
 Output: 3
 */
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class NumberOfIslands {
-    class UnionFind {
-        private Map<Integer, Integer> fathers;
+    private static final int[][] dirs = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
-        public UnionFind() {
-            fathers = new HashMap<>();
-        }
-
-        public int getRoot(int node) {
-            if (fathers.get(node) == node) {
-                return node;
+    private void bfs(char[][] grid, int i, int j) {
+        Queue<int[]> queue = new LinkedList<int[]>();
+        queue.add(new int[] { i, j });
+        grid[i][j] = '0';
+        while (!queue.isEmpty()) {
+            int[] pos = queue.poll();
+            for (int[] dir : dirs) {
+                int ni = pos[0] + dir[0];
+                int nj = pos[1] + dir[1];
+                if (ni >= 0 && ni < grid.length && nj >= 0 && nj < grid[0].length && grid[ni][nj] == '1') {
+                    grid[ni][nj] = '0';
+                    queue.add(new int[] { ni, nj });
+                }
             }
-
-            int root = getRoot(fathers.get(node));
-            fathers.put(node, root);
-            return root;
-        }
-
-        public boolean connect(int a, int b) {
-            int rootA = getRoot(a);
-            int rootB = getRoot(b);
-
-            if (rootA == rootB) {
-                return false;
-            }
-            fathers.put(rootA, rootB);
-            return true;
-        }
-
-        public void addNode(int key) {
-            fathers.put(key, key);
         }
     }
 
-    private static final int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length < 1 || grid[0].length < 1) {
-            return 0;
-        }
-
-        UnionFind uf = new UnionFind();
-        int count = 0;
+        int ans = 0;
         for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+            for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == '1') {
-                    uf.addNode(i * grid[0].length + j);
-                    count++;
+                    ans++;
+                    bfs(grid, i, j);
                 }
             }
         }
-
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == '1') {
-                    for (int[] dir : dirs) {
-                        int ni = i + dir[0];
-                        int nj = j + dir[1];
-
-                        if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != '1') {
-                            continue; 
-                        }
-
-                        if (uf.connect(ni * grid[0].length + nj, i * grid[0].length + j)) {
-                            count--;
-                        }
-                    }
-                }
-            }
-        }
-
-        return count;
+        return ans;
     }
 }

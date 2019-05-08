@@ -13,7 +13,7 @@ Leet code again
 | 300 | Medium | [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence) | ✅    |
 | 48  | Medium | [rotate-image](https://leetcode.com/problems/rotate-image)                                     | ✅    |
 | 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     | ✅    |
-| 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           |      |
+| 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           | ✅    |
 | 797 | Medium | [rabbits-in-forest](https://leetcode.com/problems/rabbits-in-forest)                           |      |
 
 ## session wish
