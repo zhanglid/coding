@@ -2,7 +2,15 @@
 
 Leet code again
 
-## Week 3 May 5, 2019 - May 12, 2019
+## Week 3 May 8, 2019 - May 12, 2019
+| No  | Level | Title                                                                    | Done |
+| --- | ----- | ------------------------------------------------------------------------ | ---- |
+| 146 | Hard  | [lru-cache](https://leetcode.com/problems/lru-cache)                     |      |
+| 42  | Hard  | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water) |      |
+| 205 | Easy  | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)   |      |
+| 1   | Easy  | [two-sum](https://leetcode.com/problems/two-sum)                         |      |
+
+## Week 3 May 5, 2019 - May 7, 2019
 | No  | Level  | Title                                                                                          | Done |
 | --- | ------ | ---------------------------------------------------------------------------------------------- | ---- |
 | 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)                     | ✅    |
@@ -23,11 +31,11 @@ Leet code again
 | 42  | Hard   | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water)                       |      |
 | 205 | Easy   | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)                         |      |
 | 1   | Easy   | [two-sum](https://leetcode.com/problems/two-sum)                                               |      |
-| 300 | Medium | [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence) |      |
-| 48  | Medium | [rotate-image](https://leetcode.com/problems/rotate-image)                                     |      |
-| 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     |      |
-| 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           |      |
-| 797 | Medium | [rabbits-in-forest](https://leetcode.com/problems/rabbits-in-forest)                           |      |
+| 300 | Medium | [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence) | ✅    |
+| 48  | Medium | [rotate-image](https://leetcode.com/problems/rotate-image)                                     | ✅    |
+| 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     | ✅    |
+| 200 | Medium | [number-of-islands](https://leetcode.com/problems/number-of-islands)                           | ✅    |
+| 797 | Medium | [rabbits-in-forest](https://leetcode.com/problems/rabbits-in-forest)                           | ✅    |
 | 23  | Hard   | [merge-k-sorted-lists](https://leetcode.com/problems/merge-k-sorted-lists)                     | ✅    |
 | 56  | Medium | [merge-intervals](https://leetcode.com/problems/merge-intervals)                               | ✅    |
 | 7   | Easy   | [reverse-integer](https://leetcode.com/problems/reverse-integer)                               | ✅    |
