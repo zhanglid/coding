@@ -1,8 +1,6 @@
 package com.zhangliang.leetcode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /*
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -20,27 +18,41 @@ return [0, 1].
 */
 
 public class TwoSum {
-	public int[] twoSum(int[] nums, int target) {
-		if (nums == null || nums.length < 2) {
-			return null;
+	class Node {
+		int val;
+		int index;
+
+		public Node(int val, int index) {
+			this.val = val;
+			this.index = index;
 		}
-
-		Map<Integer, Integer> map = new HashMap<>();
-
-		for (int i = 0; i < nums.length; i++) {
-			int diff = target - nums[i];
-			if (map.containsKey(diff)) {
-				return new int[] { map.get(diff), i };
-			}
-
-			map.put(nums[i], i);
-		}
-
-		return null;
 	}
 
-	public static void main(String[] args) {
-		TwoSum s = new TwoSum();
-		System.out.println(Arrays.toString(s.twoSum(new int[] { 2, 7, 11, 15 }, 9)));
+	public int[] twoSum(int[] nums, int target) {
+		Node[] nodes = new Node[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			nodes[i] = new Node(nums[i], i);
+		}
+		Arrays.sort(nodes, new Comparator<Node>() {
+			public int compare(Node a, Node b) {
+				return a.val - b.val;
+			}
+		});
+		int l = 0;
+		int r = nums.length - 1;
+		int[] ans = null;
+		while (l < r) {
+			int sum = nodes[l].val + nodes[r].val;
+			if (sum < target) {
+				l++;
+			} else if (sum > target) {
+				r--;
+			} else {
+				ans = new int[] { nodes[l].index, nodes[r].index };
+				break;
+			}
+		}
+
+		return ans;
 	}
 }
