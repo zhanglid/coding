@@ -7,7 +7,7 @@ Leet code again
 | --- | ----- | ------------------------------------------------------------------------ | ---- |
 | 146 | Hard  | [lru-cache](https://leetcode.com/problems/lru-cache)                     | ✅    |
 | 42  | Hard  | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water) | ✅    |
-| 205 | Easy  | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)   |      |
+| 205 | Easy  | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)   | ✅    |
 | 1   | Easy  | [two-sum](https://leetcode.com/problems/two-sum)                         |      |
 
 ## Week 3 May 5, 2019 - May 7, 2019
