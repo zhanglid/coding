@@ -6,7 +6,7 @@ Leet code again
 | No  | Level | Title                                                                    | Done |
 | --- | ----- | ------------------------------------------------------------------------ | ---- |
 | 146 | Hard  | [lru-cache](https://leetcode.com/problems/lru-cache)                     | ✅    |
-| 42  | Hard  | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water) |      |
+| 42  | Hard  | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water) | ✅    |
 | 205 | Easy  | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)   |      |
 | 1   | Easy  | [two-sum](https://leetcode.com/problems/two-sum)                         |      |
 
