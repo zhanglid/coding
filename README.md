@@ -8,7 +8,7 @@ Leet code again
 | 146 | Hard  | [lru-cache](https://leetcode.com/problems/lru-cache)                     | ✅    |
 | 42  | Hard  | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water) | ✅    |
 | 205 | Easy  | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)   | ✅    |
-| 1   | Easy  | [two-sum](https://leetcode.com/problems/two-sum)                         |      |
+| 1   | Easy  | [two-sum](https://leetcode.com/problems/two-sum)                         | ✅    |
 
 ## Week 3 May 5, 2019 - May 7, 2019
 | No  | Level  | Title                                                                                          | Done |
@@ -27,10 +27,10 @@ Leet code again
 ## session wish
 | No  | Level  | Title                                                                                          | Done |
 | --- | ------ | ---------------------------------------------------------------------------------------------- | ---- |
-| 146 | Hard   | [lru-cache](https://leetcode.com/problems/lru-cache)                                           |      |
-| 42  | Hard   | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water)                       |      |
-| 205 | Easy   | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)                         |      |
-| 1   | Easy   | [two-sum](https://leetcode.com/problems/two-sum)                                               |      |
+| 146 | Hard   | [lru-cache](https://leetcode.com/problems/lru-cache)                                           | ✅    |
+| 42  | Hard   | [trapping-rain-water](https://leetcode.com/problems/trapping-rain-water)                       | ✅    |
+| 205 | Easy   | [isomorphic-strings](https://leetcode.com/problems/isomorphic-strings)                         | ✅    |
+| 1   | Easy   | [two-sum](https://leetcode.com/problems/two-sum)                                               | ✅    |
 | 300 | Medium | [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence) | ✅    |
 | 48  | Medium | [rotate-image](https://leetcode.com/problems/rotate-image)                                     | ✅    |
 | 93  | Medium | [restore-ip-addresses](https://leetcode.com/problems/restore-ip-addresses)                     | ✅    |
