@@ -24,85 +24,91 @@ cache.get(3);       // returns 3
 cache.get(4);       // returns 4
 */
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class LRUCache {
+class LRUCache {
     class Node {
+        int key;
+        int value;
         Node next;
-        Node prev;
-        int val;
+        Node previous;
 
-        public Node(int x) {
-            val = x;
-        }
-
-        public void remove() {
-            if (prev != null) {
-                prev.next = next;
-            }
-
-            if (next != null) {
-                next.prev = prev;
-            }
-            next = null;
-            prev = null;
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
         }
     }
 
-    private Map<Integer, Integer> map;
-    private Map<Integer, Node> nodeMap;
+    private Map<Integer, Node> nodes;
     private int capacity;
     private Node head;
     private Node tail;
 
+    private void updateFreshness(Node node) {
+        removeNodeInList(node);
+        appendNodeLast(node);
+    }
+
+    private void removeNodeInList(Node node) {
+        node.previous.next = node.next;
+        if (node.next != null) {
+            node.next.previous = node.previous;
+        }
+        if (node == tail) {
+            tail = node.previous;
+        }
+    }
+
+    /**
+     * Check the current capacity, remove the if full.
+     */
+    private void ensureCapacity() {
+        if (nodes.size() >= capacity) {
+            Node nodeToBeRemoved = head.next;
+            removeNodeInList(nodeToBeRemoved);
+            nodes.remove(nodeToBeRemoved.key);
+        }
+    }
+
+    private void appendNodeLast(Node node) {
+        tail.next = node;
+        node.previous = tail;
+        node.next = null;
+        tail = node;
+    }
+
     public LRUCache(int capacity) {
+        nodes = new HashMap<>();
         this.capacity = capacity;
-        map = new HashMap<>(capacity);
-        nodeMap = new HashMap<>(capacity);
-        head = new Node(-1);
+        head = new Node(-1, -1);
         tail = head;
     }
 
     public int get(int key) {
-        Node node = nodeMap.getOrDefault(key, null);
-        if (node == null) {
+        if (!nodes.containsKey(key)) {
             return -1;
         }
-        if (node == tail) {
-            tail = node.prev;
-        }
-        node.remove();
-        tail.next = node;
-        node.prev = tail;
-        tail = node;
-        nodeMap.put(key, tail);
-        return map.getOrDefault(key, -1);
+        Node node = nodes.get(key);
+        updateFreshness(node);
+        return node.value;
     }
 
     public void put(int key, int value) {
-        while (map.size() + 1 > capacity && !nodeMap.containsKey(key)) {
-            int valueToRemove = head.next.val;
-            if (head.next == tail) {
-                tail = head;
-            }
-            head.next.remove();
-            map.remove(valueToRemove);
-            nodeMap.remove(valueToRemove);
+        // if the key is in the cache, just update;
+        if (nodes.containsKey(key)) {
+            Node node = nodes.get(key);
+            node.value = value;
+            updateFreshness(node);
+        } else {
+            ensureCapacity();
+            Node node = new Node(key, value);
+            nodes.put(key, node);
+            appendNodeLast(node);
         }
-
-        map.put(key, value);
-        if (nodeMap.containsKey(key)) {
-            Node nextNode = nodeMap.get(key);
-            if (nextNode == tail) {
-                tail = nextNode.prev;
-            }
-            nextNode.remove();
-            nodeMap.remove(key);
-        }
-        tail.next = new Node(key);
-        tail.next.prev = tail;
-        nodeMap.put(key, tail.next);
-        tail = tail.next;
     }
 }
+
+/**
+ * Your LRUCache object will be instantiated and called as such: LRUCache obj =
+ * new LRUCache(capacity); int param_1 = obj.get(key); obj.put(key,value);
+ */
