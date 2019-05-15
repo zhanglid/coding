@@ -5,9 +5,7 @@ such that a + b + c = 0? Find all unique triplets in the array which
 gives the sum of zero.
 
 Note:
-
-The solution set must not contain duplicate triplets.
-
+The solution set must not contain duplicate triplets. 
 Example:
 
 Given array nums = [-1, 0, 1, 2, -1, -4],
@@ -19,51 +17,50 @@ A solution set is:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ThreeSum {
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (nums == null || nums.length < 3) {
-            return ans;
+    class Pair implements Comparable<Pair> {
+        int value;
+        int key;
+
+        public Pair(int value, int key) {
+            this.value = value;
+            this.key = key;
         }
 
-        Arrays.sort(nums);
+        public int compareTo(Pair other) {
+            return value - other.value;
+        }
+    }
 
+    public List<List<Integer>> threeSum(int[] nums) {
+        // assume nums is non-null non-empty
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
         for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) {
+            if (i > 0 && nums[i - 1] == nums[i]) {
                 continue;
             }
-            int target = -nums[i];
-            int left = i + 1;
-            int right = nums.length - 1;
-            while (left < right) {
-                int sum = nums[left] + nums[right];
-
-                if (sum > target) {
-                    right--;
-                } else if (sum < target) {
-                    left++;
+            int l = i + 1;
+            int r = nums.length - 1;
+            while (l < r) {
+                if (l > i + 1 && nums[l] == nums[l - 1]) {
+                    l++;
+                    continue;
+                }
+                int sum = nums[l] + nums[r] + nums[i];
+                if (sum < 0) {
+                    l++;
+                } else if (sum > 0) {
+                    r--;
                 } else {
-                    List<Integer> record = new ArrayList<>();
-                    record.add(nums[i]);
-                    record.add(nums[left]);
-                    record.add(nums[right]);
-                    ans.add(record);
-                    left++;
-                    while (left < right && nums[left] == nums[left - 1]) {
-                        left++;
-                    }
+                    ans.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                    l++;
                 }
             }
         }
-        return ans;
-    }
 
-    public static void main(String[] args) {
-        ThreeSum s = new ThreeSum();
-        System.out.println(s.threeSum(new int[] { 0, 0, 0, 0 }));
+        return ans;
     }
 }

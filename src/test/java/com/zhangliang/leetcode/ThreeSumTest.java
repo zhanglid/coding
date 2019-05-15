@@ -53,12 +53,26 @@ public class ThreeSumTest {
     }
 
     @Test
-    /* Wrong Answer
-    */
+    /*
+     * Wrong Answer
+     */
     public void errCase2() {
         ThreeSum s = new ThreeSum();
         List<List<Integer>> ans = s.threeSum(new int[] { 0, 0, 0 });
         String[] expected = new String[] { "[0, 0, 0]" };
+        Arrays.sort(expected);
+        assertNotNull(ans);
+        assertArrayEquals(expected, this.transformToStrings(ans));
+    }
+
+    @Test
+    /*
+     * Wrong Answer
+     */
+    public void errCase3() {
+        ThreeSum s = new ThreeSum();
+        List<List<Integer>> ans = s.threeSum(new int[] { 1, 2, -2, -1 });
+        String[] expected = new String[] {};
         Arrays.sort(expected);
         assertNotNull(ans);
         assertArrayEquals(expected, this.transformToStrings(ans));
