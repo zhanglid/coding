@@ -3,7 +3,9 @@
 Leet code again
 
 ## Week 4 Jun 2, 2019 -
-| 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) |      |
+| No  | Level  | Title                                                                                                              | Done |
+| --- | ------ | ------------------------------------------------------------------------------------------------------------------ | ---- |
+| 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) | ✅    |
 | 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)         |      |
 | 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                               |      |
 | 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                               |      |
