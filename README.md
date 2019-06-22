@@ -9,7 +9,7 @@ Leet code again
 | 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)         | ✅    |
 | 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                               | ✅    |
 | 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                               | ✅    |
-| 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                 |      |
+| 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                 | ✅    |
 | 865 | Hard   | [robot-room-cleane](https://leetcode.com/problems/robot-room-cleane)                                               |      |
 
 ## Week 3 May 8, 2019 - May 12, 2019
