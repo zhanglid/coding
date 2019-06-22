@@ -39,10 +39,15 @@ public class TreeNode {
         }
     }
 
-    public boolean equals(TreeNode other) {
-        if (other == null) {
+    @Override
+    public boolean equals(Object unknownOther) {
+        if (unknownOther == null) {
             return false;
         }
+        if (!(unknownOther instanceof TreeNode)) {
+            return false;
+        }
+        TreeNode other = (TreeNode) (unknownOther);
 
         if (other.val != val) {
             return false;
