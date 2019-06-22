@@ -7,7 +7,7 @@ Leet code again
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------ | ---- |
 | 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) | ✅    |
 | 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)         | ✅    |
-| 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                               |      |
+| 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                               | ✅    |
 | 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                               |      |
 | 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                 |      |
 | 865 | Hard   | [robot-room-cleane](https://leetcode.com/problems/robot-room-cleane)                                               |      |
