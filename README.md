@@ -4,7 +4,7 @@ Leet code again
 ## Week 5 Jun 23, 2019 - 
 | No  | Level  | Title                                                                                                                                            | Done |
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
-| 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         |      |
+| 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         | ✅    |
 | 737 | Medium | [sentence-similarity-ii](https://leetcode.com/problems/sentence-similarity-ii)                                                                   |      |
 | 743 | Medium | [closest-leaf-in-a-binary-tree](https://leetcode.com/problems/closest-leaf-in-a-binary-tree)                                                     |      |
 | 751 | Medium | [number-of-corner-rectangles](https://leetcode.com/problems/number-of-corner-rectangles)                                                         |      |
