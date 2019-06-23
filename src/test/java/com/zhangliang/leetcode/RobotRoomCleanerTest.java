@@ -29,6 +29,7 @@ public class RobotRoomCleanerTest {
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid[i].length; j++) {
                     if (grid[i][j] == 1 && !cleaned[i][j]) {
+                        draw(i, j);
                         return false;
                     }
                 }
@@ -36,9 +37,28 @@ public class RobotRoomCleanerTest {
             return true;
         }
 
+        private void draw(int ti, int tj) {
+            for (int i = 0; i < grid.length; i++) {
+                if (i == ti) {
+                    String[] nums = new String[grid[i].length];
+                    for (int j = 0; j < nums.length; j++) {
+                        if (j == tj) {
+                            nums[j] = "X";
+                        } else {
+                            nums[j] = Integer.toString(grid[i][j]);
+                        }
+                    }
+                    System.out.println(Arrays.toString(nums));
+                } else {
+                    System.out.println(Arrays.toString(grid[i]));
+                }
+            }
+        }
+
         public boolean move() {
             int ni = i + dirs[dir][0];
             int nj = j + dirs[dir][1];
+            System.out.println(i + ", " + j + " => " + ", move: " + Arrays.toString(dirs[dir]));
             if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != 1) {
                 return false;
             }

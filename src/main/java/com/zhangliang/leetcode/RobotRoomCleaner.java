@@ -71,86 +71,89 @@ public class RobotRoomCleaner {
         public void clean();
     }
 
-    class State {
-        int stage;
+    class StateRobot {
         int offsetI;
         int offsetJ;
         int dir;
+        private Robot robot;
+
+        public StateRobot(Robot _robot) {
+            robot = _robot;
+        }
+
+        public boolean move() {
+            int nextI = offsetI + dirs[dir][0];
+            int nextJ = offsetJ + dirs[dir][1];
+            if (!robot.move()) {
+                return false;
+            }
+            offsetI = nextI;
+            offsetJ = nextJ;
+            return true;
+        }
+
+        public boolean moveIfNotCleaned() {
+            int nextI = offsetI + dirs[dir][0];
+            int nextJ = offsetJ + dirs[dir][1];
+            if (cleaned.containsKey(nextI) && cleaned.get(nextI).contains(nextJ) || !robot.move()) {
+                return false;
+            }
+            offsetI = nextI;
+            offsetJ = nextJ;
+            return true;
+        }
 
         public void turnLeft() {
-            dir = dir - 1;
+            robot.turnLeft();
+            dir -= 1;
             if (dir < 0) {
                 dir += dirs.length;
             }
         }
 
         public void turnRight() {
-            dir = dir + 1;
+            robot.turnRight();
+            dir += 1;
             if (dir >= dirs.length) {
                 dir -= dirs.length;
             }
         }
-    }
 
-    static private final int[][] dirs = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-
-    private void turnLeftRobotWithState(Robot robot, State state) {
-        robot.turnLeft();
-        state.turnLeft();
-    }
-
-    private void turnRightRobotWithState(Robot robot, State state) {
-        robot.turnRight();
-        state.turnRight();
-    }
-
-    private State moveIfNotCleaned(Robot robot, State state, Map<Integer, Set<Integer>> cleaned) {
-        int nextI = state.offsetI + dirs[state.dir][0];
-        int nextJ = state.offsetJ + dirs[state.dir][1];
-        if (cleaned.containsKey(nextI) && cleaned.get(nextI).contains(nextJ) || !robot.move()) {
-            return null;
+        public void clean() {
+            robot.clean();
+            if (!cleaned.containsKey(offsetI)) {
+                cleaned.put(offsetI, new HashSet<>());
+            }
+            cleaned.get(offsetI).add(offsetJ);
         }
-        State nextState = new State();
-        nextState.dir = state.dir;
-        nextState.offsetI = nextI;
-        nextState.offsetJ = nextJ;
-        return nextState;
     }
 
-    private void clean(Robot robot, State state, Map<Integer, Set<Integer>> cleaned) {
-        if (!cleaned.containsKey(state.offsetI)) {
-            cleaned.put(state.offsetI, new HashSet<>());
-        }
-        cleaned.get(state.offsetI).add(state.offsetJ);
+    static final int[][] dirs = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
+
+    private Map<Integer, Set<Integer>> cleaned = new HashMap<>();
+
+    private void clean(StateRobot robot) {
         robot.clean();
+        int oi = robot.offsetI;
+        int oj = robot.offsetJ;
+        for (int i = 0; i < 3; i++) {
+            if (robot.moveIfNotCleaned()) {
+                robot.turnLeft();
+                clean(robot);
+                robot.move();
+                robot.turnLeft();
+            } else {
+                robot.turnRight();
+            }
+        }
     }
 
     public void cleanRoom(Robot robot) {
-        Stack<State> states = new Stack<>();
-        states.push(new State());
-        states.peek().stage--;
-        Map<Integer, Set<Integer>> cleaned = new HashMap<>();
-        while (!states.isEmpty()) {
-            State state = states.pop();
-            if (state.stage <= 0) {
-                clean(robot, state, cleaned);
-            } else if (state.stage == 3) {
-                robot.move();
-                robot.turnLeft();
-                continue;
-            }
-            state.stage++;
-            states.push(state);
-            State nextState = moveIfNotCleaned(robot, state, cleaned);
-            if (nextState != null) {
-                turnLeftRobotWithState(robot, nextState);
-                states.push(nextState);
-                state.turnRight();
-            } else {
-                turnRightRobotWithState(robot, state);
-            }
+        StateRobot sr = new StateRobot(robot);
+        clean(sr);
+        if (sr.move()) {
+            sr.turnLeft();
+            clean(sr);
         }
-
-        System.out.println(cleaned.toString());
     }
 }
