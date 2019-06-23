@@ -1,8 +1,19 @@
 # leetcode
 
 Leet code again
+## Week 5 Jun 23, 2019 - 
+| No  | Level  | Title                                                                                                                                            | Done |
+| --- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
+| 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         |      |
+| 737 | Medium | [sentence-similarity-ii](https://leetcode.com/problems/sentence-similarity-ii)                                                                   |      |
+| 743 | Medium | [closest-leaf-in-a-binary-tree](https://leetcode.com/problems/closest-leaf-in-a-binary-tree)                                                     |      |
+| 751 | Medium | [number-of-corner-rectangles](https://leetcode.com/problems/number-of-corner-rectangles)                                                         |      |
+| 752 | Easy   | [ip-to-cidr](https://leetcode.com/problems/ip-to-cidr)                                                                                           |      |
+| 758 | Medium | [convert-binary-search-tree-to-sorted-doubly-linked-list](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list) |      |
+| 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       |      |
+| 761 | Hard   | [employee-free-time](https://leetcode.com/problems/employee-free-time)                                                                           |      |
 
-## Week 4 Jun 2, 2019 -
+## Week 4 Jun 2, 2019 - Jun 23, 2019
 | No  | Level  | Title                                                                                                              | Done |
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------ | ---- |
 | 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size) | ✅    |
@@ -173,12 +184,12 @@ Leet code again
 | 758 | Medium | [convert-binary-search-tree-to-sorted-doubly-linked-list](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list) |      |
 | 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       |      |
 | 761 | Hard   | [employee-free-time](https://leetcode.com/problems/employee-free-time)                                                                           |      |
-| 762 | Easy   | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                                                                     |      |
-| 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)                                       |      |
-| 785 | Hard   | [basic-calculator-iii](https://leetcode.com/problems/basic-calculator-iii)                                                                       |      |
-| 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size)                               |      |
-| 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)                                       |      |
-| 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                                                             |      |
-| 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                                                             |      |
-| 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                                               |      |
-| 865 | Hard   | [robot-room-cleaner](https://leetcode.com/problems/robot-room-cleaner)                                                                           |      |
+| 762 | Easy   | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                                                                     | ✅    |
+| 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)                                       | ✅    |
+| 785 | Hard   | [basic-calculator-iii](https://leetcode.com/problems/basic-calculator-iii)                                                                       | ✅    |
+| 786 | Medium | [search-in-a-sorted-array-of-unknown-size](https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size)                               | ✅    |
+| 788 | Hard   | [minimize-max-distance-to-gas-station](https://leetcode.com/problems/minimize-max-distance-to-gas-station)                                       | ✅    |
+| 791 | Medium | [split-bst](https://leetcode.com/problems/split-bst)                                                                                             | ✅    |
+| 818 | Easy   | [similar-rgb-color](https://leetcode.com/problems/similar-rgb-color)                                                                             | ✅    |
+| 850 | Medium | [insert-into-a-cyclic-sorted-list](https://leetcode.com/problems/insert-into-a-cyclic-sorted-list)                                               | ✅    |
+| 865 | Hard   | [robot-room-cleaner](https://leetcode.com/problems/robot-room-cleaner)                                                                           | ✅    |
