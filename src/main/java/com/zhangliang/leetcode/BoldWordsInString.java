@@ -21,20 +21,7 @@ All characters in words[i] and S are lowercase letters.
 import java.util.*;
 
 public class BoldWordsInString {
-    public String boldWords(String[] words, String S) {
-        boolean[] boldStatuses = new boolean[S.length()];
-        Set<String> wordsSet = new HashSet<>();
-        for (String word : words) {
-            wordsSet.add(word);
-        }
-        for (int i = 0; i < S.length(); i++) {
-            for (int j = i + 1; j <= S.length(); j++) {
-                String s = S.substring(i, j);
-                if (wordsSet.contains(s)) {
-                    Arrays.fill(boldStatuses, i, j, true);
-                }
-            }
-        }
+    private String build(boolean[] boldStatuses, String S) {
         StringBuilder sb = new StringBuilder();
         int l = 0;
         for (int i = 1; i <= boldStatuses.length; i++) {
@@ -49,5 +36,29 @@ public class BoldWordsInString {
             }
         }
         return sb.toString();
+    }
+
+    private boolean[] getStatus(String[] words, String S) {
+        boolean[] boldStatuses = new boolean[S.length()];
+        Set<String> wordsSet = new HashSet<>();
+        int wordMaxLength = 0;
+        for (String word : words) {
+            wordMaxLength = Math.max(wordMaxLength, word.length());
+            wordsSet.add(word);
+        }
+        for (int i = 0; i < S.length(); i++) {
+            for (int j = Math.min(i + wordMaxLength, S.length()); j >= i + 1; j--) {
+                String s = S.substring(i, j);
+                if (wordsSet.contains(s)) {
+                    Arrays.fill(boldStatuses, i, j, true);
+                    break;
+                }
+            }
+        }
+        return boldStatuses;
+    }
+
+    public String boldWords(String[] words, String S) {
+        return build(getStatus(words, S), S);
     }
 }
