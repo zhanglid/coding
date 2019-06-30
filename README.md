@@ -10,7 +10,7 @@ Leet code again
 | 751 | Medium | [number-of-corner-rectangles](https://leetcode.com/problems/number-of-corner-rectangles)                                                         | ✅    |
 | 752 | Easy   | [ip-to-cidr](https://leetcode.com/problems/ip-to-cidr)                                                                                           | ✅    |
 | 758 | Medium | [convert-binary-search-tree-to-sorted-doubly-linked-list](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list) | ✅    |
-| 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       |      |
+| 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       | ✅    |
 | 761 | Hard   | [employee-free-time](https://leetcode.com/problems/employee-free-time)                                                                           |      |
 
 ## Week 4 Jun 2, 2019 - Jun 23, 2019
