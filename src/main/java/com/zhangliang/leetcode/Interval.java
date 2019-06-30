@@ -27,6 +27,15 @@ public class Interval {
         return "[" + start + ", " + end + "]";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Interval)) {
+            return false;
+        }
+        Interval other = (Interval) obj;
+        return other.start == start && other.end == end;
+    }
+
     public static List<Interval> getIntervalsList(int[][] intervals) {
         List<Interval> ans = new ArrayList<>();
 
