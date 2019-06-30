@@ -1,7 +1,22 @@
 # leetcode
-
 Leet code again
-## Week 5 Jun 23, 2019 - 
+
+## Week 6 Jun 30, 2019 -
+| No  | Level  | Title                                                                                                | Done |
+| --- | ------ | ---------------------------------------------------------------------------------------------------- | ---- |
+| 635 | Medium | [design-log-storage-system](https://leetcode.com/problems/design-log-storage-system)                 |      |
+| 642 | Hard   | [design-search-autocomplete-system](https://leetcode.com/problems/design-search-autocomplete-system) |      |
+| 644 | Hard   | [maximum-average-subarray-ii](https://leetcode.com/problems/maximum-average-subarray-ii)             |      |
+| 651 | Medium | [4-keys-keyboard](https://leetcode.com/problems/4-keys-keyboard)                                     |      |
+| 656 | Hard   | [coin-path](https://leetcode.com/problems/coin-path)                                                 |      |
+| 681 | Medium | [next-closest-time](https://leetcode.com/problems/next-closest-time)                                 |      |
+| 683 | Hard   | [k-empty-slots](https://leetcode.com/problems/k-empty-slots)                                         |      |
+| 694 | Medium | [number-of-distinct-islands](https://leetcode.com/problems/number-of-distinct-islands)               |      |
+| 716 | Easy   | [max-stack](https://leetcode.com/problems/max-stack)                                                 |      |
+| 723 | Medium | [candy-crush](https://leetcode.com/problems/candy-crush)                                             |      |
+| 727 | Hard   | [minimum-window-subsequence](https://leetcode.com/problems/minimum-window-subsequence)               |      |
+
+## Week 5 Jun 23, 2019 - Jun 30, 2019
 | No  | Level  | Title                                                                                                                                            | Done |
 | --- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---- |
 | 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         | ✅    |
@@ -176,14 +191,14 @@ Leet code again
 | 716 | Easy   | [max-stack](https://leetcode.com/problems/max-stack)                                                                                             |      |
 | 723 | Medium | [candy-crush](https://leetcode.com/problems/candy-crush)                                                                                         |      |
 | 727 | Hard   | [minimum-window-subsequence](https://leetcode.com/problems/minimum-window-subsequence)                                                           |      |
-| 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         |      |
-| 737 | Medium | [sentence-similarity-ii](https://leetcode.com/problems/sentence-similarity-ii)                                                                   |      |
-| 743 | Medium | [closest-leaf-in-a-binary-tree](https://leetcode.com/problems/closest-leaf-in-a-binary-tree)                                                     |      |
-| 751 | Medium | [number-of-corner-rectangles](https://leetcode.com/problems/number-of-corner-rectangles)                                                         |      |
-| 752 | Easy   | [ip-to-cidr](https://leetcode.com/problems/ip-to-cidr)                                                                                           |      |
-| 758 | Medium | [convert-binary-search-tree-to-sorted-doubly-linked-list](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list) |      |
-| 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       |      |
-| 761 | Hard   | [employee-free-time](https://leetcode.com/problems/employee-free-time)                                                                           |      |
+| 734 | Easy   | [sentence-similarity](https://leetcode.com/problems/sentence-similarity)                                                                         | ✅    |
+| 737 | Medium | [sentence-similarity-ii](https://leetcode.com/problems/sentence-similarity-ii)                                                                   | ✅    |
+| 743 | Medium | [closest-leaf-in-a-binary-tree](https://leetcode.com/problems/closest-leaf-in-a-binary-tree)                                                     | ✅    |
+| 751 | Medium | [number-of-corner-rectangles](https://leetcode.com/problems/number-of-corner-rectangles)                                                         | ✅    |
+| 752 | Easy   | [ip-to-cidr](https://leetcode.com/problems/ip-to-cidr)                                                                                           | ✅    |
+| 758 | Medium | [convert-binary-search-tree-to-sorted-doubly-linked-list](https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list) | ✅    |
+| 760 | Easy   | [bold-words-in-string](https://leetcode.com/problems/bold-words-in-string)                                                                       | ✅    |
+| 761 | Hard   | [employee-free-time](https://leetcode.com/problems/employee-free-time)                                                                           | ✅    |
 | 762 | Easy   | [find-anagram-mappings](https://leetcode.com/problems/find-anagram-mappings)                                                                     | ✅    |
 | 765 | Hard   | [serialize-and-deserialize-n-ary-tree](https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree)                                       | ✅    |
 | 785 | Hard   | [basic-calculator-iii](https://leetcode.com/problems/basic-calculator-iii)                                                                       | ✅    |
