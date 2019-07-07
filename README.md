@@ -5,7 +5,7 @@ Leet code again
 | No  | Level  | Title                                                                                                | Done |
 | --- | ------ | ---------------------------------------------------------------------------------------------------- | ---- |
 | 635 | Medium | [design-log-storage-system](https://leetcode.com/problems/design-log-storage-system)                 | ✅    |
-| 642 | Hard   | [design-search-autocomplete-system](https://leetcode.com/problems/design-search-autocomplete-system) |      |
+| 642 | Hard   | [design-search-autocomplete-system](https://leetcode.com/problems/design-search-autocomplete-system) | ✅    |
 | 644 | Hard   | [maximum-average-subarray-ii](https://leetcode.com/problems/maximum-average-subarray-ii)             |      |
 | 651 | Medium | [4-keys-keyboard](https://leetcode.com/problems/4-keys-keyboard)                                     |      |
 | 656 | Hard   | [coin-path](https://leetcode.com/problems/coin-path)                                                 |      |
