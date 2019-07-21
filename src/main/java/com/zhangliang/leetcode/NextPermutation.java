@@ -16,44 +16,30 @@ outputs are in the right-hand column.
 1,1,5 → 1,5,1
 */
 
-import java.util.Arrays;
+import java.util.*;
 
 public class NextPermutation {
     public void nextPermutation(int[] nums) {
-        if (nums == null || nums.length < 2) {
+        if (nums == null || nums.length < 1) {
             return;
         }
-
-        int i = nums.length - 2;
-        while (i >= 0 && nums[i] >= nums[i + 1]) {
-            i--;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (stack.isEmpty() || nums[stack.peek()] <= nums[i]) {
+                stack.push(i);
+            } else {
+                int lastIndex = -1;
+                while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
+                    lastIndex = stack.pop();
+                }
+                int temp = nums[i];
+                nums[i] = nums[lastIndex];
+                nums[lastIndex] = temp;
+                Arrays.sort(nums, i + 1, nums.length);
+                return;
+            }
         }
 
-        if (i == -1) {
-            Arrays.sort(nums);
-            return;
-        }
-
-        Arrays.sort(nums, i + 1, nums.length);
-
-        int j = i + 1;
-        while (j < nums.length && nums[j] <= nums[i]) {
-            j++;
-        }
-
-        swap(nums, i, j);
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
-    }
-
-    public static void main(String[] args) {
-        NextPermutation s = new NextPermutation();
-        int[] ans = new int[] { 2, 3, 1 };
-        s.nextPermutation(ans);
-        System.out.println(Arrays.toString(ans));
+        Arrays.sort(nums);
     }
 }

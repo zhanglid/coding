@@ -35,4 +35,12 @@ public class NextPermutationTest {
         s.nextPermutation(ans);
         assertArrayEquals(ans, new int[] { 3, 1, 2 });
     }
+
+    @Test
+    public void errCase4() {
+        NextPermutation s = new NextPermutation();
+        int[] ans = new int[] { 1, 1 };
+        s.nextPermutation(ans);
+        assertArrayEquals(ans, new int[] { 1, 1 });
+    }
 }
