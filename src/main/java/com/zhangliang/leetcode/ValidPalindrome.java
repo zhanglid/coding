@@ -1,8 +1,10 @@
 package com.zhangliang.leetcode;
 /*
-Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+Given a string, determine if it is a palindrome, considering only 
+alphanumeric characters and ignoring cases.
 
-Note: For the purpose of this problem, we define empty string as valid palindrome.
+Note: For the purpose of this problem, we define empty string as valid 
+palindrome.
 
 Example 1:
 
@@ -15,60 +17,43 @@ Output: false
 */
 
 public class ValidPalindrome {
-
-    private boolean isChar(char x) {
-        return (x <= 'z' && x >= 'a') || (x <= 'Z' && x >= 'A');
+    private boolean isIgnoredChar(char x) {
+        if (x >= 'A' && x <= 'Z') {
+            return false;
+        } else if (x >= 'a' && x <= 'z') {
+            return false;
+        } else if (x >= '0' && x <= '9') {
+            return false;
+        }
+        return true;
     }
 
-    private boolean isValidChar(char x) {
-        if (isChar(x)) {
-            return true;
+    private char normalize(char a) {
+        if (a >= 'A' && a <= 'Z') {
+            a += 'a' - 'A';
         }
-
-        if (x >= '0' && x <= '9') {
-            return true;
-        }
-        return false;
+        return a;
     }
 
     private boolean isSame(char a, char b) {
-        if (a == b) {
-            return true;
-        }
-
-        if (isChar(a) && isChar(b)) {
-            return Math.abs((int) a - b) == Math.abs('A' - 'a');
-        }
-
-        return false;
+        return normalize(a) == normalize(b);
     }
 
     public boolean isPalindrome(String s) {
-        if (s == null || s.isEmpty()) {
-            return true;
+        if (s == null) {
+            return false;
         }
-
-        int left = 0;
-        int right = s.length() - 1;
-        while (left < right) {
-            if (!isValidChar(s.charAt(left))) {
-                left++;
-                continue;
-            }
-
-            if (!isValidChar(s.charAt(right))) {
-                right--;
-                continue;
-            }
-
-            if (!isSame(s.charAt(left), s.charAt(right))) {
+        int l = 0;
+        int r = s.length() - 1;
+        while (l < r) {
+            if (isIgnoredChar(s.charAt(l))) {
+                l++;
+            } else if (isIgnoredChar(s.charAt(r))) {
+                r--;
+            } else if (!isSame(s.charAt(l++), s.charAt(r--))) {
                 return false;
             }
-
-            left++;
-            right--;
         }
-
         return true;
     }
 }
