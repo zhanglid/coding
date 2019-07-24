@@ -28,4 +28,11 @@ public class ValidateBinarySearchTreeTest {
         boolean ans = s.isValidBST(null);
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase3() {
+        ValidateBinarySearchTree s = new ValidateBinarySearchTree();
+        boolean ans = s.isValidBST(new TreeNode(new Integer[] { 1, 1 }));
+        assertEquals(false, ans);
+    }
 }
