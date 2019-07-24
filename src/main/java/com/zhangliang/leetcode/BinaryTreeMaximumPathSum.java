@@ -14,6 +14,7 @@ Input: [1,2,3]
      2   3
 
 Output: 6
+
 Example 2:
 
 Input: [-10,9,20,null,null,15,7]
@@ -30,37 +31,37 @@ Output: 42
 import com.zhangliang.utils.TreeNode;
 
 public class BinaryTreeMaximumPathSum {
-    private int maxSum;
 
-    public int maxPathSum(TreeNode root) {
+    // [maxSum, maxToRoot]
+    private int[] helper(TreeNode root) {
         if (root == null) {
-            return 0;
+            return null;
         }
-        maxSum = root.val;
-        helper(root);
-
-        return maxSum;
+        int[] left = helper(root.left);
+        int[] right = helper(root.right);
+        int maxToRoot = 0;
+        int sumWithRoot = root.val;
+        int maxSum = root.val;
+        if (left != null) {
+            if (left[1] > 0) {
+                sumWithRoot += left[1];
+            }
+            maxToRoot = Math.max(maxToRoot, left[1]);
+            maxSum = Math.max(maxSum, left[0]);
+        }
+        if (right != null) {
+            if (right[1] > 0) {
+                sumWithRoot += right[1];
+            }
+            maxToRoot = Math.max(maxToRoot, right[1]);
+            maxSum = Math.max(maxSum, right[0]);
+        }
+        maxToRoot += root.val;
+        return new int[] { Math.max(maxSum, sumWithRoot), maxToRoot };
     }
 
-    private int helper(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        int sum = root.val;
-        int left = helper(root.left);
-        int right = helper(root.right);
-
-        if (left > 0) {
-            sum += left;
-        }
-
-        if (right > 0) {
-            sum += right;
-        }
-
-        maxSum = Math.max(maxSum, sum);
-
-        return Math.max(0, Math.max(left, right)) + root.val;
+    public int maxPathSum(TreeNode root) {
+        int[] ans = helper(root);
+        return ans == null ? 0 : ans[0];
     }
 }
