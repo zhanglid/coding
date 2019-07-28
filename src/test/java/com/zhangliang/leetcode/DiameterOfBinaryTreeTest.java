@@ -12,4 +12,11 @@ public class DiameterOfBinaryTreeTest {
         int ans = s.diameterOfBinaryTree(new TreeNode(new Integer[] { 1, 2, 3, 4, 5 }));
         assertEquals(3, ans);
     }
+
+    @Test
+    public void testCase2() {
+        DiameterOfBinaryTree s = new DiameterOfBinaryTree();
+        int ans = s.diameterOfBinaryTree(null);
+        assertEquals(0, ans);
+    }
 }
