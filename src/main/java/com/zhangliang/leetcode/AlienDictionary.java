@@ -1,9 +1,9 @@
 package com.zhangliang.leetcode;
 /*
 There is a new alien language which uses the latin alphabet. However, the order 
-among letters are unknown to you. You receive a list of non-empty words from the dictionary, 
-where words are sorted lexicographically by the rules of this new language. Derive the order 
-of letters in this language.
+among letters are unknown to you. You receive a list of non-empty words from the 
+dictionary, where words are sorted lexicographically by the rules of this new 
+language. Derive the order of letters in this language.
 
 Example 1:
 
@@ -46,73 +46,93 @@ If the order is invalid, return an empty string.
 There may be multiple valid order of letters, return any one of them is fine.
 */
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AlienDictionary {
-    public String alienOrder(String[] words) {
-        if (words == null || words.length < 1) {
-            return "";
-        }
-
-        Map<Character, Set<Character>> neighbors = new HashMap<>();
-
-        for (int i = 0; i < words.length; i++) {
-            for (char x : words[i].toCharArray()) {
-                if (!neighbors.containsKey(x)) {
-                    neighbors.put(x, new HashSet<>());
-                }
-            }
-
-            if (i > 0) {
-                int j = 0;
-                int len = Math.min(words[i].length(), words[i - 1].length());
-                for (; j < len; j++) {
-                    if (words[i].charAt(j) != words[i - 1].charAt(j)) {
-                        break;
-                    }
-                }
-                if (j == len) {
-                    continue;
-                }
-                neighbors.get(words[i - 1].charAt(j)).add(words[i].charAt(j));
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-        Set<Character> visited = new HashSet<>();
-        for (char x : neighbors.keySet()) {
-            if (!helper(x, visited, sb, new HashSet<>(), neighbors)) {
-                sb.delete(0, sb.length());
-                break;
-            }
-        }
-
-        sb.reverse();
-
-        return sb.toString();
+    private int toInt(char x) {
+        return x - 'a';
     }
 
-    private boolean helper(Character c, Set<Character> visited, StringBuilder sb, Set<Character> path,
-            Map<Character, Set<Character>> neighbors) {
-        if (path.contains(c)) {
-            return false;
+    private List<Character> topoSort(boolean[][] graph) {
+        Set<Character> visited = new HashSet<>();
+        List<Character> ans = new LinkedList<>();
+        for (char x = 'a'; x <= 'z'; x++) {
+            if (visited.contains(x)) {
+                continue;
+            }
+            Set<Character> path = new HashSet<>();
+            List<Character> pathList = topoSortHelper(graph, x, visited, path);
+            if (pathList == null) {
+                return null;
+            }
+            visited.addAll(pathList);
+            pathList.addAll(ans);
+            ans = pathList;
         }
-        if (visited.contains(c)) {
-            return true;
+        return ans;
+    }
+
+    private List<Character> topoSortHelper(boolean[][] graph, char ch, Set<Character> visited, Set<Character> path) {
+        List<Character> ans = new LinkedList<>();
+        if (visited.contains(ch) || !graph[toInt(ch)][toInt(ch)]) {
+            return ans;
         }
-        path.add(c);
-        visited.add(c);
-        for (char x : neighbors.get(c)) {
-            if (!helper(x, visited, sb, path, neighbors)) {
-                return false;
+        if (path.contains(ch)) {
+            return null;
+        }
+        ans.add(ch);
+        path.add(ch);
+        for (char other = 'a'; other <= 'z'; other++) {
+            if (graph[toInt(ch)][toInt(other)] && other != ch) {
+                List<Character> rest = topoSortHelper(graph, other, visited, path);
+                if (rest == null) {
+                    return null;
+                }
+                visited.addAll(rest);
+                ans.addAll(rest);
             }
         }
+        path.remove(ch);
+        return ans;
+    }
 
-        sb.append(c);
-        path.remove(c);
-        return true;
+    /**
+     * Build the graph from string.
+     */
+    private boolean[][] buildGraph(String[] words) {
+        boolean[][] graph = new boolean[26][26];
+        String prev = "";
+        for (String word : words) {
+            boolean diff = false;
+            for (int i = 0; i < word.length(); i++) {
+                // set self -> self to true to indicate a char exists
+                graph[toInt(word.charAt(i))][toInt(word.charAt(i))] = true;
+                // prev has char
+                if (i < prev.length()) {
+                    if (prev.charAt(i) == word.charAt(i)) {
+                        continue;
+                    }
+                    if (!diff) {
+                        diff = true;
+                        graph[toInt(prev.charAt(i))][toInt(word.charAt(i))] = true;
+                    }
+                }
+            }
+            prev = word;
+        }
+        return graph;
+    }
+
+    public String alienOrder(String[] words) {
+        boolean[][] graph = buildGraph(words);
+        List<Character> ans = topoSort(graph);
+        if (ans == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Character ch : ans) {
+            sb.append(ch);
+        }
+        return sb.toString();
     }
 }
