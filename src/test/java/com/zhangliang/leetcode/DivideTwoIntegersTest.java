@@ -53,4 +53,11 @@ public class DivideTwoIntegersTest {
         int ans = s.divide(-1010369383, -2147483648);
         assertEquals(0, ans);
     }
+
+    @Test
+    public void errCase6() {
+        DivideTwoIntegers s = new DivideTwoIntegers();
+        int ans = s.divide(2, 2);
+        assertEquals(1, ans);
+    }
 }

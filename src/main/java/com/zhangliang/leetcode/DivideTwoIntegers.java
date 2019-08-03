@@ -8,15 +8,14 @@ Return the quotient after dividing dividend by divisor.
 The integer division should truncate toward zero.
 
 Example 1:
-
 Input: dividend = 10, divisor = 3
 Output: 3
-Example 2:
 
+Example 2:
 Input: dividend = 7, divisor = -3
 Output: -2
-Note:
 
+Note:
 Both dividend and divisor will be 32-bit signed integers.
 The divisor will never be 0.
 Assume we are dealing with an environment which could only store integers 
@@ -27,50 +26,38 @@ result overflows.
 
 public class DivideTwoIntegers {
     public int divide(int dividend, int divisor) {
-        if (divisor == Integer.MIN_VALUE) {
+        // overflow: divisor = +-1
+        if (divisor == 1) {
+            return dividend;
+        }
+        if (divisor == -1) {
             if (dividend == Integer.MIN_VALUE) {
-                return 1;
+                return Integer.MAX_VALUE;
             }
-
-            return 0;
+            return -dividend;
         }
 
-        int offset = 0;
-        if (dividend == Integer.MIN_VALUE) {
-            dividend += Math.abs(divisor);
-            offset += 1;
+        int sign = (dividend >= 0 && divisor > 0 || dividend < 0 && divisor < 0) ? 1 : -1;
+        if (dividend > 0) {
+            dividend = -dividend;
         }
-        boolean isPostive = (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0);
-
-        dividend = Math.abs(dividend);
-        divisor = Math.abs(divisor);
-
-        int base = divisor;
-        int baseIndex = 1;
-
-        while (base * 2 < dividend && base * 2 > base) {
-            base *= 2;
-            baseIndex *= 2;
+        if (divisor > 0) {
+            divisor = -divisor;
         }
-
-        int ans = 0;
-        while (dividend >= divisor) {
-            if (dividend >= base) {
-                dividend -= base;
-                ans += baseIndex;
+        int base = 1;
+        while ((divisor + divisor) >= dividend && ((divisor + divisor) >> 1 == divisor)) {
+            divisor += divisor;
+            base = base << 1;
+        }
+        int result = 0;
+        while (base > 0) {
+            if (dividend <= divisor) {
+                result += base;
+                dividend -= divisor;
             }
             base = base >> 1;
-            baseIndex = baseIndex >> 1;
+            divisor = divisor >> 1;
         }
-
-        if (ans + offset < 0) {
-            if (isPostive) {
-                return Integer.MAX_VALUE;
-            } else {
-                return Integer.MIN_VALUE;
-            }
-        }
-        ans += offset;
-        return isPostive ? ans : -ans;
+        return sign * result;
     }
 }
