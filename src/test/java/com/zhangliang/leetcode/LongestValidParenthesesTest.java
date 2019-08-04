@@ -9,13 +9,20 @@ public class LongestValidParenthesesTest {
     public void testCase() {
         LongestValidParentheses s = new LongestValidParentheses();
         int ans = s.longestValidParentheses("(()");
-        assertEquals(ans, 2);
+        assertEquals(2, ans);
     }
 
     @Test
     public void testCase2() {
         LongestValidParentheses s = new LongestValidParentheses();
         int ans = s.longestValidParentheses(")()())");
-        assertEquals(ans, 4);
+        assertEquals(4, ans);
+    }
+
+    @Test
+    public void testCase3() {
+        LongestValidParentheses s = new LongestValidParentheses();
+        int ans = s.longestValidParentheses("()(()");
+        assertEquals(2, ans);
     }
 }
