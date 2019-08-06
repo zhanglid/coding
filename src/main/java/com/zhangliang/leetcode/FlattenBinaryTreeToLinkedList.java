@@ -31,22 +31,16 @@ public class FlattenBinaryTreeToLinkedList {
         if (root == null) {
             return;
         }
-
         flatten(root.left);
         flatten(root.right);
-
-        TreeNode leftEnd = root.left;
-
-        while (leftEnd != null && leftEnd.right != null) {
-            leftEnd = leftEnd.right;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        root.left = null;
+        root.right = left;
+        TreeNode cur = root;
+        while (cur.right != null) {
+            cur = cur.right;
         }
-
-        if (leftEnd != null) {
-            leftEnd.right = root.right;
-
-            root.right = root.left;
-
-            root.left = null;
-        }
+        cur.right = right;
     }
 }

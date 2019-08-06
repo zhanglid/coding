@@ -51,4 +51,10 @@ public class RegularExpressionMatchingTest {
         boolean ans = s.isMatch("aaa", "ab*a*c*a");
         assertEquals(ans, true);
     }
+
+    @Test
+    public void errCase3() {
+        boolean ans = s.isMatch("a", ".*..a*");
+        assertEquals(ans, false);
+    }
 }

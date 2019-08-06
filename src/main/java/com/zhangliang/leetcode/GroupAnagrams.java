@@ -17,11 +17,7 @@ All inputs will be in lowercase.
 The order of your output does not matter.
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GroupAnagrams {
     private String hash(String s) {
@@ -31,25 +27,14 @@ public class GroupAnagrams {
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        List<List<String>> ans = new ArrayList<>();
-        if (strs == null | strs.length < 1) {
-            return ans;
-        }
-
-        Map<String, List<String>> map = new HashMap<>();
+        Map<String, List<String>> groups = new HashMap<>();
         for (String s : strs) {
-            String key = hash(s);
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
+            String h = hash(s);
+            if (!groups.containsKey(h)) {
+                groups.put(h, new ArrayList<>());
             }
-
-            map.get(key).add(s);
+            groups.get(h).add(s);
         }
-
-        for (List<String> group : map.values()) {
-            ans.add(group);
-        }
-
-        return ans;
+        return new ArrayList<>(groups.values());
     }
 }

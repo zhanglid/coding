@@ -3,9 +3,7 @@ package com.zhangliang.leetcode;
 Convert a BST to a sorted circular doubly-linked list in-place. Think of the left and 
 right pointers as synonymous to the previous and next pointers in a doubly-linked list.
 
-Let's take the following BST as an example, it may help you understand the problem 
-better:
-
+Let's take the following BST as an example, it may help you understand the problem better:
  
 We want to transform this BST into a circular doubly linked list. Each node in a doubly 
 linked list has a predecessor and successor. For a circular doubly linked list, the 
@@ -34,48 +32,22 @@ public class ConvertBinarySearchTreeToSortedDoublyLinkedList {
         }
         TreeNode left = treeToDoublyList(root.left);
         TreeNode right = treeToDoublyList(root.right);
-        /**
-         * 1. no left & no right connect itself and return.
-         * 
-         * 2. no left has right right side is greater than root, put root as head and
-         * return root;
-         * 
-         * 3. no right has left left side is smaller than root. put root before head
-         * return head;
-         * 
-         * 4. has both we can do 2 and connect right to the list.
-         * 
-         * Abstract: we have 3 circle to connect. left could be empty, root is a single
-         * node circle, right also could be empty. combine three circles.
-         */
-
-        TreeNode head = root;
-
-        // self circle.
         root.left = root;
         root.right = root;
-
-        // left circle.
         if (left != null) {
-            // update head
-            head = left;
-            TreeNode prev = left.left;
-            prev.right = root;
-            root.left = prev;
+            left.left.right = root;
+            root.left = left.left;
             root.right = left;
             left.left = root;
+            root = left;
         }
-
-        // right circle
         if (right != null) {
-            TreeNode prev = head.left;
-            TreeNode rightPrev = right.left;
-            prev.right = right;
-            right.left = prev;
-            rightPrev.right = head;
-            head.left = rightPrev;
+            root.left.right = right;
+            right.left.right = root;
+            TreeNode max = right.left;
+            right.left = root.left;
+            root.left = max;
         }
-
-        return head;
+        return root;
     }
 }

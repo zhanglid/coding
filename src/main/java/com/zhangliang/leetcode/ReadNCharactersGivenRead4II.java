@@ -23,62 +23,60 @@ read("abc", 4) // returns "abc"
 read("abc", 1); // returns ""
 */
 
-public class ReadNCharactersGivenRead4II {
-    private int cacheSize = 0;
-    private int cacheIndex = 0;
-    private int curIndex = 0;
-    private char[] cache = new char[4];
-    private char[] buf;
+import com.zhangliang.utils.Reader4;
 
-    public ReadNCharactersGivenRead4II(char[] buf) {
-        this.buf = buf;
+public class ReadNCharactersGivenRead4II extends Reader4 {
+    public ReadNCharactersGivenRead4II(char[] chars) {
+        super(chars);
     }
 
-    private int read4(char[] buf) {
-        int count = Math.min(4, this.buf.length - curIndex);
+    // circle buffer
+    private char[] extraBuffer = new char[4];
+    private int extraBufferSize;
+    private int extraBufferStartIndex;
 
-        for (int i = curIndex; i < curIndex + count; i++) {
-            buf[i - curIndex] = this.buf[curIndex];
-        }
-        curIndex += count;
-        return count;
-    }
-
+    /**
+     * @param buf Destination buffer
+     * @param n   Number of characters to read
+     * @return The number of actual characters read
+     */
     public int read(char[] buf, int n) {
-        if (n < 1) {
+        if (n <= 0 || buf == null) {
             return 0;
         }
-
-        int index = 0;
-        for (int i = 0; i < Math.min(cacheSize, n); i++) {
-            buf[index++] = cache[cacheIndex++];
-            cacheIndex %= cache.length;
+        int i = 0;
+        // read from last left
+        if (extraBufferSize > 0) {
+            int j = 0;
+            for (; j < extraBufferSize && i + j < n; j++) {
+                buf[i + j] = extraBuffer[(extraBufferStartIndex + j) % extraBuffer.length];
+            }
+            extraBufferSize -= j;
+            i += j;
+            extraBufferStartIndex += j;
+            extraBufferStartIndex %= extraBuffer.length;
         }
-        cacheSize -= index;
-        n -= index;
 
-        while (n > 0) {
-            char[] buf4 = new char[4];
-            int realReadNum = read4(buf4);
-            if (realReadNum < 1) {
+        // read from read4
+        char[] buf4 = new char[4];
+        while (i < n) {
+            int num = read4(buf4);
+            int j = 0;
+            for (; j < num && i + j < n; j++) {
+                buf[i + j] = buf4[j];
+            }
+            if (j < num) {
+                extraBufferSize = num - j;
+                for (int t = 0; t < extraBufferSize; t++) {
+                    extraBuffer[(extraBufferStartIndex + t) % extraBuffer.length] = buf4[j + t];
+                }
+            }
+            i += j;
+            if (num < 4) {
                 break;
             }
-            int buf4index = 0;
-            while (n > 0 && realReadNum > 0) {
-                buf[index++] = buf4[buf4index++];
-                realReadNum--;
-                n--;
-            }
-
-            int cacheWriteIndex = cacheIndex;
-            while (realReadNum > 0) {
-                cache[cacheWriteIndex++] = buf4[buf4index++];
-                realReadNum--;
-                cacheWriteIndex = cacheWriteIndex % cache.length;
-                cacheSize++;
-            }
         }
 
-        return index;
+        return i;
     }
 }

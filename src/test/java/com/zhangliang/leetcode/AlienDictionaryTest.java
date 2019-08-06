@@ -25,4 +25,13 @@ public class AlienDictionaryTest {
         String ans = s.alienOrder(new String[] { "z", "x", "z" });
         assertEquals("", ans);
     }
+
+    @Test
+    public void errCase() {
+        AlienDictionary s = new AlienDictionary();
+        String ans = s.alienOrder(
+                new String[] { "ri", "xz", "qxf", "jhsguaw", "dztqrbwbm", "dhdqfb", "jdv", "fcgfsilnb", "ooby" });
+        assertEquals("", ans);
+    }
+
 }

@@ -16,30 +16,21 @@ Output: "10101"
 
 public class AddBinary {
     public String addBinary(String a, String b) {
-        if (a == null || b == null) {
-            return "0";
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        int cur1 = a.length() - 1;
-        int cur2 = b.length() - 1;
+        int[] digits = new int[Math.max(a.length(), b.length()) + 1];
         int step = 0;
-
-        while (cur1 >= 0 || cur2 >= 0) {
-            int n1 = cur1 >= 0 ? a.charAt(cur1) - '0' : 0;
-            int n2 = cur2 >= 0 ? b.charAt(cur2) - '0' : 0;
-            int sum = n1 + n2 + step;
-            sb.insert(0, sum % 2);
+        for (int i = 0; i <= Math.max(a.length(), b.length()); i++) {
+            int ai = a.length() - 1 - i;
+            int bi = b.length() - 1 - i;
+            int sum = (ai >= 0 ? (a.charAt(ai) - '0') : 0) + (bi >= 0 ? (b.charAt(bi) - '0') : 0) + step;
+            digits[digits.length - i - 1] = sum % 2;
             step = sum / 2;
-            cur1--;
-            cur2--;
         }
-
-        if (step > 0) {
-            sb.insert(0, step);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < digits.length; i++) {
+            if (sb.length() > 0 || digits[i] != 0) {
+                sb.append(digits[i]);
+            }
         }
-
-        return sb.toString();
+        return sb.length() == 0 ? "0" : sb.toString();
     }
 }

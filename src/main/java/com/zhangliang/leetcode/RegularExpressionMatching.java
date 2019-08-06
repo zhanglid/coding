@@ -47,68 +47,31 @@ Output: false
 */
 
 public class RegularExpressionMatching {
-
-    private static boolean isCharMatch(char s, char p) {
-        if (s == p) {
-            return true;
-        }
-
-        else if (p == '.') {
-            return true;
-        }
-
-        return false;
-    }
-
     public boolean isMatch(String s, String p) {
-        if (s == null || p == null) {
-            return false;
-        }
-
-        char[] sChars = s.toCharArray();
-        char[] pChars = p.toCharArray();
-
-        int lenS = s.length();
-        int lenP = p.length();
-        boolean[][] dp = new boolean[lenS + 1][lenP + 1];
-
-        dp[0][0] = true;
-
-        for (int i = 0; i <= lenS; i++) {
-            for (int j = 1; j <= lenP; j++) {
-
-                // case when coresponding pos chars are the same
-                if (i - 1 >= 0 && isCharMatch(sChars[i - 1], pChars[j - 1])) {
-                    if (dp[i - 1][j - 1]) {
-                        dp[i][j] = true;
+        boolean[][] matches = new boolean[s.length() + 1][p.length() + 1];
+        matches[0][0] = true;
+        for (int i = 0; i <= s.length(); i++) {
+            for (int j = 1; j <= p.length(); j++) {
+                char pch = p.charAt(j - 1);
+                if (i >= 1 && pch == s.charAt(i - 1) || pch == '.') {
+                    if (i >= 0 && i > 0 && matches[i - 1][j - 1]) {
+                        matches[i][j] = true;
                         continue;
                     }
                 }
-
-                // case meet *
-                if (j >= 2 && pChars[j - 1] == '*') {
-                    // char is equal to previous one
-                    if (i != 0 && isCharMatch(sChars[i - 1], pChars[j - 2])) {
-                        if (dp[i - 1][j]) {
-                            dp[i][j] = true;
+                if (pch == '*') {
+                    if (i >= 1 && j > 1 && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.')) {
+                        if (i > 0 && matches[i - 1][j]) {
+                            matches[i][j] = true;
                             continue;
                         }
                     }
-
-                    // previos one is not useful, 0 match
-                    if (j >= 2 && dp[i][j - 2]) {
-                        dp[i][j] = true;
-                        continue;
+                    if (j - 2 >= 0 && matches[i][j - 2]) {
+                        matches[i][j] = true;
                     }
                 }
             }
         }
-
-        return dp[lenS][lenP];
-    }
-
-    public static void main(String[] args) {
-        RegularExpressionMatching s = new RegularExpressionMatching();
-        System.out.println(s.isMatch("aaa", "ab*a"));
+        return matches[s.length()][p.length()];
     }
 }
