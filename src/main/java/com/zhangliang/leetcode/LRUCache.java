@@ -1,10 +1,14 @@
 package com.zhangliang.leetcode;
 /*
-Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+Design and implement a data structure for Least Recently Used (LRU) cache. 
+It should support the following operations: get and put.
 
-get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, 
-it should invalidate the least recently used item before inserting a new item.
+get(key) - Get the value (will always be positive) of the key if the key 
+exists in the cache, otherwise return -1.
+
+put(key, value) - Set or insert the value if the key is not already present. 
+When the cache reached its capacity, it should invalidate the least recently used 
+item before inserting a new item.
 
 Follow up:
 Could you do both operations in O(1) time complexity?
@@ -28,83 +32,73 @@ import java.util.*;
 
 class LRUCache {
     class Node {
-        int key;
-        int value;
         Node next;
-        Node previous;
-
-        public Node(int key, int value) {
-            this.key = key;
-            this.value = value;
-        }
+        Node prev;
+        int key;
     }
 
+    private Node head = new Node();
+    private Node tail;
+    private Map<Integer, Integer> values;
     private Map<Integer, Node> nodes;
     private int capacity;
-    private Node head;
-    private Node tail;
 
-    private void updateFreshness(Node node) {
-        removeNodeInList(node);
-        appendNodeLast(node);
+    private void refresh(int key) {
+        Node node = nodes.get(key);
+        removeNode(node);
+        attach(node);
     }
 
-    private void removeNodeInList(Node node) {
-        node.previous.next = node.next;
-        if (node.next != null) {
-            node.next.previous = node.previous;
-        }
-        if (node == tail) {
-            tail = node.previous;
-        }
-    }
-
-    /**
-     * Check the current capacity, remove the if full.
-     */
-    private void ensureCapacity() {
-        if (nodes.size() >= capacity) {
-            Node nodeToBeRemoved = head.next;
-            removeNodeInList(nodeToBeRemoved);
-            nodes.remove(nodeToBeRemoved.key);
+    private void removeNode(Node node) {
+        node.prev.next = node.next;
+        if (node != tail) {
+            node.next.prev = node.prev;
+            node.next = null;
+        } else {
+            tail = node.prev;
         }
     }
 
-    private void appendNodeLast(Node node) {
+    private void attach(Node node) {
         tail.next = node;
-        node.previous = tail;
-        node.next = null;
+        node.prev = tail;
         tail = node;
     }
 
     public LRUCache(int capacity) {
-        nodes = new HashMap<>();
         this.capacity = capacity;
-        head = new Node(-1, -1);
-        tail = head;
+        this.values = new HashMap<>();
+        this.nodes = new HashMap<>();
+        tail = this.head;
     }
 
     public int get(int key) {
-        if (!nodes.containsKey(key)) {
-            return -1;
+        if (values.containsKey(key)) {
+            int value = values.get(key);
+            refresh(key);
+            return value;
         }
-        Node node = nodes.get(key);
-        updateFreshness(node);
-        return node.value;
+        return -1;
     }
 
     public void put(int key, int value) {
-        // if the key is in the cache, just update;
+        values.put(key, value);
         if (nodes.containsKey(key)) {
-            Node node = nodes.get(key);
-            node.value = value;
-            updateFreshness(node);
-        } else {
-            ensureCapacity();
-            Node node = new Node(key, value);
-            nodes.put(key, node);
-            appendNodeLast(node);
+            // already exists
+            refresh(key);
+            return;
         }
+        // create new node
+        Node node = new Node();
+        node.key = key;
+        if (nodes.size() >= capacity) {
+            Node toBeRemoved = head.next;
+            removeNode(toBeRemoved);
+            values.remove(toBeRemoved.key);
+            nodes.remove(toBeRemoved.key);
+        }
+        attach(node);
+        nodes.put(key, node);
     }
 }
 
