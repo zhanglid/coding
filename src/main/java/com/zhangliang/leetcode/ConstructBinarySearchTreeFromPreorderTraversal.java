@@ -20,28 +20,29 @@ The values of preorder are distinct.
 import com.zhangliang.utils.TreeNode;
 
 public class ConstructBinarySearchTreeFromPreorderTraversal {
-    private TreeNode helper(int[] preorder, int i, int j) {
-        TreeNode node = new TreeNode(preorder[i]);
-        if (i >= j) {
-            return node;
+    private int helper(TreeNode root, int[] preorder, int index, int maxValue) {
+        int next = index + 1;
+        if (next >= preorder.length) {
+            return next;
         }
-        int mid = i + 1;
-        while (mid <= j && preorder[mid] < preorder[i]) {
-            mid++;
+        if (preorder[next] < preorder[index]) {
+            root.left = new TreeNode(preorder[next]);
+            next = helper(root.left, preorder, next, root.val);
         }
-        if (mid > i + 1) {
-            node.left = helper(preorder, i + 1, mid - 1);
+
+        if (next < preorder.length && preorder[next] <= maxValue) {
+            root.right = new TreeNode(preorder[next]);
+            next = helper(root.right, preorder, next, maxValue);
         }
-        if (mid <= j) {
-            node.right = helper(preorder, mid, j);
-        }
-        return node;
+        return next;
     }
 
     public TreeNode bstFromPreorder(int[] preorder) {
         if (preorder == null || preorder.length < 1) {
             return null;
         }
-        return helper(preorder, 0, preorder.length - 1);
+        TreeNode root = new TreeNode(preorder[0]);
+        helper(root, preorder, 0, Integer.MAX_VALUE);
+        return root;
     }
 }
