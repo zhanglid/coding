@@ -36,52 +36,27 @@ Notes:
 1 <= ages[i] <= 120.
 */
 
-import java.util.Arrays;
+import java.util.*;
 
 public class FriendsOfAppropriateAges {
-    // return the range that will be requested as friend for age.
-
-    private int[] getRange(int age) {
-        return new int[] { age / 2 + 7 + 1, age };
-    }
-
-    private int search(int[] ages, int age, boolean isStart) {
-        int l = 0;
-        int r = ages.length - 1;
-        while (l + 1 < r) {
-            int mid = l + (r - l) / 2;
-            if (ages[mid] < age || ages[mid] == age && !isStart) {
-                l = mid;
-            } else {
-                r = mid;
-            }
-        }
-        if (isStart) {
-            if (ages[l] >= age) {
-                return l;
-            } else {
-                return r;
-            }
-        } else {
-            if (ages[r] <= age) {
-                return r;
-            } else {
-                return l;
-            }
-        }
-    }
-
     public int numFriendRequests(int[] ages) {
         int ans = 0;
-        Arrays.sort(ages);
+        int[] counts = new int[120];
         for (int age : ages) {
-            int[] range = getRange(age);
-            if (range[0] > range[1]) {
-                continue;
+            counts[age - 1]++;
+        }
+        for (int age : ages) {
+            for (int i = 1; i <= 120; i++) {
+                if (i > age) {
+                    continue;
+                } else if (i <= age / 2 + 7) {
+                    continue;
+                }
+                ans += counts[i - 1];
+                if (i == age) {
+                    ans--;
+                }
             }
-            int start = search(ages, range[0], true);
-            int end = search(ages, range[1], false);
-            ans += end - start;
         }
         return ans;
     }

@@ -39,4 +39,11 @@ public class FriendsOfAppropriateAgesTest {
         int ans = s.numFriendRequests(new int[] { 111, 94, 119, 60, 64, 39, 57, 19, 105, 25 });
         assertEquals(17, ans);
     }
+
+    @Test
+    public void errCase3() {
+        FriendsOfAppropriateAges s = new FriendsOfAppropriateAges();
+        int ans = s.numFriendRequests(new int[] { 108, 115, 5, 24, 82 });
+        assertEquals(3, ans);
+    }
 }
