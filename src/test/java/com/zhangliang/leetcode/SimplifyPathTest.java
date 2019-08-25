@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class SimplifyPathTest {
@@ -25,5 +24,12 @@ public class SimplifyPathTest {
         SimplifyPath s = new SimplifyPath();
         String ans = s.simplifyPath("/abc/...");
         assertEquals("/abc/...", ans);
+    }
+
+    @Test
+    public void errCase2() {
+        SimplifyPath s = new SimplifyPath();
+        String ans = s.simplifyPath("/../");
+        assertEquals("/", ans);
     }
 }
