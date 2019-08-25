@@ -9,70 +9,36 @@ Example 1:
 
 Input: S = "aab"
 Output: "aba"
-Example 2:
 
+Example 2:
 Input: S = "aaab"
 Output: ""
-Note:
 
+Note:
 S will consist of lowercase letters and have length in range [1, 500].
 */
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 public class ReorganizeString {
     public String reorganizeString(String S) {
-        if (S == null || S.length() < 1) {
-            return "";
-        }
-
-        int n = S.length();
-        int[] count = new int[26];
+        int[] counts = new int[26];
         for (char x : S.toCharArray()) {
-            count[x - 'a']++;
+            counts[x - 'a']++;
         }
-
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return -a[0] + b[0];
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < S.length()) {
+            char prev = sb.length() < 1 ? 0 : sb.charAt(sb.length() - 1);
+            char target = 0;
+            for (int i = 0; i < 26; i++) {
+                if (counts[i] > 0 && i + 'a' != prev && (target == 0 || counts[i] > counts[target - 'a'])) {
+                    target = (char) (i + 'a');
+                }
             }
-        });
-
-        for (int i = 0; i < count.length; i++) {
-            int[] pair = new int[2];
-            pair[0] = count[i];
-            pair[1] = i;
-            pq.add(pair);
-        }
-
-        if (n < 2 * pq.peek()[0] - 1) {
-            return "";
-        }
-
-        StringBuilder[] sbs = new StringBuilder[pq.peek()[0]];
-
-        for (int i = 0; i < sbs.length; i++) {
-            sbs[i] = new StringBuilder();
-        }
-
-        int index = 0;
-        while (!pq.isEmpty()) {
-            int[] cur = pq.poll();
-            char c = (char) (cur[1] + 'a');
-            for (int i = 0; i < cur[0]; i++) {
-                int j = (index + i) % sbs.length;
-                sbs[j].append(c);
+            if (target == 0) {
+                return "";
             }
-            index = (index + cur[0]) % sbs.length;
+            sb.append(target);
+            counts[target - 'a']--;
         }
-
-        StringBuilder ansBuilder = new StringBuilder();
-
-        for (StringBuilder sb : sbs) {
-            ansBuilder.append(sb);
-        }
-
-        return ansBuilder.toString();
+        return sb.toString();
     }
 }
