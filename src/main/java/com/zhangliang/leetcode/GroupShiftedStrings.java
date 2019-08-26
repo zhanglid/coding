@@ -20,46 +20,34 @@ Output:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GroupShiftedStrings {
-    private String hash(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+    private String hash(String str) {
+        if (str.length() < 1) {
+            return "";
         }
+        int diff = str.charAt(0) - 'a';
         StringBuilder sb = new StringBuilder();
-        char head = s.charAt(0);
-        for (char x : s.toCharArray()) {
-            char t = (char)( x + 'a' - head );
-            if (t < 'a') {
-                t += 26;
+        for (int i = 0; i < str.length(); i++) {
+            char x = (char) (str.charAt(i) - diff);
+            if (x < 'a') {
+                x += 26;
             }
-            sb.append((char)(t));
+            sb.append(x);
         }
         return sb.toString();
     }
+
     public List<List<String>> groupStrings(String[] strings) {
-        List<List<String>> ans = new ArrayList<>();
-        if (strings == null || strings.length < 1) {
-            return ans;
-        }
-        Map<String, List<String>> map = new HashMap<>();
-
+        Map<String, List<String>> groups = new HashMap<>();
         for (String s : strings) {
-            String key = hash(s);
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
+            String hashCode = hash(s);
+            if (!groups.containsKey(hashCode)) {
+                groups.put(hashCode, new ArrayList<>());
             }
-            map.get(key).add(s);
+            groups.get(hashCode).add(s);
         }
-
-        for (List<String> part : map.values()) {
-            ans.add(part);
-        }
-
-        return ans;
+        return new ArrayList<>(groups.values());
     }
 }
