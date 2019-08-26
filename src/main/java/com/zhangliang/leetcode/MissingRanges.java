@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given a sorted integer array nums, where the range of elements are in the inclusive range [lower, upper], 
+Given a sorted integer array nums, where the range of elements are in the inclusive range 
+[lower, upper], 
 return its missing ranges.
 
 Example:
@@ -10,48 +11,32 @@ Output: ["2", "4->49", "51->74", "76->99"]
 
 */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MissingRanges {
-
-    private String getRangeString(int start, int end) {
-        if (start == end) {
-            return Integer.toString(start);
-        }
-        return Integer.toString(start) + "->" + Integer.toString(end);
-    }
-
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
-        List<String> ans = new ArrayList<>();
-        if (nums == null || lower > upper) {
-            return ans;
-        }
-
-        int cur = lower;
-        for (int i = 0; i < nums.length; i++) {
-            if (i != 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
-            if (cur >= nums[i]) {
-                if (cur != Integer.MAX_VALUE) {
-                    cur++;
-                } else {
-                    return ans;
-                }
-                continue;
-            } else {
-                ans.add(getRangeString(cur, nums[i] - 1));
-                if (nums[i] != Integer.MAX_VALUE) {
-                    cur = nums[i] + 1;
-                } else {
-                    return ans;
+        List<String> result = new ArrayList<>();
+        int val = lower;
+        for (int num : nums) {
+            if (num > val) {
+                if (num == val + 1) {
+                    result.add("" + val);
+                } else if (num >= val) {
+                    result.add(val + "->" + (num - 1));
                 }
             }
+            val = num + 1;
+            if (val < num) {
+                return result;
+            }
         }
-        if (cur <= upper) {
-            ans.add(getRangeString(cur, upper));
+        if (val <= upper) {
+            if (upper == val) {
+                result.add("" + val);
+            } else if (upper > val) {
+                result.add(val + "->" + upper);
+            }
         }
-        return ans;
+        return result;
     }
 }
