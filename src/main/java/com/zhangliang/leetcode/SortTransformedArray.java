@@ -17,52 +17,45 @@ Input: nums = [-4,-2,2,4], a = -1, b = 3, c = 5
 Output: [-23,-5,1,7]
 */
 
-import java.util.Arrays;
-
 public class SortTransformedArray {
-
-    private int calculate(int num, int a, int b, int c) {
-        return a * num * num + b * num + c;
-    }
-
     public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
-        if (nums == null || nums.length < 1) {
-            return nums;
-        }
-        int[] ans = new int[nums.length];
-        int l = -1;
-        int r = 0;
-        if (a > 0) {
-            int index = Arrays.binarySearch(nums, -b / (2 * a));
-            if (index < 0) {
-                index = -index - 1;
-            }
-            l = index - 1;
-            r = index;
-        } else if (a <= 0) {
-            l = 0;
-            r = nums.length - 1;
-        }
-
-        int index = 0;
-        while ((l >= 0 || r < nums.length) && l <= r) {
-            if (l >= 0 && (r >= nums.length || calculate(nums[l], a, b, c) < calculate(nums[r], a, b, c))) {
-                ans[index++] = calculate(nums[l], a, b, c);
-                if (a <= 0) {
-                    l++;
-                } else {
-                    l--;
+        int[] vals = new int[nums.length];
+        int state = 0;
+        int pivot = -1;
+        for (int i = 0; i < nums.length; i++) {
+            vals[i] = a * nums[i] * nums[i] + b * nums[i] + c;
+            if (i > 0) {
+                int curState = vals[i] == vals[i - 1] ? 0 : vals[i] > vals[i - 1] ? 1 : -1;
+                if (state * curState < 0) {
+                    pivot = i - 1;
                 }
-            } else {
-                ans[index++] = calculate(nums[r], a, b, c);
-                if (a <= 0) {
-                    r--;
-                } else {
-                    r++;
+                if (curState != 0) {
+                    state = curState;
                 }
             }
         }
-
-        return ans;
+        int[] sortedVals = new int[nums.length];
+        if (a > 0 && pivot > 0) {
+            int l = pivot;
+            int r = pivot + 1;
+            for (int i = 0; i < sortedVals.length; i++) {
+                if (r >= vals.length || l >= 0 && vals[l] < vals[r]) {
+                    sortedVals[i] = vals[l--];
+                } else {
+                    sortedVals[i] = vals[r++];
+                }
+            }
+        } else {
+            int l = 0;
+            int r = vals.length - 1;
+            for (int i = 0; i < sortedVals.length; i++) {
+                if (vals[l] < vals[r]) {
+                    sortedVals[i] = vals[l++];
+                } else {
+                    sortedVals[i] = vals[r--];
+                }
+            }
+        }
+        return sortedVals;
     }
 }
