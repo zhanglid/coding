@@ -42,4 +42,11 @@ public class MissingRangesTest {
                 -2147483648, 2147483647);
         assertArrayEquals(new String[] { "-2147483647->-1", "1->2147483646" }, ans.toArray(new String[0]));
     }
+
+    @Test
+    public void errCase5() {
+        MissingRanges s = new MissingRanges();
+        List<String> ans = s.findMissingRanges(new int[] { -2147483648, 2147483647 }, -2147483648, 2147483647);
+        assertArrayEquals(new String[] { "-2147483647->2147483646" }, ans.toArray(new String[0]));
+    }
 }
