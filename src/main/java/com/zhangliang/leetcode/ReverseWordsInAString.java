@@ -15,31 +15,18 @@ You need to reduce multiple spaces between two words to a single space in the re
 Follow up: For C programmers, try to solve it in-place in O(1) space.
 */
 
+import java.util.*;
+
 public class ReverseWordsInAString {
     public String reverseWords(String s) {
-        if (s == null || s.isEmpty()) {
-            return s;
+        String[] words = s.split(" ");
+        List<String> result = new ArrayList<>();
+        for (String word : words) {
+            if (word.length() > 0) {
+                result.add(word);
+            }
         }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == ' ') {
-                continue;
-            }
-
-            int j = i;
-            while (j >= 0 && s.charAt(j) != ' ') {
-                j--;
-            }
-
-            if (sb.length() > 0) {
-                sb.append(' ');
-            }
-
-            sb.append(s.substring(j + 1, i + 1));
-            i = j;
-        }
-
-        return sb.toString();
+        Collections.reverse(result);
+        return String.join(" ", result);
     }
 }
