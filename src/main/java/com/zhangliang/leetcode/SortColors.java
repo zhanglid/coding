@@ -21,28 +21,24 @@ Could you come up with a one-pass algorithm using only constant space?
 */
 
 public class SortColors {
+    private void swap(int[] nums, int i, int j) {
+        int t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
+    }
+
     public void sortColors(int[] nums) {
-        if (nums == null || nums.length < 2) {
+        if (nums == null) {
             return;
         }
-
         int l = 0;
         int r = nums.length - 1;
         for (int i = 0; i <= r; i++) {
             if (nums[i] == 0) {
-                swap(nums, i, l);
-                l++;
+                swap(nums, l++, i);
             } else if (nums[i] == 2) {
-                swap(nums, i, r);
-                r--;
-                i--;
+                swap(nums, r--, i--);
             }
         }
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
     }
 }
