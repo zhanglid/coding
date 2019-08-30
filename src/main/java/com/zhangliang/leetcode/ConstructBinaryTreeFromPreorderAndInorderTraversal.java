@@ -18,36 +18,25 @@ Return the following binary tree:
    15   7
 */
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.zhangliang.utils.TreeNode;
 
 public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> indexMap = new HashMap<>();
-        for (int i = 0; i < preorder.length; i++) {
-            indexMap.put(preorder[i], i);
-        }
-
-        return helper(inorder, 0, inorder.length, indexMap);
-    }
-
-    private TreeNode helper(int[] inorder, int start, int end, Map<Integer, Integer> indexDict) {
-        if (start >= end) {
+    private TreeNode buildTreeHelper(int[] preorder, int pi, int pj, int[] inorder, int ii, int ij) {
+        if (pi > pj) {
             return null;
         }
-        int rootIndex = start;
-        for (int i = start; i < end; i++) {
-            if (indexDict.get(inorder[i]) < indexDict.get(inorder[rootIndex])) {
-                rootIndex = i;
-            }
+        int rootVal = preorder[pi];
+        int rii = ii;
+        while (inorder[rii] != rootVal) {
+            rii++;
         }
+        TreeNode root = new TreeNode(rootVal);
+        root.left = buildTreeHelper(preorder, pi + 1, pi + (rii - ii), inorder, ii, rii - 1);
+        root.right = buildTreeHelper(preorder, pi + (rii - ii) + 1, pj, inorder, rii + 1, ij);
+        return root;
+    }
 
-        TreeNode ans = new TreeNode(inorder[rootIndex]);
-        ans.left = helper(inorder, start, rootIndex, indexDict);
-        ans.right = helper(inorder, rootIndex + 1, end, indexDict);
-
-        return ans;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
 }
