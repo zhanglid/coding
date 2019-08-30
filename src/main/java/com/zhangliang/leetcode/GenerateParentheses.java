@@ -14,37 +14,24 @@ For example, given n = 3, a solution set is:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GenerateParentheses {
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList<>();
-        if (n < 1) {
-            return ans;
-        }
-
-        List<List<String>> dp = new ArrayList<>();
-        dp.add(new ArrayList<String>());
+        List<Set<String>> dp = new ArrayList<>();
+        dp.add(new HashSet<>());
         dp.get(0).add("");
-
         for (int i = 1; i <= n; i++) {
-            List<String> record = new ArrayList<>();
+            Set<String> solutionSet = new HashSet<>();
             for (int j = 0; j < i; j++) {
-                for (String sIn: dp.get(j)) {
-                    for (String sOut: dp.get(i - 1 - j)) {
-                        record.add(sOut + "(" + sIn + ")");
+                for (String left : dp.get(j)) {
+                    for (String right : dp.get(i - j - 1)) {
+                        solutionSet.add("(" + left + ")" + right);
                     }
                 }
             }
-            dp.add(record);
+            dp.add(solutionSet);
         }
-
-        return dp.get(n);
-    }
-
-    public static void main(String[] args) {
-        GenerateParentheses s = new GenerateParentheses();
-        System.out.println(s.generateParenthesis(3));
+        return new ArrayList<>(dp.get(n));
     }
 }
