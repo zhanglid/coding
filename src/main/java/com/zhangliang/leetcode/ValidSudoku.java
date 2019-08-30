@@ -14,7 +14,6 @@ The Sudoku board could be partially filled, where empty cells are filled with
 the character '.'.
 
 Example 1:
-
 Input:
 [
   ["5","3",".",".","7",".",".",".","."],
@@ -28,8 +27,8 @@ Input:
   [".",".",".",".","8",".",".","7","9"]
 ]
 Output: true
-Example 2:
 
+Example 2:
 Input:
 [
   ["8","3",".",".","7",".",".",".","."],
@@ -56,58 +55,33 @@ The given board size is always 9x9.
 
 public class ValidSudoku {
     public boolean isValidSudoku(char[][] board) {
-        if (board == null || board.length != 9 || board[0] == null || board[0].length != 9) {
-            return false;
-        }
+        boolean[][] rowStates = new boolean[board.length][9];
+        boolean[][] colStates = new boolean[board[0].length][9];
+        boolean[][][] subBoxStates = new boolean[3][3][9];
 
-        for (char[] row : board) {
-            if (!valid(row)) {
-                return false;
-            }
-        }
-
-        char[] col = new char[9];
-        for (int i = 0; i < board[0].length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                col[j] = board[j][i];
-            }
-
-            if (!valid(col)) {
-                return false;
-            }
-        }
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                char[] area = new char[9];
-
-                // transform area into array
-                for (int oi = 0; oi < 3; oi++) {
-                    for (int oj = 0; oj < 3; oj++) {
-                        area[oi * 3 + oj] = board[i * 3 + oi][j * 3 + oj];
-                    }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == '.') {
+                    continue;
                 }
-
-                if (!valid(area)) {
+                int val = board[i][j] - '0' - 1;
+                if (rowStates[i][val]) {
                     return false;
                 }
-            }
-        }
-
-        return true;
-    }
-
-    private boolean valid(char[] chars) {
-        boolean[] bools = new boolean[10];
-
-        for (char x : chars) {
-            if (x != '.') {
-                if (bools[x - '0']) {
+                rowStates[i][val] = true;
+                if (colStates[j][val]) {
                     return false;
                 }
-                bools[x - '0'] = true;
+                colStates[j][val] = true;
+                int bi = i / 3;
+                int bj = j / 3;
+                if (subBoxStates[bi][bj][val]) {
+                    return false;
+                }
+                subBoxStates[bi][bj][val] = true;
             }
         }
+
         return true;
     }
 }
