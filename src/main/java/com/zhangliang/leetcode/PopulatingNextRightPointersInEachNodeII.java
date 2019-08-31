@@ -2,13 +2,13 @@ package com.zhangliang.leetcode;
 /*
 Given a binary tree
 
-struct TreeLinkNode {
-  TreeLinkNode *left;
-  TreeLinkNode *right;
-  TreeLinkNode *next;
+struct Node {
+  Node *left;
+  Node *right;
+  Node *next;
 }
-Populate each next pointer to point to its next right node. If there is no next right node, the next pointer 
-should be set to NULL.
+Populate each next pointer to point to its next right node. If there is no next right node, 
+the next pointer should be set to NULL.
 
 Initially, all next pointers are set to NULL.
 
@@ -35,30 +35,53 @@ After calling your function, the tree should look like:
 
 */
 
-import com.zhangliang.utils.TreeLinkNode;
+import java.util.*;
 
 public class PopulatingNextRightPointersInEachNodeII {
-    public void connect(TreeLinkNode root) {
-        if (root == null) {
-            return;
-        }
+  static class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
 
-        TreeLinkNode cur = root;
-        while (cur != null) {
-            TreeLinkNode dummy = new TreeLinkNode(-1);
-            TreeLinkNode cloneCur = dummy;
-            while (cur != null) {
-                if (cur.left != null) {
-                    cloneCur.next = cur.left;
-                    cloneCur = cloneCur.next;
-                }
-                if (cur.right != null) {
-                    cloneCur.next = cur.right;
-                    cloneCur = cloneCur.next;
-                }
-                cur = cur.next;
-            }
-            cur = dummy.next;
-        }
+    public Node() {
     }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+      val = _val;
+      left = _left;
+      right = _right;
+      next = _next;
+    }
+
+    public Node() {
+
+    }
+  };
+
+  public Node connect(Node root) {
+    Queue<Node> queue = new LinkedList<>();
+    if (root == null) {
+      return root;
+    }
+    queue.add(root);
+    while (!queue.isEmpty()) {
+      int size = queue.size();
+      Node prev = null;
+      for (int i = 0; i < size; i++) {
+        Node node = queue.poll();
+        if (prev != null) {
+          prev.next = node;
+        }
+        if (node.left != null) {
+          queue.add(node.left);
+        }
+        if (node.right != null) {
+          queue.add(node.right);
+        }
+        prev = node;
+      }
+    }
+    return root;
+  }
 }
