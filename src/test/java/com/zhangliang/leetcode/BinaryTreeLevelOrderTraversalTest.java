@@ -1,8 +1,7 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertArrayEquals;
-import java.util.List;
-
+import java.util.*;
 import com.zhangliang.Utils;
 import com.zhangliang.utils.TreeNode;
 
