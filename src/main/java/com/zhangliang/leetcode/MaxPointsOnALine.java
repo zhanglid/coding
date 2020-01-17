@@ -30,51 +30,46 @@ Explanation:
 
 */
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.zhangliang.utils.Point;
+import java.util.*;
 
 public class MaxPointsOnALine {
-
-    public int maxPoints(Point[] points) {
-        if (points == null || points.length < 1) {
-            return 0;
+    private int GCD(int a, int b) {
+        if (b == 0) {
+            return a;
         }
-
-        int ans = 0;
-        for (Point point : points) {
-            Map<String, Integer> countMap = new HashMap<>();
-            int duplicate = -1;
-            for (Point point2 : points) {
-                if (point.x == point2.x && point.y == point2.y) {
-                    duplicate++;
-                    ans = Math.max(ans, duplicate);
-                    continue;
-                }
-
-                int[] diff = new int[] { point.x - point2.x, point.y - point2.y };
-                int g = gcd(diff[0], diff[1]);
-                diff[0] /= g;
-                diff[1] /= g;
-
-                String key = diff[0] + "," + diff[1];
-                countMap.put(key, countMap.getOrDefault(key, 0) + 1);
-            }
-
-            for (int num : countMap.values()) {
-                ans = Math.max(ans, num + duplicate);
-            }
-        }
-
-        return ans + 1;
+        return GCD(b, a % b);
     }
 
-    private int gcd(int x, int y) {
-        if (y == 0) {
-            return x;
+    private String hash(int[] a, int[] b) {
+        int delta = a[0] - b[0];
+        int alpha = a[1] - b[1];
+        if (delta == 0) {
+            return Integer.toString(a[0]);
+        }
+        int gcd = GCD(delta, alpha);
+        delta /= gcd;
+        alpha /= gcd;
+        return Integer.toString(delta) + "," + Integer.toString(alpha) + ","
+                + Double.toString(a[1] - a[0] * alpha / delta);
+    }
+
+    public int maxPoints(int[][] points) {
+        Map<String, Set<Integer>> pointIndexesByLine = new HashMap<>();
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                String hashCode = hash(points[i], points[j]);
+                if (!pointIndexesByLine.containsKey(hashCode)) {
+                    pointIndexesByLine.put(hashCode, new HashSet<>());
+                }
+                pointIndexesByLine.get(hashCode).add(i);
+                pointIndexesByLine.get(hashCode).add(j);
+            }
         }
 
-        return x % y == 0 ? y : gcd(y, x % y);
+        int ans = points.length < 1 ? 0 : 1;
+        for (Set<Integer> indexSet : pointIndexesByLine.values()) {
+            ans = Math.max(ans, indexSet.size());
+        }
+        return ans;
     }
 }
