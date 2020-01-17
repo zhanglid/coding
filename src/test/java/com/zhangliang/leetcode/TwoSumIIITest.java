@@ -24,4 +24,12 @@ public class TwoSumIIITest {
         assertEquals(true, s.find(3));
         assertEquals(false, s.find(6));
     }
+
+    @Test
+    public void errCase() {
+        TwoSumIII s = new TwoSumIII();
+        s.add(0);
+        s.add(0);
+        assertEquals(true, s.find(0));
+    }
 }
