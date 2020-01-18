@@ -15,4 +15,11 @@ public class BinaryTreeLevelOrderTraversalTest {
         List<List<Integer>> ans = s.levelOrder(new TreeNode(new Integer[] { 3, 9, 20, null, null, 15, 7 }));
         assertArrayEquals(new String[] { "[3]", "[9, 20]", "[15, 7]" }, Utils.getStrsFrom2DList(ans, false));
     }
+
+    @Test
+    public void testCase2() {
+        BinaryTreeLevelOrderTraversal s = new BinaryTreeLevelOrderTraversal();
+        List<List<Integer>> ans = s.levelOrder(null);
+        assertArrayEquals(new String[] {}, Utils.getStrsFrom2DList(ans, false));
+    }
 }

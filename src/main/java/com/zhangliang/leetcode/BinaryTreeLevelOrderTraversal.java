@@ -29,11 +29,11 @@ public class BinaryTreeLevelOrderTraversal {
             queue.add(root);
         }
         while (!queue.isEmpty()) {
+            List<Integer> levelValues = new ArrayList<>();
             int size = queue.size();
-            List<Integer> values = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                values.add(node.val);
+                levelValues.add(node.val);
                 if (node.left != null) {
                     queue.add(node.left);
                 }
@@ -41,7 +41,7 @@ public class BinaryTreeLevelOrderTraversal {
                     queue.add(node.right);
                 }
             }
-            result.add(values);
+            result.add(levelValues);
         }
         return result;
     }
