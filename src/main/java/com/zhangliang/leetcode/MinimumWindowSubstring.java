@@ -17,32 +17,31 @@ there will always be only one unique minimum window in S.
 
 public class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
-        String ans = null;
         int[] counts = new int[256];
-        for (int i = 0; i < t.length(); i++) {
-            counts[t.charAt(i)]++;
+        for (char x : t.toCharArray()) {
+            counts[x]++;
         }
-        int resolvedCount = 0;
+        int count = 0;
         int l = 0;
+        String result = null;
         for (int i = 0; i < s.length(); i++) {
-            if (counts[s.charAt(i)] > 0) {
-                resolvedCount++;
-            }
             counts[s.charAt(i)]--;
-            if (resolvedCount == t.length()) {
-                while (resolvedCount == t.length()) {
-                    if (counts[s.charAt(l)] >= 0) {
-                        resolvedCount--;
-                    }
+            if (counts[s.charAt(i)] >= 0) {
+                count++;
+            }
+            if (count == t.length()) {
+                while (count == t.length()) {
                     counts[s.charAt(l)]++;
+                    if (counts[s.charAt(l)] > 0) {
+                        count--;
+                    }
                     l++;
                 }
-                if (ans == null || (i - (l - 1) + 1) < ans.length()) {
-                    ans = s.substring(l - 1, i + 1);
+                if (result == null || (i - l + 2) < result.length()) {
+                    result = s.substring(l - 1, i + 1);
                 }
             }
         }
-
-        return ans == null ? "" : ans;
+        return result == null ? "" : result;
     }
 }
