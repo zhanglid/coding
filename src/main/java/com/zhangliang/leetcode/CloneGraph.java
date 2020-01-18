@@ -1,12 +1,13 @@
 package com.zhangliang.leetcode;
 /*
-Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
-
+Clone an undirected graph. Each node in the graph contains a label and a list of its 
+neighbors.
 
 OJ's undirected graph serialization:
 Nodes are labeled uniquely.
 
-We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.
+We use # as a separator for each node, and , as a separator for node label and each 
+neighbor of the node.
 As an example, consider the serialized graph {0,1,2#1,2#2,2}.
 
 The graph has a total of three nodes, and therefore contains three parts as separated by #.
@@ -25,45 +26,60 @@ Visually, the graph looks like the following:
 
 */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
-import com.zhangliang.utils.UndirectedGraphNode;
+class Node {
+    public int val;
+    public List<Node> neighbors;
+
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
 
 public class CloneGraph {
-    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+    private void shallowClone(Node node, Map<Node, Node> cloned) {
+        if (cloned.containsKey(node)) {
+            return;
+        }
+        Node clonedNode = new Node(node.val);
+        cloned.put(node, clonedNode);
+        for (Node other : node.neighbors) {
+            shallowClone(other, cloned);
+        }
+    }
+
+    private void buildClonedNeighbors(Node node, Map<Node, Node> cloned) {
+        // Check already cloned nodes.
+        if (node.neighbors.size() > 0 && cloned.get(node).neighbors.size() > 0) {
+            return;
+        }
+
+        cloned.get(node).neighbors = new ArrayList<>();
+        for (Node other : node.neighbors) {
+            cloned.get(node).neighbors.add(cloned.get(other));
+            buildClonedNeighbors(other, cloned);
+        }
+    }
+
+    public Node cloneGraph(Node node) {
         if (node == null) {
-            return node;
+            return null;
         }
-
-        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
-        Queue<UndirectedGraphNode> queue = new LinkedList<>();
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            UndirectedGraphNode toBeCloned = queue.poll();
-            UndirectedGraphNode cloned = new UndirectedGraphNode(toBeCloned.label);
-            cloned.neighbors = toBeCloned.neighbors;
-            map.put(toBeCloned, cloned);
-            for (UndirectedGraphNode curNode : cloned.neighbors) {
-                if (!map.containsKey(curNode)) {
-                    queue.add(curNode);
-                    map.put(curNode, null);
-                }
-            }
-        }
-
-        for (UndirectedGraphNode cur : map.values()) {
-            List<UndirectedGraphNode> clonedNeighbors = new ArrayList<>();
-            for (int i = 0; i < cur.neighbors.size(); i++) {
-                clonedNeighbors.add(map.get(cur.neighbors.get(i)));
-            }
-            cur.neighbors = clonedNeighbors;
-        }
-
-        return map.get(node);
+        Map<Node, Node> cloned = new HashMap<>();
+        shallowClone(node, cloned);
+        buildClonedNeighbors(node, cloned);
+        return cloned.get(node);
     }
 }
