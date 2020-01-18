@@ -31,51 +31,42 @@ Explanation: The input is: [5,1,4,null,null,3,6]. The root node's value
 import com.zhangliang.utils.TreeNode;
 
 public class ValidateBinarySearchTree {
-
     class Result {
         int min;
         int max;
         boolean isValid;
 
         public Result(int min, int max, boolean isValid) {
-            this.min = min;
             this.max = max;
+            this.min = min;
             this.isValid = isValid;
         }
     }
 
-    private Result helper(TreeNode root) {
-        if (root == null) {
+    private Result check(TreeNode node) {
+        if (node == null) {
             return null;
         }
-        int min = root.val;
-        int max = root.val;
+        Result l = check(node.left);
+        Result r = check(node.right);
+        int min = node.val;
+        int max = node.val;
         boolean isValid = true;
-        Result left = helper(root.left);
-        Result right = helper(root.right);
-
-        if (left != null) {
-            if (!left.isValid || left.max >= root.val) {
-                isValid = false;
-            } else {
-                min = left.min;
-            }
+        if (l != null) {
+            min = Math.min(l.min, min);
+            isValid = isValid && l.isValid && l.max < node.val;
         }
-
-        if (right != null) {
-            if (!right.isValid || right.min <= root.val) {
-                isValid = false;
-            } else {
-                max = right.max;
-            }
+        if (r != null) {
+            max = Math.max(r.max, max);
+            isValid = isValid && r.isValid && r.min > node.val;
         }
-
         return new Result(min, max, isValid);
     }
 
     public boolean isValidBST(TreeNode root) {
-        Result result = helper(root);
-        return result == null ? true : result.isValid;
+        if (root == null) {
+            return true;
+        }
+        return check(root).isValid;
     }
-
 }

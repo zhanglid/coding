@@ -1,9 +1,7 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-
 import com.zhangliang.utils.TreeNode;
-
 import org.junit.Test;
 
 public class ValidateBinarySearchTreeTest {
@@ -33,6 +31,13 @@ public class ValidateBinarySearchTreeTest {
     public void errCase3() {
         ValidateBinarySearchTree s = new ValidateBinarySearchTree();
         boolean ans = s.isValidBST(new TreeNode(new Integer[] { 1, 1 }));
+        assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase4() {
+        ValidateBinarySearchTree s = new ValidateBinarySearchTree();
+        boolean ans = s.isValidBST(new TreeNode(new Integer[] { 5, 1, 4, null, null, 3, 6 }));
         assertEquals(false, ans);
     }
 }
