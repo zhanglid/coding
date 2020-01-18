@@ -51,45 +51,23 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 */
 
 public class IntegerToRoman {
-    private static String[] digits = new String[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
+    static private final String[] THOUSANDS = { "M", "MM", "MMM" };
+    static private final String[] HUNDREDS = { "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+    static private final String[] TENS = { "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
+    static private final String[] DIGITS = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
 
-    private static String[] tens = new String[] { "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "C" };
-
-    private static String[] hundreds = new String[] { "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
-
-    private static String[] thousands = new String[] { "M", "MM", "MMM" };
+    static private final String[][] MARKS = { DIGITS, TENS, HUNDREDS, THOUSANDS };
 
     public String intToRoman(int num) {
-        if (num <= 0) {
-            return "";
+        StringBuilder sb = new StringBuilder();
+        int base = 1000;
+        for (int i = MARKS.length - 1; i >= 0; i--) {
+            if (num / base > 0) {
+                sb.append(MARKS[i][num / base - 1]);
+            }
+            num %= base;
+            base /= 10;
         }
-
-        StringBuilder ans = new StringBuilder();
-
-        if (num / 1000 > 0) {
-            ans.append(thousands[num / 1000 - 1]);
-            num %= 1000;
-        }
-
-        if (num / 100 > 0) {
-            ans.append(hundreds[num / 100 - 1]);
-            num %= 100;
-        }
-
-        if (num / 10 > 0) {
-            ans.append(tens[num / 10 - 1]);
-            num %= 10;
-        }
-
-        if (num > 0) {
-            ans.append(digits[num - 1]);
-        }
-
-        return ans.toString();
-    }
-
-    public static void main(String[] args) {
-        IntegerToRoman s = new IntegerToRoman();
-        System.out.println(s.intToRoman(3));
+        return sb.toString();
     }
 }

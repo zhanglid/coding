@@ -1,14 +1,15 @@
 package com.zhangliang.leetcode;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-public class IntegerToRomanTest{
+public class IntegerToRomanTest {
 
     @Test
     public void testCase() {
         IntegerToRoman s = new IntegerToRoman();
         String ans = s.intToRoman(3);
-        assertEquals(ans, "III");
+        assertEquals("III", ans);
     }
 
     @Test
