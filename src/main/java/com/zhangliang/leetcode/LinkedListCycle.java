@@ -11,15 +11,20 @@ public class LinkedListCycle {
         if (head == null) {
             return false;
         }
-
         ListNode slow = head;
         ListNode fast = head.next;
-
-        while (slow != fast && slow != null && fast != null && fast.next != null) {
+        while (fast != null) {
+            if (slow == fast) {
+                return true;
+            }
             slow = slow.next;
-            fast = fast.next.next;
+            fast = fast.next;
+            if (fast == null) {
+                return false;
+            }
+            fast = fast.next;
         }
 
-        return slow == fast;
+        return fast == slow;
     }
 }
