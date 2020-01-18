@@ -28,43 +28,79 @@ Output: []
 import java.util.*;
 
 public class ExpressionAddOperators {
-    private void evalDfs(String cur, int sum, int last, List<Integer> numList, int start, int target,
-            List<String> result) {
-        if (start == numList.size()) {
-            if (sum + last == target) {
-                result.add(cur);
+
+    private static final String[] OPERATORS = { "*", "+", "-" };
+
+    private boolean isOperator(String s) {
+        for (String op : OPERATORS) {
+            if (op.equals(s)) {
+                return true;
             }
-            return;
         }
-        int num = numList.get(start);
-        evalDfs(cur + "+" + num, sum + last, num, numList, start + 1, target, result);
-        evalDfs(cur + "-" + num, sum + last, -num, numList, start + 1, target, result);
-        evalDfs(cur + "*" + num, sum, last * num, numList, start + 1, target, result);
+        return false;
     }
 
-    private void numDfs(List<Integer> cur, int start, String s, List<String> result, int target) {
-        if (start == s.length()) {
-            if (!cur.isEmpty()) {
-                evalDfs(cur.get(0).toString(), 0, cur.get(0), cur, 1, target, result);
+    private boolean isOverflow(String s) {
+        String maxIntStr = Integer.toString(Integer.MAX_VALUE);
+        return !(s.length() < maxIntStr.length() || s.length() == maxIntStr.length() && s.compareTo(maxIntStr) <= 0);
+    }
+
+    private int eval(List<String> expression) {
+        List<Integer> values = new ArrayList<>();
+        for (int i = 0; i < expression.size(); i++) {
+            if (expression.get(i).equals("*")) {
+                values.set(values.size() - 1, values.get(values.size() - 1) * Integer.parseInt(expression.get(i + 1)));
+                i++;
+            } else if (expression.get(i).equals("-")) {
+                values.add(-Integer.parseInt(expression.get(i + 1)));
+                i++;
+            } else if (!expression.get(i).equals("+")) {
+                values.add(Integer.parseInt(expression.get(i)));
+            }
+        }
+        int result = 0;
+        for (Integer value : values) {
+            result += value;
+        }
+        return result;
+    }
+
+    private void generateHelper(String num, int index, List<String> expression, List<String> result, int target) {
+        if (index >= num.length()) {
+            if (eval(expression) == target) {
+                result.add(String.join("", expression));
             }
             return;
         }
-        int val = 0;
-        for (int i = start; i < s.length() && (i == start || val != 0); i++) {
-            int next = 10 * val + s.charAt(i) - '0';
-            if (next / 10 != val) {
-                break;
+        String part = num.substring(index, index + 1);
+        // Combine the previous number
+        if (!expression.isEmpty()) {
+            String last = expression.get(expression.size() - 1);
+            if (!isOperator(last) && Integer.parseInt(last) != 0) {
+                expression.set(expression.size() - 1, last + num.charAt(index));
+                if (!isOverflow(expression.get(expression.size() - 1))) {
+                    generateHelper(num, index + 1, expression, result, target);
+                }
+                expression.set(expression.size() - 1, last);
             }
-            val = next;
-            cur.add(val);
-            numDfs(cur, i + 1, s, result, target);
-            cur.remove(cur.size() - 1);
+        }
+
+        for (String op : expression.isEmpty() ? new String[] { null } : OPERATORS) {
+            if (op != null) {
+                expression.add(op);
+            }
+            expression.add(part);
+            generateHelper(num, index + 1, expression, result, target);
+            expression.remove(expression.size() - 1);
+            if (op != null) {
+                expression.remove(expression.size() - 1);
+            }
         }
     }
 
     public List<String> addOperators(String num, int target) {
         List<String> result = new ArrayList<>();
-        numDfs(new ArrayList<>(), 0, num, result, target);
+        generateHelper(num, 0, new ArrayList<>(), result, target);
         return result;
     }
 }
