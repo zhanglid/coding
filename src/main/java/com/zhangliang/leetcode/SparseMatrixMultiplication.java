@@ -29,37 +29,32 @@ AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
 import java.util.*;
 
 public class SparseMatrixMultiplication {
-    public int[][] multiply(int[][] A, int[][] B) {
-        if (A == null || B == null || A.length < 1 || A[0].length < 1 || B.length < 1 || B[0].length < 1) {
-            return null;
-        }
-        int[][] ans = new int[A.length][B[0].length];
-        List<int[]> nonZeroAList = new ArrayList<>();
-        List<int[]> nonZeroBList = new ArrayList<>();
+    private List<int[]> extractNonEmptyIndexes(int[][] A) {
+        List<int[]> result = new ArrayList<>();
         for (int i = 0; i < A.length; i++) {
             for (int j = 0; j < A[i].length; j++) {
                 if (A[i][j] != 0) {
-                    nonZeroAList.add(new int[] { i, j });
+                    result.add(new int[] { i, j });
                 }
             }
         }
+        return result;
+    }
 
-        for (int i = 0; i < B[0].length; i++) {
-            for (int j = 0; j < B.length; j++) {
-                if (B[j][i] != 0) {
-                    nonZeroBList.add(new int[] { j, i });
-                }
-            }
+    public int[][] multiply(int[][] A, int[][] B) {
+        if (B.length == 0) {
+            return new int[0][0];
         }
-
-        for (int[] aPos : nonZeroAList) {
-            for (int[] bPos : nonZeroBList) {
+        List<int[]> nonEmptyElemA = extractNonEmptyIndexes(A);
+        List<int[]> nonEmptyElemB = extractNonEmptyIndexes(B);
+        int[][] result = new int[A.length][B[0].length];
+        for (int[] aPos : nonEmptyElemA) {
+            for (int[] bPos : nonEmptyElemB) {
                 if (aPos[1] == bPos[0]) {
-                    ans[aPos[0]][bPos[1]] += A[aPos[0]][aPos[1]] * B[bPos[0]][bPos[1]];
+                    result[aPos[0]][bPos[1]] += A[aPos[0]][aPos[1]] * B[bPos[0]][bPos[1]];
                 }
             }
         }
-
-        return ans;
+        return result;
     }
 }
