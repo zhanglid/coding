@@ -17,30 +17,24 @@ import java.util.*;
 
 public class MergeIntervals {
     public int[][] merge(int[][] intervals) {
-        if (intervals.length < 2) {
-            return intervals;
-        }
         Arrays.sort(intervals, new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
-                if (a[0] != b[0]) {
-                    return a[0] - b[0];
-                }
-                return a[1] - b[1];
+                return a[0] == b[0] ? a[1] - b[1] : a[0] - b[0];
             }
         });
-
-        List<int[]> result = new ArrayList<>();
-        result.add(intervals[0]);
-        int[] last = intervals[0];
-        for (int i = 1; i < intervals.length; i++) {
-            int[] interval = intervals[i];
-            if (interval[0] > last[1]) {
-                result.add(interval);
-                last = interval;
-            } else {
+        List<int[]> mergedIntervalList = new ArrayList<>();
+        for (int[] interval : intervals) {
+            if (mergedIntervalList.isEmpty()) {
+                mergedIntervalList.add(interval);
+                continue;
+            }
+            int[] last = mergedIntervalList.get(mergedIntervalList.size() - 1);
+            if (interval[0] <= last[1]) {
                 last[1] = Math.max(last[1], interval[1]);
+            } else {
+                mergedIntervalList.add(interval);
             }
         }
-        return result.toArray(new int[0][2]);
+        return mergedIntervalList.toArray(new int[0][2]);
     }
 }
