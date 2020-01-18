@@ -12,6 +12,11 @@ A:          a1 → a2
 B:     b1 → b2 → b3
 begin to intersect at node c1.
 
+0
+[2,6,4]
+[1,5]
+3
+2
 
 Notes:
 
@@ -28,25 +33,29 @@ public class IntersectionOfTwoLinkedLists {
         if (headA == null || headB == null) {
             return null;
         }
+        ListNode cursorA = headA;
+        ListNode cursorB = headB;
+        boolean switchedA = false;
+        boolean switchedB = false;
+        while (cursorA != cursorB) {
+            cursorA = cursorA.next;
+            cursorB = cursorB.next;
 
-        ListNode curA = headA;
-        ListNode curB = headB;
-        boolean onePass = false;
-        while (curA != curB) {
-            curA = curA.next;
-            if (curA == null) {
-                curA = headB;
-                if (onePass) {
-                    return null;
+            if (cursorA == null) {
+                cursorA = headB;
+                if (switchedA && switchedB) {
+                    break;
                 }
-                onePass = true;
+                switchedA = true;
             }
-            curB = curB.next;
-            if (curB == null) {
-                curB = headA;
+            if (cursorB == null) {
+                cursorB = headA;
+                if (switchedA && switchedB) {
+                    break;
+                }
+                switchedB = true;
             }
         }
-
-        return curA;
+        return cursorA == cursorB ? cursorA : null;
     }
 }
