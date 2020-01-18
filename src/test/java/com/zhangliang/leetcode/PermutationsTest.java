@@ -24,7 +24,8 @@ public class PermutationsTest {
         Permutations s = new Permutations();
         List<List<Integer>> ans = s.permute(new int[] { 1, 2, 3 });
         String[] ansStrs = getStrings(ans).toArray(new String[0]);
-        String[] expected = new String[] { "[1, 2, 3]", "[1, 3, 2]", "[2, 1, 3]", "[2, 3, 1]", "[3, 1, 2]", "[3, 2, 1]" };
+        String[] expected = new String[] { "[1, 2, 3]", "[1, 3, 2]", "[2, 1, 3]", "[2, 3, 1]", "[3, 1, 2]",
+                "[3, 2, 1]" };
         Arrays.sort(ansStrs);
         Arrays.sort(expected);
         assertArrayEquals(expected, ansStrs);

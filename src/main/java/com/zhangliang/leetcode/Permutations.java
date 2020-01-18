@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given a collection of distinct integers, return all possible permutations.
+Given a collection of distinct integers, return all possible 
+permutations.
 
 Example:
 
@@ -16,34 +17,31 @@ Output:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Permutations {
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (nums == null || nums.length < 1) {
-            return ans;
-        }
-
-        helper(nums, new boolean[nums.length], new ArrayList<>(), ans);
-        return ans;
-    }
-
-    private void helper(int[] nums, boolean[] isSelected, List<Integer> cur, List<List<Integer>> ans) {
-        if (cur.size() == nums.length) {
-            ans.add(new ArrayList<>(cur));
+    private void helper(Set<Integer> numSet, List<Integer> path, List<List<Integer>> result) {
+        if (numSet.size() == 0) {
+            result.add(new ArrayList<>(path));
             return;
         }
-
-        for (int i = 0; i < isSelected.length; i++) {
-            if (!isSelected[i]) {
-                cur.add(nums[i]);
-                isSelected[i] = true;
-                helper(nums, isSelected, cur, ans);
-                isSelected[i] = false;
-                cur.remove(cur.size() - 1);
-            }
+        for (Integer num : numSet.toArray(new Integer[0])) {
+            numSet.remove(num);
+            path.add(num);
+            helper(numSet, path, result);
+            path.remove(path.size() - 1);
+            numSet.add(num);
         }
     }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Set<Integer> numSet = new HashSet<>();
+        for (int num : nums) {
+            numSet.add(num);
+        }
+        helper(numSet, new ArrayList<>(), result);
+        return result;
+    }
+
 }
