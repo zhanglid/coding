@@ -33,31 +33,22 @@ Output: true
 import java.util.*;
 
 public class ValidParentheses {
+    public static Map<Character, Character> PAIRS;
+
+    static {
+        PAIRS = new HashMap<>();
+        PAIRS.put('(', ')');
+        PAIRS.put('[', ']');
+        PAIRS.put('{', '}');
+    }
+
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            switch (s.charAt(i)) {
-            case '[':
-            case '(':
-            case '{':
-                stack.push(s.charAt(i));
-                break;
-            case ']':
-            case ')':
-            case '}':
-                if (stack.isEmpty()) {
-                    return false;
-                }
-                char leftPart = stack.pop();
-                if (s.charAt(i) == ']' && leftPart != '[') {
-                    return false;
-                }
-                if (s.charAt(i) == ')' && leftPart != '(') {
-                    return false;
-                }
-                if (s.charAt(i) == '}' && leftPart != '{') {
-                    return false;
-                }
+        for (char x : s.toCharArray()) {
+            if (!stack.isEmpty() && PAIRS.containsKey(stack.peek()) && PAIRS.get(stack.peek()) == x) {
+                stack.pop();
+            } else {
+                stack.push(x);
             }
         }
         return stack.isEmpty();
