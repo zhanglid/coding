@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+Suppose an array sorted in ascending order is rotated at some pivot 
+unknown to you beforehand.
 
 (i.e.,  [0,1,2,4,5,6,7] might become  [4,5,6,7,0,1,2]).
 
@@ -19,16 +20,26 @@ Output: 0
 
 public class FindMinimumInRotatedSortedArray {
     public int findMin(int[] nums) {
+        if (nums[0] < nums[nums.length - 1]) {
+            return nums[0];
+        }
         int l = 0;
         int r = nums.length - 1;
         while (l + 1 < r) {
             int mid = l + (r - l) / 2;
-            if (nums[mid] <= nums[r]) {
+            if (nums[mid] > nums[r]) {
+                l = mid;
+            } else if (nums[mid] < nums[r]) {
                 r = mid;
             } else {
-                l = mid;
+                if (nums[mid] == nums[l]) {
+                    l++;
+                } else {
+                    r = mid;
+                }
             }
         }
-        return Math.min(nums[l], nums[r]);
+
+        return nums[l] < nums[r] ? nums[l] : nums[r];
     }
 }
