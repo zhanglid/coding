@@ -54,59 +54,54 @@ public class FlattenNestedListIterator {
     }
 
     static class NestedIterator implements Iterator<Integer> {
-        class NestedListIteratorState {
-            List<NestedInteger> nestedList;
+        class IterStatus {
+            List<NestedInteger> list;
             int index;
 
-            public NestedListIteratorState(List<NestedInteger> nestedList) {
-                this.nestedList = nestedList;
+            public boolean isEnd() {
+                return index >= list.size();
             }
 
-            public boolean isValid() {
-                return nestedList != null && index < nestedList.size();
+            public IterStatus(List<NestedInteger> list) {
+                this.list = list;
             }
         }
 
-        private Stack<NestedListIteratorState> stack = new Stack<>();
-        private NestedListIteratorState state;
+        Stack<IterStatus> stack = new Stack<>();
 
-        private void moveToInteger() {
-            while (!state.isValid() && !stack.isEmpty()
-                    || state.isValid() && !state.nestedList.get(state.index).isInteger()) {
-                if (!state.isValid() && !stack.isEmpty()) {
-                    state = stack.pop();
-                    moveToInteger();
-                } else {
-                    stack.push(state);
-                    state = new NestedListIteratorState(state.nestedList.get(state.index).getList());
-                    stack.peek().index++;
+        private void ensureInteger() {
+            while (!stack.isEmpty()
+                    && (stack.peek().isEnd() || !stack.peek().list.get(stack.peek().index).isInteger())) {
+                IterStatus status = stack.peek();
+                if (status.index + 1 >= status.list.size()) {
+                    stack.pop();
+                }
+                if (!status.isEnd()) {
+                    stack.push(new IterStatus(status.list.get(status.index).getList()));
+                    status.index++;
                 }
             }
         }
 
-        private void moveToNext() {
-            state.index++;
-            moveToInteger();
-        }
-
         public NestedIterator(List<NestedInteger> nestedList) {
-            state = new NestedListIteratorState(nestedList);
-            moveToInteger();
+            stack.push(new IterStatus(nestedList));
+            ensureInteger();
         }
 
         @Override
         public Integer next() {
-            Integer ans = state.nestedList.get(state.index).getInteger();
-            moveToNext();
-            return ans;
+            IterStatus top = stack.peek();
+            Integer value = top.list.get(top.index).getInteger();
+            top.index++;
+            ensureInteger();
+            return value;
         }
 
         @Override
         public boolean hasNext() {
-            return state.isValid();
+            return !stack.isEmpty();
         }
     }
-
     /**
      * Your NestedIterator object will be instantiated and called as such:
      * NestedIterator i = new NestedIterator(nestedList); while (i.hasNext()) v[f()]
