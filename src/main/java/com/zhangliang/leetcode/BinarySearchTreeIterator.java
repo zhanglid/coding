@@ -1,7 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the 
-root node of a BST.
+Implement an iterator over a binary search tree (BST). 
+Your iterator will be initialized with the root node of a BST.
 
 Calling next() will return the next smallest number in the BST.
 
@@ -11,38 +11,65 @@ Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
 */
 
-import java.util.Stack;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class BinarySearchTreeIterator {
-    private Stack<TreeNode> stack = new Stack<>();
+    /**
+     * Definition for a binary tree node. public class TreeNode { int val; TreeNode
+     * left; TreeNode right; TreeNode(int x) { val = x; } }
+     */
+    static class BSTIterator {
+        class Status {
+            TreeNode root;
+            boolean hasLeftVisited;
+            boolean hasRightVisited;
 
-    public BinarySearchTreeIterator(TreeNode root) {
-        if (root != null)
-            stack.push(root);
-    }
-
-    /** @return whether we have a next smallest number */
-    public boolean hasNext() {
-        return !stack.isEmpty();
-    }
-
-    /** @return the next smallest number */
-    public int next() {
-        while (stack.peek().left != null) {
-            TreeNode next = stack.peek().left();
-            stack.peek().left = null;
-            stack.push(next);
+            public Status(TreeNode root) {
+                this.root = root;
+                this.hasLeftVisited = root.left == null;
+                this.hasRightVisited = root.right == null;
+            }
         }
 
-        TreeNode node = stack.pop();
-        if (node.right != null) {
-            stack.push(node.right);
+        Stack<Status> stack = new Stack<>();
+
+        private void moveToSmallest() {
+            while (!stack.peek().hasLeftVisited) {
+                stack.peek().hasLeftVisited = true;
+                stack.push(new Status(stack.peek().root.left));
+            }
         }
 
-        return node.val;
+        public BSTIterator(TreeNode root) {
+            if (root != null) {
+                stack.push(new Status(root));
+                moveToSmallest();
+            }
+        }
+
+        /** @return the next smallest number */
+        public int next() {
+            Status status = stack.pop();
+            if (!status.hasRightVisited) {
+                stack.push(new Status(status.root.right));
+                moveToSmallest();
+            }
+            return status.root.val;
+        }
+
+        /** @return whether we have a next smallest number */
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
     }
+
+    /**
+     * Your BSTIterator object will be instantiated and called as such: BSTIterator
+     * obj = new BSTIterator(root); int param_1 = obj.next(); boolean param_2 =
+     * obj.hasNext();
+     */
 }
 
 /**
