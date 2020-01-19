@@ -21,10 +21,14 @@ n = 2
 logs = ["0:start:0","1:start:2","1:end:5","0:end:6"]
 Output: [3, 4]
 Explanation:
-Function 0 starts at the beginning of time 0, then it executes 2 units of time and reaches the end of time 1.
-Now function 1 starts at the beginning of time 2, executes 4 units of time and ends at time 5.
-Function 0 is running again at the beginning of time 6, and also ends at the end of time 6, thus executing for 1 unit of time. 
-So function 0 spends 2 + 1 = 3 units of total time executing, and function 1 spends 4 units of total time executing.
+Function 0 starts at the beginning of time 0, then it executes 2 units of 
+time and reaches the end of time 1.
+Now function 1 starts at the beginning of time 2, executes 4 units of time 
+and ends at time 5.
+Function 0 is running again at the beginning of time 6, and also ends at 
+the end of time 6, thus executing for 1 unit of time. 
+So function 0 spends 2 + 1 = 3 units of total time executing, and function 
+1 spends 4 units of total time executing.
 
 Note:
 
@@ -36,26 +40,37 @@ Functions will always log when they exit.
 import java.util.*;
 
 public class ExclusiveTimeOfFunctions {
+    class Task {
+        int id;
+        int timestamp;
+        int time;
+
+        public Task(int id, int timestamp) {
+            this.id = id;
+            this.timestamp = timestamp;
+        }
+    }
+
     public int[] exclusiveTime(int n, List<String> logs) {
-        int[] ans = new int[n];
-        Stack<Integer> stack = new Stack<>();
-        int time = 0;
+        Stack<Task> stack = new Stack<>();
+        int[] result = new int[n];
+        int lastTimestamp = 0;
         for (String log : logs) {
-            String[] parts = log.split(":");
-            int id = Integer.parseInt(parts[0]);
-            int timestamp = Integer.parseInt(parts[2]);
-            if (parts[1].equals("start")) {
-                if (!stack.isEmpty()) {
-                    ans[stack.peek()] += timestamp - time;
-                }
-                stack.push(id);
-                time = timestamp;
+            String[] parsedLog = log.split(":");
+            int id = Integer.parseInt(parsedLog[0]);
+            int timestamp = Integer.parseInt(parsedLog[2]);
+            if (parsedLog[1].equals("end")) {
+                Task t = stack.pop();
+                result[t.id] += t.time + timestamp - lastTimestamp + 1;
+                lastTimestamp = timestamp + 1;
             } else {
-                stack.pop();
-                ans[id] += timestamp - time + 1;
-                time = timestamp + 1;
+                if (!stack.isEmpty()) {
+                    stack.peek().time += timestamp - lastTimestamp;
+                }
+                stack.push(new Task(id, timestamp));
+                lastTimestamp = timestamp;
             }
         }
-        return ans;
+        return result;
     }
 }
