@@ -1,5 +1,7 @@
 package com.zhangliang.leetcode;
 
+import java.util.*;
+
 public class ListNode {
     int val;
     ListNode next;
@@ -20,9 +22,10 @@ public class ListNode {
     public String toString() {
         ListNode cur = this;
         StringBuilder sb = new StringBuilder();
-
-        while (cur != null) {
+        Set<ListNode> visited = new HashSet<>();
+        while (cur != null && !visited.contains(cur)) {
             sb.append(cur.val);
+            visited.add(cur);
             cur = cur.next;
             if (cur != null)
                 sb.append("->");

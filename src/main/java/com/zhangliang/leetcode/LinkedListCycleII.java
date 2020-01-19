@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+Given a linked list, return the node where the cycle begins. 
+If there is no cycle, return null.
 
 Note: Do not modify the linked list.
 
@@ -10,29 +11,24 @@ Can you solve it without using extra space?
 
 public class LinkedListCycleII {
     public ListNode detectCycle(ListNode head) {
-        if (head == null || head.next == null || head.next.next == null) {
+        if (head == null) {
             return null;
         }
-
-        ListNode slow = head.next;
-        ListNode fast = head.next.next;
-
-        while (slow != null && fast != null && fast.next != null && slow != fast) {
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && slow != fast && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-
-        if (slow == null || fast == null || fast.next == null) {
+        if (slow != fast || slow == null) {
             return null;
         }
-
-        fast = head;
-
+        slow = head;
+        fast = fast.next;
         while (slow != fast) {
             slow = slow.next;
             fast = fast.next;
         }
-
         return slow;
     }
 }
