@@ -50,51 +50,34 @@ Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 */
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RomanToInteger {
+    private static Map<Character, Integer> MARKS;
 
-    Map<Character, Integer> map;
-
-    public RomanToInteger() {
-        map = new HashMap<Character, Integer>();
-        map.put('I', 1);
-        map.put('V', 5);
-        map.put('X', 10);
-        map.put('L', 50);
-        map.put('C', 100);
-        map.put('D', 500);
-        map.put('M', 1000);
+    static {
+        MARKS = new HashMap<>();
+        MARKS.put('I', 1);
+        MARKS.put('V', 5);
+        MARKS.put('X', 10);
+        MARKS.put('L', 50);
+        MARKS.put('C', 100);
+        MARKS.put('D', 500);
+        MARKS.put('M', 1000);
     }
 
     public int romanToInt(String s) {
-        if (s == null || s.length() < 1) {
-            return 0;
-        }
-
-        char[] chars = s.toCharArray();
-
-        int ans = 0;
-        int cur = 0;
-        for (int i = 0; i < chars.length; i++) {
-            if (i == 0) {
-                cur = map.get(chars[i]);
-            } else if (map.get(chars[i]) > map.get(chars[i - 1])) {
-                cur = map.get(chars[i]) - cur;
-            } else if (map.get(chars[i]) == map.get(chars[i - 1])) {
-                cur += map.get(chars[i]);
+        int result = 0;
+        int base = 1;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            int value = MARKS.get(s.charAt(i));
+            if (value < base) {
+                result -= value;
             } else {
-                ans += cur;
-                cur = map.get(chars[i]);
+                base = value;
+                result += value;
             }
         }
-
-        return ans + cur;
-    }
-
-    public static void main(String[] args) {
-        RomanToInteger s = new RomanToInteger();
-        System.out.println(s.romanToInt("III"));
+        return result;
     }
 }
