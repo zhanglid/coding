@@ -18,28 +18,26 @@ The result can be in any order.
 import java.util.*;
 
 public class IntersectionOfTwoArrays {
-    public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> result = new HashSet<>();
-        Arrays.sort(nums1);
-        Arrays.sort(nums2);
-        int i = 0;
-        int j = 0;
-        while (i < nums1.length && j < nums2.length) {
-            if (nums1[i] == nums2[j]) {
-                result.add(nums1[i]);
-                i++;
-                j++;
-            } else if (nums1[i] < nums2[j]) {
-                i++;
-            } else {
-                j++;
-            }
-        }
-        int[] ans = new int[result.size()];
+    private int[] toIntArray(Set<Integer> set) {
         int index = 0;
-        for (int x : result) {
-            ans[index++] = x;
+        int[] ans = new int[set.size()];
+        for (Integer num : set) {
+            ans[index++] = num;
         }
         return ans;
+    }
+
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums1) {
+            set.add(num);
+        }
+        Set<Integer> intersectionSet = new HashSet<>();
+        for (int num : nums2) {
+            if (set.contains(num)) {
+                intersectionSet.add(num);
+            }
+        }
+        return toIntArray(intersectionSet);
     }
 }
