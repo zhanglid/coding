@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) 
+Given two words (beginWord and endWord), and a dictionary's word list, find all shortest 
+transformation sequence(s) 
 from beginWord to endWord, such that:
 
 Only one letter can be changed at a time
@@ -12,6 +13,7 @@ All words have the same length.
 All words contain only lowercase alphabetic characters.
 You may assume no duplicates in the word list.
 You may assume beginWord and endWord are non-empty and are not the same.
+
 Example 1:
 
 Input:
@@ -24,6 +26,7 @@ Output:
   ["hit","hot","dot","dog","cog"],
   ["hit","hot","lot","log","cog"]
 ]
+
 Example 2:
 
 Input:
@@ -36,105 +39,77 @@ Output: []
 Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class WordLadderII {
-    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        List<List<String>> ans = new ArrayList<>();
-        if (beginWord == null || endWord == null || wordList == null) {
-            return ans;
-        }
-
-        Map<String, Integer> distDict = new HashMap<>();
-        for (String string : wordList) {
-            distDict.put(string, -1);
-        }
-        distDict.put(beginWord, 0);
-
-        if (!distDict.containsKey(endWord)) {
-            return ans;
-        }
-
-        calculateDist(beginWord, endWord, distDict);
-
-        if (distDict.get(endWord) < 0) {
-            return ans;
-        }
-        generatePaths(beginWord, endWord, distDict, ans);
-
-        return ans;
-    }
-
-    private void generatePaths(String beginWord, String endWord, Map<String, Integer> distDict,
-            List<List<String>> ans) {
-        List<String> cur = new ArrayList<>();
-        cur.add(endWord);
-        ans.add(cur);
-        int curDist = distDict.get(endWord);
-        while (curDist >= 0) {
-            List<List<String>> additionalLists = new ArrayList<>();
-            for (List<String> list : ans) {
-                String sCur = list.get(0);
-                boolean hasGotOne = false;
-                StringBuilder sb = new StringBuilder(sCur);
+    private void bfs(String start, String end, Set<String> words, Map<String, Integer> distances) {
+        int distance = 0;
+        Queue<String> queue = new LinkedList<>();
+        queue.add(start);
+        distances.put(start, 0);
+        while (!queue.isEmpty() && !distances.containsKey(end)) {
+            distance++;
+            int size = queue.size();
+            for (int t = 0; t < size; t++) {
+                String word = queue.poll();
+                StringBuilder sb = new StringBuilder(word);
                 for (int i = 0; i < sb.length(); i++) {
-                    char t = sb.charAt(i);
-                    for (char c = 'a'; c <= 'z'; c++) {
-                        if (c == t) {
-                            continue;
-                        }
-
-                        sb.setCharAt(i, c);
-                        String key = sb.toString();
-                        if (distDict.containsKey(key) && distDict.get(key) == curDist - 1) {
-                            if (!hasGotOne) {
-                                list.add(0, key);
-                                hasGotOne = true;
-                            } else {
-                                List<String> newList = new ArrayList<>(list);
-                                newList.set(0, key);
-                                additionalLists.add(newList);
+                    char x = sb.charAt(i);
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        if (ch != x) {
+                            sb.setCharAt(i, ch);
+                            String key = sb.toString();
+                            if (words.contains(key) && !distances.containsKey(key)) {
+                                distances.put(key, distance);
+                                queue.add(key);
                             }
                         }
                     }
-                    sb.setCharAt(i, t);
+                    sb.setCharAt(i, x);
                 }
             }
-            ans.addAll(additionalLists);
-            curDist--;
         }
     }
 
-    private void calculateDist(String beginWord, String endWord, Map<String, Integer> distDict) {
-        Set<String> wordsSet = new HashSet<>();
-        wordsSet.add(beginWord);
-        int count = 0;
-        while (!wordsSet.isEmpty() && !wordsSet.contains(endWord)) {
-            Set<String> nextSet = new HashSet<>();
-            count++;
-            for (String word : wordsSet) {
-                for (int i = 0; i < word.length(); i++) {
-                    StringBuilder sb = new StringBuilder(word);
-                    char x = word.charAt(i);
-                    for (char c = 'a'; c <= 'z'; c++) {
-                        if (x == c) {
-                            continue;
-                        }
-                        sb.setCharAt(i, c);
-                        String key = sb.toString();
-                        if (distDict.containsKey(key) && distDict.get(key) == -1) {
-                            nextSet.add(key);
-                            distDict.put(key, count);
-                        }
+    private void build(String start, List<String> path, Set<String> words, Map<String, Integer> distances,
+            List<List<String>> result) {
+        String first = path.get(0);
+        int distance = distances.get(first);
+        if (distance == 0) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        StringBuilder sb = new StringBuilder(first);
+        for (int i = 0; i < first.length(); i++) {
+            char x = sb.charAt(i);
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+                if (ch != x) {
+                    sb.setCharAt(i, ch);
+                    String key = sb.toString();
+                    if ((words.contains(key) || start.equals(key)) && distances.containsKey(key)
+                            && distances.get(key) == distance - 1) {
+                        path.add(0, key);
+                        build(start, path, words, distances, result);
+                        path.remove(0);
                     }
                 }
             }
-            wordsSet = nextSet;
+            sb.setCharAt(i, x);
         }
+    }
+
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> ans = new ArrayList<>();
+        Set<String> set = new HashSet<>();
+        for (String word : wordList) {
+            set.add(word);
+        }
+        Map<String, Integer> distances = new HashMap<>();
+        bfs(beginWord, endWord, set, distances);
+        if (!distances.containsKey(endWord)) {
+            return ans;
+        }
+        build(beginWord, new ArrayList<>(Arrays.asList(endWord)), set, distances, ans);
+        return ans;
     }
 }
