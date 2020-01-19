@@ -9,7 +9,7 @@ public class SerializeAndDeserializeBstTest {
     @Test
     public void testCase() {
         SerializeAndDeserializeBst.Codec s = new SerializeAndDeserializeBst.Codec();
-        TreeNode root = new TreeNode(new Integer[] { 1, 2, 3, 4, 5 });
+        TreeNode root = new TreeNode(new Integer[] { 2, 1, 3 });
         String ans = s.serialize(root);
         assertEquals(root, s.deserialize(ans));
     }
