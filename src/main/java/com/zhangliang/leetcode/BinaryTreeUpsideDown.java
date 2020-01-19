@@ -1,8 +1,8 @@
 package com.zhangliang.leetcode;
 /*
-Given a binary tree where all the right nodes are either leaf nodes with a sibling (a left node that shares the same 
-parent node) or empty, flip it upside down and turn it into a tree where the original right nodes turned into left 
-leaf nodes. Return the new root.
+Given a binary tree where all the right nodes are either leaf nodes with a sibling 
+(a left node that shares the same parent node) or empty, flip it upside down and turn 
+it into a tree where the original right nodes turned into left leaf nodes. Return the new root.
 
 Example:
 
@@ -43,24 +43,35 @@ The above binary tree is serialized as [1,2,3,#,#,4,#,#,5].
 import com.zhangliang.utils.TreeNode;
 
 public class BinaryTreeUpsideDown {
-    public TreeNode upsideDownBinaryTree(TreeNode root) {
+    class ReturnType {
+        TreeNode root;
+        TreeNode tail;
+
+        public ReturnType(TreeNode root, TreeNode tail) {
+            this.root = root;
+            this.tail = tail;
+        }
+    }
+
+    private ReturnType helper(TreeNode root) {
         if (root == null) {
-            return root;
+            return null;
         }
-        TreeNode prev = null;
-        TreeNode sibling = null;
-        TreeNode cur = root;
-
-        while (cur != null) {
-            TreeNode nextCur = cur.left;
-            TreeNode nextSibling = cur.right;
-            cur.left = sibling;
-            cur.right = prev;
-            prev = cur;
-            cur = nextCur;
-            sibling = nextSibling;
+        ReturnType r = helper(root.left);
+        if (r == null) {
+            r = new ReturnType(root, root);
+        } else {
+            r.tail.right = root;
+            r.tail.left = root.right;
+            r.tail = r.tail.right;
+            r.tail.left = null;
+            r.tail.right = null;
         }
+        return r;
+    }
 
-        return prev;
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        ReturnType t = helper(root);
+        return t == null ? null : t.root;
     }
 }
