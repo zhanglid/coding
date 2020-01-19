@@ -32,73 +32,71 @@ import java.util.*;
 
 class LRUCache {
     class Node {
+        int key;
         Node next;
         Node prev;
-        int key;
-    }
 
-    private Node head = new Node();
-    private Node tail;
-    private Map<Integer, Integer> values;
-    private Map<Integer, Node> nodes;
-    private int capacity;
-
-    private void refresh(int key) {
-        Node node = nodes.get(key);
-        removeNode(node);
-        attach(node);
-    }
-
-    private void removeNode(Node node) {
-        node.prev.next = node.next;
-        if (node != tail) {
-            node.next.prev = node.prev;
-            node.next = null;
-        } else {
-            tail = node.prev;
+        public Node(int key) {
+            this.key = key;
         }
     }
 
-    private void attach(Node node) {
-        tail.next = node;
-        node.prev = tail;
-        tail = node;
-    }
+    private Node head;
+    private Node tail;
+    private Map<Integer, Integer> valueMap = new HashMap<>();
+    private Map<Integer, Node> nodeMap = new HashMap<>();
+    private int capacity;
 
     public LRUCache(int capacity) {
+        head = new Node(-1);
+        tail = head;
         this.capacity = capacity;
-        this.values = new HashMap<>();
-        this.nodes = new HashMap<>();
-        tail = this.head;
+    }
+
+    private void refresh(int key) {
+        Node node = nodeMap.get(key);
+        if (node != tail) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+            node.next = null;
+            node.prev = tail;
+            tail.next = node;
+            tail = node;
+        }
     }
 
     public int get(int key) {
-        if (values.containsKey(key)) {
-            int value = values.get(key);
-            refresh(key);
-            return value;
+        if (!valueMap.containsKey(key)) {
+            return -1;
         }
-        return -1;
+        refresh(key);
+        return valueMap.get(key);
     }
 
     public void put(int key, int value) {
-        values.put(key, value);
-        if (nodes.containsKey(key)) {
-            // already exists
+        if (capacity == 0) {
+            return;
+        }
+        if (valueMap.containsKey(key)) {
+            valueMap.put(key, value);
             refresh(key);
             return;
         }
-        // create new node
-        Node node = new Node();
-        node.key = key;
-        if (nodes.size() >= capacity) {
-            Node toBeRemoved = head.next;
-            removeNode(toBeRemoved);
-            values.remove(toBeRemoved.key);
-            nodes.remove(toBeRemoved.key);
+        if (valueMap.size() >= capacity) {
+            nodeMap.remove(head.next.key);
+            valueMap.remove(head.next.key);
+            head.next = head.next.next;
+            if (head.next != null) {
+                head.next.prev = head;
+            } else {
+                tail = head;
+            }
         }
-        attach(node);
-        nodes.put(key, node);
+        tail.next = new Node(key);
+        tail.next.prev = tail;
+        valueMap.put(key, value);
+        nodeMap.put(key, tail.next);
+        tail = tail.next;
     }
 }
 
