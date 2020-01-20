@@ -1,6 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+Given a binary tree and a sum, find all root-to-leaf paths where 
+each path's sum equals the given sum.
 
 Note: A leaf is a node with no children.
 
@@ -23,38 +24,31 @@ Return:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class PathSumII {
-    public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> ans = new ArrayList<>();
+    private void dfs(TreeNode root, List<Integer> path, int sum, int target, List<List<Integer>> result) {
         if (root == null) {
-            return ans;
+            return;
         }
-
-        helper(root, new ArrayList<>(), sum, ans);
-
-        return ans;
+        if (root.left == null && root.right == null) {
+            if (sum + root.val == target) {
+                result.add(new ArrayList<>(path));
+                result.get(result.size() - 1).add(root.val);
+            }
+            return;
+        }
+        path.add(root.val);
+        dfs(root.left, path, sum + root.val, target, result);
+        dfs(root.right, path, sum + root.val, target, result);
+        path.remove(path.size() - 1);
     }
 
-    private void helper(TreeNode root, List<Integer> curList, int sum, List<List<Integer>> ans) {
-        if (root == null) {
-            return;
-        }
-        if (root.val == sum && root.left == null && root.right == null) {
-            curList.add(root.val);
-            ans.add(new ArrayList<>(curList));
-            curList.remove(curList.size() - 1);
-            return;
-        }
-
-        curList.add(root.val);
-        sum -= root.val;
-        helper(root.left, curList, sum, ans);
-        helper(root.right, curList, sum, ans);
-        curList.remove(curList.size() - 1);
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(root, new ArrayList<>(), 0, sum, result);
+        return result;
     }
 }
