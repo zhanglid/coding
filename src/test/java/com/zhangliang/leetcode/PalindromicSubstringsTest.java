@@ -10,6 +10,7 @@ public class PalindromicSubstringsTest {
         int ans = s.countSubstrings("abc");
         assertEquals(3, ans);
     }
+
     @Test
     public void testCase2() {
         PalindromicSubstrings s = new PalindromicSubstrings();
