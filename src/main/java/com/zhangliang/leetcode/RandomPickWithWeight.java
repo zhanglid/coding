@@ -29,26 +29,39 @@ arguments. Arguments are always wrapped with a list, even if there
 aren't any.
 */
 
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 public class RandomPickWithWeight {
     static class Solution {
-        private TreeMap<Integer, Integer> values = new TreeMap<>();
-        private int sum;
-        private Random random;
+        private int[] stages;
+        private Random rand = new Random();
+        private int max;
 
         public Solution(int[] w) {
+            stages = new int[w.length];
+            int sum = 0;
             for (int i = 0; i < w.length; i++) {
-                values.put(sum, i);
                 sum += w[i];
+                stages[i] = sum;
             }
-            random = new Random();
+            max = sum;
         }
 
         public int pickIndex() {
-            int rnd = random.nextInt(sum);
-            return values.floorEntry(rnd).getValue();
+            int value = rand.nextInt(max);
+            int index = Arrays.binarySearch(stages, value);
+            if (index < 0) {
+                index = -index - 1;
+            } else {
+                // Attention: If we found the value, we should use the next index.
+                index++;
+            }
+            return index;
         }
     }
+
+    /**
+     * Your Solution object will be instantiated and called as such: Solution obj =
+     * new Solution(w); int param_1 = obj.pickIndex();
+     */
 }
