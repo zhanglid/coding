@@ -27,31 +27,34 @@ Try to solve it in O(n log k) time and O(n) extra space.
 import java.util.*;
 
 public class TopKFrequentWords {
-    public List<String> topKFrequent(String[] words, int k) {
-        Map<String, Integer> counts = new HashMap<>();
+    private Map<String, Integer> buildFreqMap(String[] words) {
+        Map<String, Integer> freqMap = new HashMap<>();
         for (String word : words) {
-            counts.put(word, counts.getOrDefault(word, 0) + 1);
+            freqMap.put(word, freqMap.getOrDefault(word, 0) + 1);
         }
+        return freqMap;
+    }
+
+    public List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer> freqMap = buildFreqMap(words);
         PriorityQueue<String> pq = new PriorityQueue<>(new Comparator<String>() {
             public int compare(String a, String b) {
-                int diff = counts.get(a) - counts.get(b);
-                if (diff != 0) {
-                    return diff;
-                }
-                return b.compareTo(a);
+                // Attention: We should put the less freq in front so that it can be poll if
+                // full.
+                int freqDiff = freqMap.get(a) - freqMap.get(b);
+                return freqDiff != 0 ? freqDiff : b.compareTo(a);
             }
         });
-        for (String key : counts.keySet()) {
-            pq.add(key);
+        for (String word : freqMap.keySet()) {
+            pq.add(word);
             if (pq.size() > k) {
                 pq.poll();
             }
         }
-        List<String> ans = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         while (!pq.isEmpty()) {
-            ans.add(pq.poll());
+            result.add(0, pq.poll());
         }
-        Collections.reverse(ans);
-        return ans;
+        return result;
     }
 }
