@@ -29,45 +29,35 @@ You may assume that there are no duplicate edges in the input prerequisites.
 import java.util.*;
 
 public class CourseSchedule {
-    private boolean dfs(int index, Map<Integer, Set<Integer>> graph, Set<Integer> path, Set<Integer> visited) {
-        if (path.contains(index)) {
+    private boolean topoCheck(int node, Set<Integer> path, Set<Integer> visited, Map<Integer, Set<Integer>> graph) {
+        if (path.contains(node)) {
             return false;
         }
-        path.add(index);
-        if (graph.containsKey(index)) {
-            for (Integer other : graph.get(index)) {
-                if (visited.contains(other)) {
-                    continue;
-                }
-                if (!dfs(other, graph, path, visited)) {
-                    return false;
-                }
+        if (visited.contains(node)) {
+            return true;
+        }
+        visited.add(node);
+        path.add(node);
+        for (int neighbor : graph.get(node)) {
+            if (!topoCheck(neighbor, path, visited, graph)) {
+                return false;
             }
         }
-        path.remove(index);
-        visited.add(index);
+        path.remove(node);
         return true;
     }
 
-    private Map<Integer, Set<Integer>> buildGraph(int[][] prerequisites) {
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (int[] pair : prerequisites) {
-            if (!graph.containsKey(pair[0])) {
-                graph.put(pair[0], new HashSet<>());
-            }
-            if (!graph.containsKey(pair[1])) {
-                graph.put(pair[1], new HashSet<>());
-            }
-            graph.get(pair[1]).add(pair[0]);
-        }
-        return graph;
-    }
-
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, Set<Integer>> graph = buildGraph(prerequisites);
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.put(i, new HashSet<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            graph.get(prerequisite[1]).add(prerequisite[0]);
+        }
         Set<Integer> visited = new HashSet<>();
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(i, graph, new HashSet<>(), visited)) {
+            if (!topoCheck(i, new HashSet<>(), visited, graph)) {
                 return false;
             }
         }
