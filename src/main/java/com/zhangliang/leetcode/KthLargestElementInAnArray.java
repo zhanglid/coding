@@ -15,7 +15,7 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 */
 
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class KthLargestElementInAnArray {
     public int findKthLargest(int[] nums, int k) {
@@ -26,10 +26,6 @@ public class KthLargestElementInAnArray {
                 pq.poll();
             }
         }
-        int ans = pq.peek();
-        for (Integer num : pq) {
-            ans = Math.min(ans, num);
-        }
-        return ans;
+        return pq.peek();
     }
 }
