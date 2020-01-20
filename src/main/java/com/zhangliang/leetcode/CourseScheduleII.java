@@ -32,71 +32,48 @@ You may assume that there are no duplicate edges in the input prerequisites.
 
 */
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class CourseScheduleII {
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        if (numCourses < 1) {
-            return new int[0];
-        }
-        if (prerequisites == null) {
-            prerequisites = new int[0][];
-        }
-
-        List<Set<Integer>> outMap = new ArrayList<>();
-
-        for (int i = 0; i < numCourses; i++) {
-            outMap.add(i, new HashSet<>());
-        }
-
-        for (int[] pair : prerequisites) {
-            outMap.get(pair[1]).add(pair[0]);
-        }
-
-        boolean[] visited = new boolean[numCourses];
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < numCourses; i++) {
-            Set<Integer> pathSet = new HashSet<>();
-            if (!visited[i]) {
-                if (!helper(i, visited, stack, outMap, pathSet)) {
-                    stack.clear();
-                    break;
-                }
-            }
-        }
-
-        int[] ans = new int[stack.size()];
-        int index = 0;
-        while (!stack.isEmpty()) {
-            ans[index++] = stack.pop();
-        }
-        return ans;
-    }
-
-    private boolean helper(int index, boolean[] visited, Stack<Integer> stack, List<Set<Integer>> outMap,
-            Set<Integer> pathSet) {
-        if (pathSet.contains(index)) {
+    private boolean topoSort(int node, Set<Integer> path, Set<Integer> visited, Stack<Integer> result,
+            Map<Integer, Set<Integer>> graph) {
+        if (path.contains(node)) {
             return false;
         }
-        pathSet.add(index);
-        visited[index] = true;
-        for (int x : outMap.get(index)) {
-            if (pathSet.contains(x)) {
+        if (visited.contains(node)) {
+            return true;
+        }
+        path.add(node);
+        visited.add(node);
+        for (int next : graph.get(node)) {
+            if (!topoSort(next, path, visited, result, graph)) {
                 return false;
             }
-            if (!visited[x]) {
-                if (!helper(x, visited, stack, outMap, pathSet)) {
-                    return false;
-                }
+        }
+        result.add(node);
+        path.remove(node);
+        return true;
+    }
+
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.put(i, new HashSet<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            graph.get(prerequisite[1]).add(prerequisite[0]);
+        }
+        Stack<Integer> stack = new Stack<>();
+        Set<Integer> visited = new HashSet<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (!topoSort(i, new HashSet<>(), visited, stack, graph)) {
+                return new int[0];
             }
         }
-
-        stack.push(index);
-        pathSet.remove(index);
-        return true;
+        int[] result = new int[stack.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = stack.pop();
+        }
+        return result;
     }
 }
