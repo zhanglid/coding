@@ -24,35 +24,31 @@ Given word = "ABCB", return false.
 import java.util.*;
 
 public class WordSearch {
-    static private final int[][] dirs = { { 1, 0 }, { 0, 1 }, { -1, 0 }, { 0, -1 } };
+    static int[][] DIRS = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
-    private int hash(int[] pos, char[][] board) {
-        return pos[0] * board[0].length + pos[1];
+    private int hash(int i, int j, char[][] board) {
+        return i * board[0].length + j;
     }
 
-    private boolean dfs(char[][] board, int[] pos, String word, int index, Set<Integer> visited) {
-        // out of bound
-        if (pos[0] < 0 || pos[0] >= board.length || pos[1] < 0 || pos[1] >= board[0].length) {
-            return false;
-        }
-        int hashCode = hash(pos, board);
-        // visited
+    private boolean dfs(char[][] board, String target, int index, int i, int j, Set<Integer> visited) {
+        int hashCode = hash(i, j, board);
         if (visited.contains(hashCode)) {
             return false;
         }
-        // mismatch
-        if (board[pos[0]][pos[1]] != word.charAt(index)) {
+        if (board[i][j] != target.charAt(index)) {
             return false;
         }
-        // last one
-        if (index == word.length() - 1) {
+        if (index == target.length() - 1) {
             return true;
         }
-        // find next
         visited.add(hashCode);
-        for (int[] dir : dirs) {
-            int[] next = new int[] { pos[0] + dir[0], pos[1] + dir[1] };
-            if (dfs(board, next, word, index + 1, visited)) {
+        for (int[] dir : DIRS) {
+            int ni = i + dir[0];
+            int nj = j + dir[1];
+            if (ni < 0 || ni >= board.length || nj < 0 || nj >= board[0].length) {
+                continue;
+            }
+            if (dfs(board, target, index + 1, ni, nj, visited)) {
                 return true;
             }
         }
@@ -63,7 +59,7 @@ public class WordSearch {
     public boolean exist(char[][] board, String word) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (dfs(board, new int[] { i, j }, word, 0, new HashSet<>())) {
+                if (dfs(board, word, 0, i, j, new HashSet<>())) {
                     return true;
                 }
             }
