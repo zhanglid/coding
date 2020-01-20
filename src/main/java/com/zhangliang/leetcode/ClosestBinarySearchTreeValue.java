@@ -1,7 +1,7 @@
 package com.zhangliang.leetcode;
 /*
-Given a non-empty binary search tree and a target value, find the value in the BST that is closest 
-to the target.
+Given a non-empty binary search tree and a target value, find the value 
+in the BST that is closest to the target.
 
 Note:
 
@@ -24,19 +24,19 @@ import com.zhangliang.utils.TreeNode;
 
 public class ClosestBinarySearchTreeValue {
     public int closestValue(TreeNode root, double target) {
-        int value = root.val;
-        if (root.left != null) {
-            int other = closestValue(root.left, target);
-            if (Math.abs(value - target) > Math.abs(other - target)) {
-                value = other;
+        int result = root.val;
+        if (root.left != null && (target < root.val)) {
+            int lResult = closestValue(root.left, target);
+            if (Math.abs(target - result) > Math.abs(lResult - target)) {
+                result = lResult;
             }
         }
-        if (root.right != null) {
-            int other = closestValue(root.right, target);
-            if (Math.abs(value - target) > Math.abs(other - target)) {
-                value = other;
+        if (root.right != null && (target > root.val)) {
+            int rResult = closestValue(root.right, target);
+            if (Math.abs(target - result) > Math.abs(rResult - target)) {
+                result = rResult;
             }
         }
-        return value;
+        return result;
     }
 }
