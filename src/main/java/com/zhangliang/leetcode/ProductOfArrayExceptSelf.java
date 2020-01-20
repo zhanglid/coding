@@ -18,16 +18,21 @@ analysis.)
 
 public class ProductOfArrayExceptSelf {
     public int[] productExceptSelf(int[] nums) {
-        int[] ans = new int[nums.length];
-        int product = 1;
+        int[] lp = new int[nums.length];
+        int prod = 1;
         for (int i = 0; i < nums.length; i++) {
-            ans[i] = product;
-            product *= nums[i];
+            lp[i] = prod;
+            prod *= nums[i];
         }
-        product = 1;
+        int[] rp = new int[nums.length];
+        prod = 1;
         for (int i = nums.length - 1; i >= 0; i--) {
-            ans[i] *= product;
-            product *= nums[i];
+            rp[i] = prod;
+            prod *= nums[i];
+        }
+        int[] ans = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            ans[i] = lp[i] * rp[i];
         }
         return ans;
     }
