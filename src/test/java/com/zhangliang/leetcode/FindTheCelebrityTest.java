@@ -27,4 +27,11 @@ public class FindTheCelebrityTest {
         int ans = s.findCelebrity(2);
         assertEquals(-1, ans);
     }
+
+    @Test
+    public void errCase2() {
+        FindTheCelebrity.Solution s = new FindTheCelebrity.Solution(new int[][] { { 1, 0 }, { 0, 1 } });
+        int ans = s.findCelebrity(2);
+        assertEquals(-1, ans);
+    }
 }

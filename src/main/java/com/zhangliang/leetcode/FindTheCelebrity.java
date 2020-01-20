@@ -53,37 +53,19 @@ public class FindTheCelebrity {
             super(graph);
         }
 
-        private boolean checkCelebrity(int index, int n) {
-            for (int i = 0; i < n; i++) {
-                if (i != index && (!knows(i, index) || knows(index, i))) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public int findCelebrity(int n) {
-            Set<Integer> visited = new HashSet<>();
-            int cur = 0;
-            while (cur < n) {
-                visited.add(cur);
-                boolean knowOthers = false;
-                for (int i = 0; i < n; i++) {
-                    if (visited.contains(i)) {
-                        continue;
-                    }
-                    if (knows(cur, i)) {
-                        cur = i;
-                        knowOthers = true;
-                        break;
-                    }
-                }
-                if (!knowOthers) {
-                    break;
+            int index = 0;
+            for (int i = 1; i < n; i++) {
+                if (knows(index, i)) {
+                    index = i;
                 }
             }
-
-            return cur < n && checkCelebrity(cur, n) ? cur : -1;
+            for (int i = 0; i < n; i++) {
+                if (i != index && (knows(index, i) || !knows(i, index))) {
+                    return -1;
+                }
+            }
+            return index;
         }
     }
 }
