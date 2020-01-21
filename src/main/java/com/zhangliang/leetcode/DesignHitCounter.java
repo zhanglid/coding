@@ -43,7 +43,6 @@ import java.util.*;
 public class DesignHitCounter {
     static class HitCounter {
         private LinkedHashMap<Integer, Integer> hitGroups = new LinkedHashMap<>();
-        private int lastTimestamp = 1;
         private int count = 0;
 
         /** Initialize your data structure here. */
@@ -67,11 +66,18 @@ public class DesignHitCounter {
          * @param timestamp - The current timestamp (in seconds granularity).
          */
         public int getHits(int timestamp) {
-            for (int i = lastTimestamp; i <= timestamp - 300; i++) {
-                if (hitGroups.containsKey(i)) {
-                    count -= hitGroups.get(i);
+            Iterator<Integer> iter = hitGroups.keySet().iterator();
+            Set<Integer> keysToRemove = new HashSet<>();
+            while (iter.hasNext()) {
+                int time = iter.next();
+                if (time > timestamp - 300) {
+                    break;
                 }
-                hitGroups.remove(i);
+                count -= hitGroups.get(time);
+                keysToRemove.add(time);
+            }
+            for (int time : keysToRemove) {
+                hitGroups.remove(time);
             }
             return count;
         }
