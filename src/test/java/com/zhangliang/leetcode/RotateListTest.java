@@ -20,4 +20,12 @@ public class RotateListTest {
         ListNode ans = s.rotateRight(input, 4);
         assertEquals("2->0->1", ans.toString());
     }
+
+    @Test
+    public void errCase() {
+        RotateList s = new RotateList();
+        ListNode input = new ListNode(new int[] { 1 });
+        ListNode ans = s.rotateRight(input, 0);
+        assertEquals("1", ans.toString());
+    }
 }
