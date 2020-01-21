@@ -24,11 +24,7 @@ Do not use class member/global/static variables to store states. Your
 serialize and deserialize algorithms should be stateless.
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /*
 // Definition for a Node.
@@ -41,7 +37,10 @@ public class SerializeAndDeserializeNAryTree {
         public List<Node> children;
 
         public Node() {
-            this.children = new ArrayList<>();
+        }
+
+        public Node(int _val) {
+            val = _val;
         }
 
         public Node(int _val, List<Node> _children) {
@@ -50,13 +49,14 @@ public class SerializeAndDeserializeNAryTree {
         }
 
         public boolean isEqual(Node other) {
-            if (other == null || val != other.val) {
+            if (other == null) {
                 return false;
             }
-            if (children == other.children) {
-                return true;
+            if (val != other.val) {
+                return false;
             }
-            if (other.children.size() != children.size()) {
+            ;
+            if (children.size() != other.children.size()) {
                 return false;
             }
             for (int i = 0; i < children.size(); i++) {
@@ -68,57 +68,89 @@ public class SerializeAndDeserializeNAryTree {
         }
     };
 
-    public static class Codec {
+    /*
+     * // Definition for a Node. class Node { public int val; public List<Node>
+     * children;
+     * 
+     * public Node() {}
+     * 
+     * public Node(int _val) { val = _val; }
+     * 
+     * public Node(int _val, List<Node> _children) { val = _val; children =
+     * _children; } };
+     */
+    static class Codec {
 
         // Encodes a tree to a single string.
         public String serialize(Node root) {
+            if (root == null) {
+                return "";
+            }
             Queue<Node> queue = new LinkedList<>();
-            if (root != null) {
-                queue.add(root);
-            }
-            List<String> list = new LinkedList<>();
+            queue.add(root);
+            List<String> levels = new ArrayList<>();
             while (!queue.isEmpty()) {
-                Node node = queue.poll();
-                list.add(node.val + "," + node.children.size());
-                for (Node child : node.children) {
-                    queue.add(child);
+                StringBuilder sb = new StringBuilder();
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    Node node = queue.poll();
+                    if (sb.length() > 0) {
+                        sb.append(",");
+                    }
+                    sb.append(node.val + "#" + node.children.size());
+                    for (Node child : node.children) {
+                        queue.add(child);
+                    }
                 }
+                levels.add(sb.toString());
             }
-
-            return String.join("#", list);
+            return String.join("\n", levels);
         }
 
-        private Node decode(String part) {
-            String[] data = part.split(",");
-            int size = Integer.parseInt(data[1]);
-            return new Node(Integer.parseInt(data[0]), Arrays.asList(new Node[size]));
+        private Node fromToken(String token) {
+            if (token.length() < 1) {
+                return null;
+            }
+            String[] parts = token.split("#");
+            Node node = new Node(Integer.parseInt(parts[0]));
+            int childrenSize = Integer.parseInt(parts[1]);
+            node.children = new ArrayList<>();
+            for (int i = 0; i < childrenSize; i++) {
+                node.children.add(null);
+            }
+            return node;
         }
 
         // Decodes your encoded data to tree.
         public Node deserialize(String data) {
-            Node root = null;
-            if (data.equals("")) {
+            if (data.length() < 1) {
                 return null;
             }
-            String[] parts = data.split("#");
-            if (parts.length < 1) {
-                return root;
+            String[] levelTokens = data.split("\n");
+            if (levelTokens.length < 1) {
+                return null;
             }
-            root = decode(parts[0]);
-            Queue<Node> nodesToFill = new LinkedList<>();
-            nodesToFill.add(root);
-            int index = 1;
-            while (index < parts.length) {
-                Node node = nodesToFill.poll();
-                for (int i = 0; i < node.children.size(); i++) {
-                    Node child = decode(parts[index++]);
-                    nodesToFill.add(child);
-                    node.children.set(i, child);
+            Queue<Node> queue = new LinkedList<>();
+            Node root = fromToken(levelTokens[0]);
+            queue.add(root);
+            int level = 1;
+            while (!queue.isEmpty() && level < levelTokens.length) {
+                int tokenIndex = 0;
+                String[] tokens = levelTokens[level++].split(",");
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    Node node = queue.poll();
+                    for (int j = 0; j < node.children.size(); j++) {
+                        node.children.set(j, fromToken(tokens[tokenIndex++]));
+                        queue.add(node.children.get(j));
+                    }
                 }
-
             }
-
             return root;
         }
     }
+
+    // Your Codec object will be instantiated and called as such:
+    // Codec codec = new Codec();
+    // codec.deserialize(codec.serialize(root));
 }
