@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.*;
 import org.junit.Test;
 
 public class ValidPalindromeTest {
@@ -25,6 +24,13 @@ public class ValidPalindromeTest {
         ValidPalindrome s = new ValidPalindrome();
         boolean ans = s.isPalindrome("0P");
         assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase2() {
+        ValidPalindrome s = new ValidPalindrome();
+        boolean ans = s.isPalindrome("Zeus was deified, saw Suez.");
+        assertEquals(true, ans);
     }
 
 }

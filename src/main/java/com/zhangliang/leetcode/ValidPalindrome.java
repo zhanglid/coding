@@ -17,42 +17,41 @@ Output: false
 */
 
 public class ValidPalindrome {
-    private boolean isIgnoredChar(char x) {
-        if (x >= 'A' && x <= 'Z') {
-            return false;
-        } else if (x >= 'a' && x <= 'z') {
-            return false;
-        } else if (x >= '0' && x <= '9') {
-            return false;
-        }
-        return true;
+    private boolean shouldIgnore(char x) {
+        return !(x >= 'a' && x <= 'z' || x >= 'A' && x <= 'Z' || x >= '0' && x <= '9');
     }
 
-    private char normalize(char a) {
-        if (a >= 'A' && a <= 'Z') {
-            a += 'a' - 'A';
+    private char toLowerCase(char x) {
+        if (x >= 'a' && x <= 'z') {
+            return x;
         }
-        return a;
+        return (char) (x - 'A' + 'a');
     }
 
     private boolean isSame(char a, char b) {
-        return normalize(a) == normalize(b);
+        return toLowerCase(a) == toLowerCase(b);
     }
 
     public boolean isPalindrome(String s) {
-        if (s == null) {
-            return false;
+        if (s.length() < 1) {
+            return true;
         }
-        int l = 0;
-        int r = s.length() - 1;
-        while (l < r) {
-            if (isIgnoredChar(s.charAt(l))) {
-                l++;
-            } else if (isIgnoredChar(s.charAt(r))) {
-                r--;
-            } else if (!isSame(s.charAt(l++), s.charAt(r--))) {
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            if (shouldIgnore(s.charAt(i))) {
+                i++;
+                continue;
+            }
+            if (shouldIgnore(s.charAt(j))) {
+                j--;
+                continue;
+            }
+            if (!isSame(s.charAt(i), s.charAt(j))) {
                 return false;
             }
+            i++;
+            j--;
         }
         return true;
     }
