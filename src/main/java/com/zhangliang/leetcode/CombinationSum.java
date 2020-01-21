@@ -1,9 +1,8 @@
 package com.zhangliang.leetcode;
 /*
-Given a set of candidate numbers (candidates) (without duplicates) and 
-a target number (target), 
-find all unique combinations in candidates where the candidate numbers sums 
-to target.
+Given a set of candidate numbers (candidates) (without duplicates) and a target number 
+(target), find all unique combinations in candidates where the candidate numbers sums to 
+target.
 
 The same repeated number may be chosen from candidates unlimited number of times.
 
@@ -33,28 +32,27 @@ A solution set is:
 import java.util.*;
 
 public class CombinationSum {
-    private List<List<Integer>> find(int[] nums, int start, int target) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (target == 0) {
-            ans.add(new ArrayList<>());
-            return ans;
+    private void dfs(int[] nums, int index, List<Integer> path, int sum, int target, List<List<Integer>> result) {
+        if (sum == target) {
+            result.add(new ArrayList<>(path));
         }
-        if (start >= nums.length || target < 0) {
-            return ans;
+        if (sum >= target) {
+            return;
         }
-        for (int i = start; i < nums.length; i++) {
-            List<List<Integer>> rest = find(nums, i, target - nums[i]);
-            for (List<Integer> choice : rest) {
-                List<Integer> extended = new ArrayList<>();
-                extended.add(nums[i]);
-                extended.addAll(choice);
-                ans.add(extended);
+        for (int i = index; i < nums.length; i++) {
+            if (i != index && nums[i] == nums[i - 1]) {
+                continue;
             }
+            path.add(nums[i]);
+            dfs(nums, i, path, sum + nums[i], target, result);
+            path.remove(path.size() - 1);
         }
-        return ans;
     }
 
     public List<List<Integer>> combinationSum(int[] nums, int target) {
-        return find(nums, 0, target);
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(nums, 0, new ArrayList<>(), 0, target, result);
+        return result;
     }
 }
