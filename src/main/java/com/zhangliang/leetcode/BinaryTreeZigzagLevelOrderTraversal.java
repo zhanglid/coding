@@ -18,46 +18,41 @@ return its zigzag level order traversal as:
 ]
 */
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class BinaryTreeZigzagLevelOrderTraversal {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
-
-        if (root == null) {
-            return ans;
+    private void pushNonNull(Stack<TreeNode> stack, TreeNode node) {
+        if (node != null) {
+            stack.push(node);
         }
+    }
 
-        Queue<TreeNode> queue = new LinkedList<>();
-
-        queue.add(root);
-        boolean reversed = false;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> curList = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                if (reversed) {
-                    curList.add(0, node.val);
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        boolean forward = true;
+        pushNonNull(stack, root);
+        while (!stack.isEmpty()) {
+            Stack<TreeNode> next = new Stack<>();
+            List<Integer> level = new ArrayList<>();
+            while (!stack.isEmpty()) {
+                TreeNode node = stack.pop();
+                level.add(node.val);
+                if (forward) {
+                    pushNonNull(next, node.left);
+                    pushNonNull(next, node.right);
                 } else {
-                    curList.add(node.val);
-                }
-                if (node.left != null) {
-                    queue.add(node.left);
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
+                    pushNonNull(next, node.right);
+                    pushNonNull(next, node.left);
                 }
             }
-            ans.add(curList);
-            reversed = !reversed;
+            stack = next;
+            forward = !forward;
+            result.add(level);
         }
 
-        return ans;
+        return result;
     }
 }
