@@ -25,4 +25,11 @@ public class ValidPalindromeIITest {
         boolean ans = s.validPalindrome("bddb");
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase() {
+        ValidPalindromeII s = new ValidPalindromeII();
+        boolean ans = s.validPalindrome("cbbcc");
+        assertEquals(true, ans);
+    }
 }
