@@ -16,14 +16,14 @@ import java.util.*;
 public class DailyTemperatures {
     public int[] dailyTemperatures(int[] T) {
         Stack<Integer> stack = new Stack<>();
-        int[] ans = new int[T.length];
-        for (int i = 0; i < T.length; i++) {
+        int[] result = new int[T.length];
+        for (int i = 0; i < result.length; i++) {
             while (!stack.isEmpty() && T[stack.peek()] < T[i]) {
                 int day = stack.pop();
-                ans[day] = i - day;
+                result[day] = i - day;
             }
             stack.push(i);
         }
-        return ans;
+        return result;
     }
 }
