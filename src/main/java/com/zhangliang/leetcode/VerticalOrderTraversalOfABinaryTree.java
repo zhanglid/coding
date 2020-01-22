@@ -37,60 +37,56 @@ import java.util.*;
 import com.zhangliang.utils.TreeNode;
 
 public class VerticalOrderTraversalOfABinaryTree {
-    public List<List<Integer>> verticalTraversal(TreeNode root) {
-        LinkedList<Integer> xPosList = new LinkedList<>();
-        LinkedList<TreeNode> nodeList = new LinkedList<>();
-        List<List<int[]>> ansList = new LinkedList<>();
-        nodeList.add(root);
-        xPosList.add(0);
-        ansList.add(new ArrayList<>());
-        int level = 0;
-        int minXPos = 0;
-        int maxXPos = 0;
-        while (!nodeList.isEmpty()) {
-            int size = nodeList.size();
-            for (int i = 0; i < size; i++) {
-                int xPos = xPosList.poll();
-                TreeNode node = nodeList.poll();
-                if (xPos < minXPos) {
-                    ansList.add(0, new ArrayList<>());
-                    minXPos = xPos;
-                }
-                if (xPos > maxXPos) {
-                    ansList.add(new ArrayList<>());
-                    maxXPos = xPos;
-                }
-                ansList.get(xPos - minXPos).add(new int[] { node.val, level });
-                if (node.left != null) {
-                    nodeList.add(node.left);
-                    xPosList.add(xPos - 1);
-                }
-                if (node.right != null) {
-                    nodeList.add(node.right);
-                    xPosList.add(xPos + 1);
-                }
-            }
-            level++;
-        }
-        for (int i = 0; i < ansList.size(); i++) {
-            Collections.sort(ansList.get(i), new Comparator<int[]>() {
-                public int compare(int[] a, int[] b) {
-                    int levelDiff = a[1] - b[1];
-                    if (levelDiff != 0) {
-                        return levelDiff;
-                    }
-                    return a[0] - b[0];
-                }
-            });
-        }
+    class Token {
+        TreeNode node;
+        int depth;
+        int pos;
 
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < ansList.size(); i++) {
-            ans.add(new ArrayList<>());
-            for (int j = 0; j < ansList.get(i).size(); j++) {
-                ans.get(i).add(ansList.get(i).get(j)[0]);
-            }
+        public Token(TreeNode node, int depth, int pos) {
+            this.node = node;
+            this.depth = depth;
+            this.pos = pos;
         }
-        return ans;
+    }
+
+    private void dfs(TreeNode root, int depth, int pos, List<Token> result) {
+        if (root == null) {
+            return;
+        }
+        result.add(new Token(root, depth, pos));
+        dfs(root.left, depth + 1, pos - 1, result);
+        dfs(root.right, depth + 1, pos + 1, result);
+    }
+
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<Token> tokenList = new ArrayList<>();
+        dfs(root, 0, 0, tokenList);
+        Collections.sort(tokenList, new Comparator<Token>() {
+            public int compare(Token a, Token b) {
+                if (a.pos != b.pos) {
+                    return a.pos - b.pos;
+                }
+                if (a.depth != b.depth) {
+                    return a.depth - b.depth;
+                }
+                return a.node.val - b.node.val;
+            }
+        });
+        List<List<Integer>> result = new ArrayList<>();
+        if (tokenList.isEmpty()) {
+            return result;
+        }
+        List<Integer> group = new ArrayList<>();
+        int pos = tokenList.get(0).pos;
+        for (Token token : tokenList) {
+            if (token.pos != pos) {
+                pos = token.pos;
+                result.add(group);
+                group = new ArrayList<>();
+            }
+            group.add(token.node.val);
+        }
+        result.add(group);
+        return result;
     }
 }
