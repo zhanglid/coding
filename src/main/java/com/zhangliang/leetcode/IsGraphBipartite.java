@@ -42,18 +42,16 @@ The graph is undirected: if any element j is in graph[i], then i will be in grap
 import java.util.*;
 
 public class IsGraphBipartite {
-    private boolean dfs(int point, Set<Integer> aSet, Set<Integer> bSet, int[][] graph) {
-        if (aSet.contains(point)) {
+    private boolean dfs(int index, Set<Integer> aSet, Set<Integer> bSet, int[][] graph) {
+        if (bSet.contains(index)) {
+            return false;
+        }
+        if (aSet.contains(index)) {
             return true;
         }
-        aSet.add(point);
-        for (int other : graph[point]) {
-            if (aSet.contains(other)) {
-                return false;
-            }
-        }
-        for (int other : graph[point]) {
-            if (!dfs(other, bSet, aSet, graph)) {
+        aSet.add(index);
+        for (int i : graph[index]) {
+            if (!dfs(i, bSet, aSet, graph)) {
                 return false;
             }
         }
@@ -61,18 +59,14 @@ public class IsGraphBipartite {
     }
 
     public boolean isBipartite(int[][] graph) {
-        Set<Integer> visited = new HashSet<>();
+        Set<Integer> aSet = new HashSet<>();
+        Set<Integer> bSet = new HashSet<>();
         for (int i = 0; i < graph.length; i++) {
-            if (visited.contains(i)) {
-                continue;
+            if (!aSet.contains(i) && !bSet.contains(i)) {
+                if (!dfs(i, aSet, bSet, graph)) {
+                    return false;
+                }
             }
-            Set<Integer> aSet = new HashSet<>();
-            Set<Integer> bSet = new HashSet<>();
-            if (!dfs(i, aSet, bSet, graph)) {
-                return false;
-            }
-            visited.addAll(aSet);
-            visited.addAll(bSet);
         }
         return true;
     }
