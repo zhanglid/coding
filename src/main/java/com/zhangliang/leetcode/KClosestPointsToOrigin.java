@@ -31,14 +31,10 @@ Note:
 import java.util.*;
 
 public class KClosestPointsToOrigin {
-    private int getDist(int[] point) {
-        return point[0] * point[0] + point[1] * point[1];
-    }
-
     public int[][] kClosest(int[][] points, int K) {
         PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
-                return getDist(b) - getDist(a);
+                return b[0] * b[0] + b[1] * b[1] - a[0] * a[0] - a[1] * a[1];
             }
         });
 
@@ -48,6 +44,13 @@ public class KClosestPointsToOrigin {
                 pq.poll();
             }
         }
-        return pq.toArray(new int[K][2]);
+
+        int[][] result = new int[pq.size()][2];
+        for (int i = 0; i < result.length; i++) {
+            int[] point = pq.poll();
+            result[i][0] = point[0];
+            result[i][1] = point[1];
+        }
+        return result;
     }
 }
