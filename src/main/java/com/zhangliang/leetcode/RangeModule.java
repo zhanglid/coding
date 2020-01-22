@@ -11,6 +11,7 @@ queryRange(int left, int right) Returns true if and only if every real number in
 the interval [left, right) is currently being tracked.
 removeRange(int left, int right) Stops tracking every real number currently being 
 tracked in the interval [left, right).
+
 Example 1:
 addRange(10, 20): null
 removeRange(14, 16): null
@@ -19,7 +20,8 @@ queryRange(13, 15): false (Numbers like 14, 14.03, 14.17 in [13, 15) are not bei
 tracked)
 queryRange(16, 17): true (The number 16 in [16, 17) is still being tracked, despite 
 the remove operation)
-Note:
+
+Note
 
 A half open interval [left, right) denotes all real numbers left <= x < right.
 0 < left < right < 10^9 in all calls to addRange, queryRange, removeRange.
@@ -28,103 +30,106 @@ The total number of calls to queryRange in a single test case is at most 5000.
 The total number of calls to removeRange in a single test case is at most 1000.
 */
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class RangeModule {
-    List<int[]> intervals = new LinkedList<>();
-
-    private int binaryFindStart(int value) {
-        int l = 0;
-        int r = intervals.size();
-        while (l + 1 < r) {
-            int mid = l + (r - l) / 2;
-            if (intervals.get(mid)[0] <= value) {
-                l = mid;
-            } else {
-                r = mid;
-            }
-        }
-        return l;
-    }
+    List<int[]> intervals = new ArrayList<>();
 
     public RangeModule() {
-        intervals = new LinkedList<>();
     }
 
     public void addRange(int left, int right) {
-        if (intervals.isEmpty()) {
-            intervals.add(new int[] { left, right });
+        right--;
+        if (left > right) {
             return;
         }
-        int l = binaryFindStart(left);
-        int r = binaryFindStart(right);
-
-        if (intervals.get(l)[0] > right) {
-            intervals.add(0, new int[] { left, right });
+        int[] interval = new int[] { left, right };
+        if (intervals.isEmpty() || left > intervals.get(intervals.size() - 1)[1] + 1) {
+            intervals.add(interval);
             return;
         }
-        if (intervals.get(l)[1] >= left) {
-            left = Math.min(intervals.get(l)[0], left);
-        } else {
-            l++;
+        if (right < intervals.get(0)[0] - 1) {
+            intervals.add(0, interval);
+            return;
         }
-
-        if (intervals.get(r)[0] <= right) {
-            right = Math.max(intervals.get(r)[1], right);
-        } else {
-            r--;
+        int i = 0;
+        for (; i < intervals.size(); i++) {
+            if (intervals.get(i)[1] >= left - 1) {
+                // Attention: It is possible that two intervals do not have intersection.
+                intervals.add(i, new int[] { left, right });
+                i++;
+                break;
+            }
         }
-
-        intervals.add(l, new int[] { left, right });
-
-        for (int i = l; i <= r; i++) {
-            intervals.remove(l + 1);
+        while (i < intervals.size() && intervals.get(i)[0] <= intervals.get(i - 1)[1] + 1) {
+            intervals.get(i - 1)[1] = Math.max(intervals.get(i)[1], intervals.get(i - 1)[1]);
+            intervals.get(i - 1)[0] = Math.min(intervals.get(i)[0], intervals.get(i - 1)[0]);
+            intervals.remove(i);
         }
     }
 
     public boolean queryRange(int left, int right) {
-        if (intervals.isEmpty()) {
+        right--;
+        if (intervals.isEmpty() || left > right) {
             return false;
         }
-        int index = binaryFindStart(left);
-        return intervals.get(index)[0] <= left && intervals.get(index)[1] >= right;
+        int l = 0;
+        int r = intervals.size() - 1;
+        while (l + 1 < r) {
+            int mid = l + (r - l) / 2;
+            int[] interval = intervals.get(mid);
+            if (interval[1] >= left) {
+                r = mid;
+            } else {
+                l = mid;
+            }
+        }
+        int index = intervals.get(l)[1] >= left ? l : r;
+        int[] target = intervals.get(index);
+        return left >= target[0] && right <= target[1];
     }
 
     public void removeRange(int left, int right) {
-        if (intervals.isEmpty()) {
+        right--;
+        // Not a valid interval.
+        if (left > right) {
             return;
         }
-
-        int l = binaryFindStart(left);
-        int r = binaryFindStart(right);
-
-        if (intervals.get(l)[0] > right) {
+        // The interval is out of range.
+        if (intervals.isEmpty() || right < intervals.get(0)[0] || left > intervals.get(intervals.size() - 1)[1]) {
             return;
         }
+        int i = 0;
+        for (; i < intervals.size(); i++) {
+            int[] interval = intervals.get(i);
+            if (interval[1] >= left) {
+                // Remove whole
+                if (interval[0] >= left && interval[1] <= right) {
+                    intervals.remove(i);
+                    i--;
+                    continue;
+                }
 
-        if (l == r) {
-            intervals.add(l, new int[] { intervals.get(l)[0], intervals.get(l)[1] });
-            r++;
-        }
+                // Keep upper part
+                // Attention: interval can have no intersection.
+                if (interval[1] > right && left <= interval[0] && right >= interval[0]) {
+                    interval[0] = right + 1;
+                    break;
+                }
 
-        if (intervals.get(l)[1] >= left && intervals.get(l)[0] < left) {
-            intervals.get(l)[1] = left;
-        }
-        if (intervals.get(l)[0] < left) {
-            l++;
-        }
+                // Keep lower part
+                if (interval[1] <= right && left > interval[0]) {
+                    interval[1] = left - 1;
+                    continue;
+                }
 
-        if (intervals.get(r)[0] <= right) {
-            if (intervals.get(r)[1] > right) {
-                intervals.get(r)[0] = right;
+                // Split into two parts
+                if (left > interval[0] && right < interval[1]) {
+                    intervals.add(i + 1, new int[] { right + 1, interval[1] });
+                    interval[1] = left - 1;
+                    break;
+                }
             }
-        }
-        if (intervals.get(r)[1] > right) {
-            r--;
-        }
-        for (int i = l; i <= r; i++) {
-            intervals.remove(l);
         }
     }
 }
