@@ -61,50 +61,55 @@ The length of accounts[i][j] will be in the range [1, 30].
 import java.util.*;
 
 public class AccountsMerge {
-
-    private void dfs(String email, Map<String, List<List<String>>> accounts, Set<String> visited) {
-        visited.add(email);
-        for (List<String> account : accounts.get(email)) {
-            List<String> otherEmails = new ArrayList<>();
-            for (int i = 1; i < account.size(); i++) {
-                if (!visited.contains(account.get(i))) {
-                    otherEmails.add(account.get(i));
-                    visited.add(account.get(i));
-                }
-            }
-            for (String otherEmail : otherEmails) {
-                dfs(otherEmail, accounts, visited);
-            }
+    // Run DFS from a point to find connect component, add add it to path.
+    private void dfs(String point, Set<String> path, Map<String, Set<String>> graph) {
+        if (path.contains(point)) {
+            return;
+        }
+        path.add(point);
+        for (String other : graph.get(point)) {
+            dfs(other, path, graph);
         }
     }
 
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        List<List<String>> ans = new ArrayList<>();
-        Map<String, List<List<String>>> emailIndexedAccounts = new HashMap<>();
-        // build map
-        for (List<String> account : accounts) {
-            for (int i = 1; i < account.size(); i++) {
-                if (!emailIndexedAccounts.containsKey(account.get(i))) {
-                    emailIndexedAccounts.put(account.get(i), new ArrayList<>());
+        // Build graph.
+        Map<String, Set<String>> graph = new HashMap<>();
+        Map<String, String> emailNameMap = new HashMap<>();
+        for (List<String> accountInfoList : accounts) {
+            String name = accountInfoList.get(0);
+            String firstEmail = accountInfoList.get(1);
+            emailNameMap.put(firstEmail, name);
+            if (!graph.containsKey(firstEmail)) {
+                graph.put(firstEmail, new HashSet<>());
+            }
+            for (int i = 2; i < accountInfoList.size(); i++) {
+                String email = accountInfoList.get(i);
+                if (!graph.containsKey(email)) {
+                    graph.put(email, new HashSet<>());
                 }
-                emailIndexedAccounts.get(account.get(i)).add(account);
+                graph.get(firstEmail).add(email);
+                graph.get(email).add(firstEmail);
+                emailNameMap.put(email, name);
             }
         }
+
+        // Run dfs to get each connected component.
+        List<List<String>> result = new ArrayList<>();
         Set<String> visited = new HashSet<>();
-        for (String email : emailIndexedAccounts.keySet()) {
-            if (visited.contains(email)) {
-                continue;
+        for (String email : emailNameMap.keySet()) {
+            if (!visited.contains(email)) {
+                Set<String> path = new HashSet<>();
+                dfs(email, path, graph);
+                List<String> mergedAccountInfoList = new ArrayList<>();
+                mergedAccountInfoList.add(emailNameMap.get(email));
+                List<String> emailList = new ArrayList<>(path);
+                Collections.sort(emailList);
+                mergedAccountInfoList.addAll(emailList);
+                result.add(mergedAccountInfoList);
+                visited.addAll(path);
             }
-            Set<String> emails = new HashSet<>();
-            dfs(email, emailIndexedAccounts, emails);
-            visited.addAll(emails);
-            List<String> mergedAccount = new ArrayList<>();
-            mergedAccount.add(emailIndexedAccounts.get(email).get(0).get(0));
-            List<String> sortedEmails = new ArrayList<>(emails);
-            Collections.sort(sortedEmails);
-            mergedAccount.addAll(sortedEmails);
-            ans.add(mergedAccount);
         }
-        return ans;
+        return result;
     }
 }

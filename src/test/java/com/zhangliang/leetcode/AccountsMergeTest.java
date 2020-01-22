@@ -1,6 +1,6 @@
 package com.zhangliang.leetcode;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import java.util.*;
 
 import org.junit.Test;
@@ -9,10 +9,22 @@ public class AccountsMergeTest {
     private void assertCorrect(String[][] expected, List<List<String>> ans) {
         Map<String, String[]> emailAccs = new HashMap<>();
         for (String[] account : expected) {
-            emailAccs.put(account[1], account);
+            String[] emails = new String[account.length - 1];
+            for (int i = 1; i < account.length; i++) {
+                emails[i - 1] = account[i];
+            }
+            Arrays.sort(emails);
+            for (int i = 0; i < emails.length; i++) {
+                emailAccs.put(emails[i], emails);
+            }
         }
         for (List<String> account : ans) {
-            assertEquals(Arrays.toString(emailAccs.get(account.get(1))), account.toString());
+            String[] emails = new String[account.size() - 1];
+            for (int i = 1; i < account.size(); i++) {
+                emails[i - 1] = account.get(i);
+            }
+            Arrays.sort(emails);
+            assertArrayEquals(emailAccs.get(emails[0]), emails);
         }
     }
 
