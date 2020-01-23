@@ -47,4 +47,12 @@ public class InsertIntervalTest {
         int[][] ans = s.insert(new int[][] { { 1, 5 } }, new int[] { 2, 3 });
         assertEquals("[[1, 5]]", arrayToString(ans));
     }
+
+    // equal just touch
+    @Test
+    public void errCase4() {
+        InsertInterval s = new InsertInterval();
+        int[][] ans = s.insert(new int[][] { { 1, 2 }, { 3, 5 }, { 6, 7 }, { 8, 10 }, { 12, 16 } }, new int[] { 4, 8 });
+        assertEquals("[[1, 2], [3, 10], [12, 16]]", arrayToString(ans));
+    }
 }

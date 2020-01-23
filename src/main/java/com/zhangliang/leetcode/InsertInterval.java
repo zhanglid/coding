@@ -23,34 +23,38 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 import java.util.*;
 
 public class InsertInterval {
-    private boolean hasIntersection(int[] a, int[] b) {
-        return a[1] >= b[0] && a[0] <= b[1];
-    }
-
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> result = new ArrayList<>();
-        boolean hasInserted = false;
-        for (int[] interval : intervals) {
-            if (hasIntersection(interval, newInterval)) {
-                interval[0] = Math.min(interval[0], newInterval[0]);
-                interval[1] = Math.max(interval[1], newInterval[1]);
-                hasInserted = true;
-            }
-            if (!result.isEmpty() && hasIntersection(interval, result.get(result.size() - 1))) {
-                int[] last = result.get(result.size() - 1);
-                last[1] = Math.max(last[1], interval[1]);
-            } else {
-                if (!hasInserted && interval[0] > newInterval[1]) {
-                    result.add(newInterval);
-                    hasInserted = true;
-                }
-                result.add(interval);
-            }
+        List<int[]> mergedIntervals = new ArrayList<>();
+        // empty
+        if (intervals.length < 1) {
+            mergedIntervals.add(newInterval);
         }
-        if (!hasInserted) {
-            result.add(newInterval);
+        int i = 0;
+        for (; i < intervals.length; i++) {
+            if (intervals[i][1] >= newInterval[0]) {
+                if (intervals[i][0] > newInterval[1]) {
+                    mergedIntervals.add(newInterval);
+                    mergedIntervals.add(intervals[i]);
+                } else {
+                    mergedIntervals.add(new int[] { Math.min(intervals[i][0], newInterval[0]),
+                            Math.max(newInterval[1], newInterval[1]) });
+                }
+                break;
+            }
+            mergedIntervals.add(intervals[i]);
         }
 
-        return result.toArray(new int[0][2]);
+        for (; i < intervals.length; i++) {
+            int[] last = mergedIntervals.get(mergedIntervals.size() - 1);
+            if (last[1] >= intervals[i][0]) {
+                last[1] = Math.max(last[1], intervals[i][1]);
+            } else {
+                mergedIntervals.add(intervals[i]);
+            }
+        }
+        if (newInterval[0] > mergedIntervals.get(mergedIntervals.size() - 1)[1]) {
+            mergedIntervals.add(newInterval);
+        }
+        return mergedIntervals.toArray(new int[0][2]);
     }
 }
