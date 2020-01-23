@@ -29,26 +29,28 @@ import java.util.*;
 import com.zhangliang.utils.TreeNode;
 
 public class PathSumII {
-    private void dfs(TreeNode root, List<Integer> path, int sum, int target, List<List<Integer>> result) {
-        if (root == null) {
+    private void dfs(TreeNode node, List<Integer> path, int sum, int target, List<List<Integer>> result) {
+        path.add(node.val);
+        sum += node.val;
+        if (node.left == null && node.right == null && sum == target) {
+            result.add(new ArrayList<>(path));
+            path.remove(path.size() - 1);
             return;
         }
-        if (root.left == null && root.right == null) {
-            if (sum + root.val == target) {
-                result.add(new ArrayList<>(path));
-                result.get(result.size() - 1).add(root.val);
-            }
-            return;
+        if (node.left != null) {
+            dfs(node.left, path, sum, target, result);
         }
-        path.add(root.val);
-        dfs(root.left, path, sum + root.val, target, result);
-        dfs(root.right, path, sum + root.val, target, result);
+        if (node.right != null) {
+            dfs(node.right, path, sum, target, result);
+        }
         path.remove(path.size() - 1);
     }
 
     public List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> result = new ArrayList<>();
-        dfs(root, new ArrayList<>(), 0, sum, result);
+        if (root != null) {
+            dfs(root, new ArrayList<>(), 0, sum, result);
+        }
         return result;
     }
 }
