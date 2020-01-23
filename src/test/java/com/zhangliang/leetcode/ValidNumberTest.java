@@ -116,4 +116,18 @@ public class ValidNumberTest {
         boolean ans = s.isNumber(" 005047e+6");
         assertEquals(true, ans);
     }
+
+    @Test
+    public void errCase9() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("0..");
+        assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase10() {
+        ValidNumber s = new ValidNumber();
+        boolean ans = s.isNumber("6e6.5");
+        assertEquals(false, ans);
+    }
 }
