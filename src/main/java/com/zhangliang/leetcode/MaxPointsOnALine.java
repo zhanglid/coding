@@ -41,35 +41,37 @@ public class MaxPointsOnALine {
     }
 
     private String hash(int[] a, int[] b) {
-        int delta = a[0] - b[0];
-        int alpha = a[1] - b[1];
-        if (delta == 0) {
+        if (a[0] == b[0]) {
             return Integer.toString(a[0]);
         }
-        int gcd = GCD(delta, alpha);
-        delta /= gcd;
+        int alpha = a[1] - b[1];
+        int delta = a[0] - b[0];
+        if (alpha == delta && alpha == 0) {
+            return a[0] + "#" + a[1];
+        }
+        int gcd = GCD(alpha, delta);
         alpha /= gcd;
-        return Integer.toString(delta) + "," + Integer.toString(alpha) + ","
-                + Double.toString(a[1] - a[0] * alpha / delta);
+        delta /= gcd;
+        int beta = a[1] * delta - a[0] * alpha;
+        return alpha + "," + beta + "," + delta;
     }
 
     public int maxPoints(int[][] points) {
-        Map<String, Set<Integer>> pointIndexesByLine = new HashMap<>();
+        Map<String, Set<Integer>> counts = new HashMap<>();
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
                 String hashCode = hash(points[i], points[j]);
-                if (!pointIndexesByLine.containsKey(hashCode)) {
-                    pointIndexesByLine.put(hashCode, new HashSet<>());
+                if (!counts.containsKey(hashCode)) {
+                    counts.put(hashCode, new HashSet<>());
                 }
-                pointIndexesByLine.get(hashCode).add(i);
-                pointIndexesByLine.get(hashCode).add(j);
+                counts.get(hashCode).add(i);
+                counts.get(hashCode).add(j);
             }
         }
-
-        int ans = points.length < 1 ? 0 : 1;
-        for (Set<Integer> indexSet : pointIndexesByLine.values()) {
-            ans = Math.max(ans, indexSet.size());
+        int max = Math.max(0, Math.min(1, points.length));
+        for (Set<Integer> group : counts.values()) {
+            max = Math.max(max, group.size());
         }
-        return ans;
+        return max;
     }
 }

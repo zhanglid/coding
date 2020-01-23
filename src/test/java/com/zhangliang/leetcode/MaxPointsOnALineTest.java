@@ -54,4 +54,11 @@ public class MaxPointsOnALineTest {
         int ans = s.maxPoints(new int[][] { { 3, 10 }, { 0, 2 }, { 0, 2 }, { 3, 10 } });
         assertEquals(4, ans);
     }
+
+    @Test
+    public void errCase6() {
+        MaxPointsOnALine s = new MaxPointsOnALine();
+        int ans = s.maxPoints(new int[][] { { 0, 0 } });
+        assertEquals(1, ans);
+    }
 }
