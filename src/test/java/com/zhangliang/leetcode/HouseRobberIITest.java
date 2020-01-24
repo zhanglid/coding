@@ -32,5 +32,11 @@ public class HouseRobberIITest {
         int ans = s.rob(new int[] { 1, 2 });
         assertEquals(2, ans);
     }
+    @Test
+    public void errCase3() {
+        HouseRobberII s = new HouseRobberII();
+        int ans = s.rob(new int[] {});
+        assertEquals(0, ans);
+    }
 
 }

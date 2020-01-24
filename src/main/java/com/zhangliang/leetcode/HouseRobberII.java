@@ -32,25 +32,20 @@ public class HouseRobberII {
         if (nums.length < 1) {
             return 0;
         }
-        int[] dpRobFirst = new int[nums.length];
-        int[] dpNonRobFirst = new int[nums.length];
-        dpRobFirst[0] = nums[0];
-        if (nums.length >= 2) {
-            dpRobFirst[1] = nums[0];
-            dpNonRobFirst[1] = nums[1];
-        }
-        for (int i = 2; i < nums.length - 1; i++) {
-            dpRobFirst[i] = Math.max(dpRobFirst[i - 2] + nums[i], dpRobFirst[i - 1]);
-            dpNonRobFirst[i] = Math.max(dpNonRobFirst[i - 2] + nums[i], dpNonRobFirst[i - 1]);
-        }
-        if (nums.length >= 2) {
-            dpRobFirst[nums.length - 1] = dpRobFirst[nums.length - 2];
-            if (nums.length >= 3) {
-                dpNonRobFirst[nums.length - 1] = Math.max(dpNonRobFirst[nums.length - 2],
-                        nums[nums.length - 1] + dpNonRobFirst[nums.length - 3]);
-            }
+        int[] robFirstDp = new int[nums.length + 1];
+        int[] notRobFirstDp = new int[nums.length + 1];
+        robFirstDp[1] = nums[0];
 
+        for (int i = 2; i < nums.length; i++) {
+            robFirstDp[i] = Math.max(nums[i - 1] + robFirstDp[i - 2], robFirstDp[i - 1]);
         }
-        return Math.max(dpNonRobFirst[nums.length - 1], dpRobFirst[nums.length - 1]);
+        if (nums.length != 1) {
+            robFirstDp[nums.length] = robFirstDp[nums.length - 1];
+        }
+        for (int i = 2; i <= nums.length; i++) {
+            notRobFirstDp[i] = Math.max(nums[i - 1] + notRobFirstDp[i - 2], notRobFirstDp[i - 1]);
+        }
+
+        return Math.max(robFirstDp[nums.length], notRobFirstDp[nums.length]);
     }
 }
