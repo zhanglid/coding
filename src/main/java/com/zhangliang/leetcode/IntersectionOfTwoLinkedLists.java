@@ -29,33 +29,28 @@ Special thanks to @stellari for adding this problem and creating all test cases.
 */
 
 public class IntersectionOfTwoLinkedLists {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) {
-            return null;
-        }
-        ListNode cursorA = headA;
-        ListNode cursorB = headB;
-        boolean switchedA = false;
-        boolean switchedB = false;
-        while (cursorA != cursorB) {
-            cursorA = cursorA.next;
-            cursorB = cursorB.next;
-
-            if (cursorA == null) {
-                cursorA = headB;
-                if (switchedA && switchedB) {
-                    break;
-                }
-                switchedA = true;
-            }
-            if (cursorB == null) {
-                cursorB = headA;
-                if (switchedA && switchedB) {
-                    break;
-                }
-                switchedB = true;
-            }
-        }
-        return cursorA == cursorB ? cursorA : null;
+  public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    if (headA == null || headB == null) {
+      return null;
     }
+    ListNode curA = headA;
+    ListNode curB = headB;
+    boolean hasASwitched = false;
+    boolean hasBSwitched = false;
+
+    while (curA != curB && curA != null && curB != null) {
+      curA = curA.next;
+      curB = curB.next;
+      if (curA == null && !hasASwitched) {
+        hasASwitched = true;
+        curA = headB;
+      }
+      if (curB == null && !hasBSwitched) {
+        hasBSwitched = true;
+        curB = headA;
+      }
+    }
+
+    return curA;
+  }
 }
