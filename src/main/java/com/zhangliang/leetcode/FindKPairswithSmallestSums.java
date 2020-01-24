@@ -29,43 +29,30 @@ Output: [[1,3],[2,3]]
 Explanation: All possible pairs are returned from the sequence: [1,3],[2,3]
 */
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
-public class FindKPairswithSmallestSums {
-    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        List<int[]> ans = new ArrayList<>();
-        if (nums1 == null || nums2 == null || nums1.length < 1 || nums2.length < 1 || k < 1) {
-            return ans;
+public class FindKPairsWithSmallestSums {
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums1.length < 1 || nums2.length < 1) {
+            return result;
         }
-
         PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
                 return nums1[a[0]] + nums2[a[1]] - (nums1[b[0]] + nums2[b[1]]);
             }
         });
-        int i = 0;
-        int j = 0;
-        Set<Integer> visited = new HashSet<>();
-        visited.add(i * nums2.length + j);
         pq.add(new int[] { 0, 0 });
-        while (!pq.isEmpty() && ans.size() < k) {
-            int[] cur = pq.poll();
-            ans.add(new int[] { nums1[cur[0]], nums2[cur[1]] });
-            if (cur[0] + 1 < nums1.length && !visited.contains((cur[0] + 1) * nums2.length + cur[1])) {
-                visited.add((cur[0] + 1) * nums2.length + cur[1]);
-                pq.add(new int[] { cur[0] + 1, cur[1] });
+        while (!pq.isEmpty() && result.size() < k) {
+            int[] pos = pq.poll();
+            result.add(Arrays.asList(nums1[pos[0]], nums2[pos[1]]));
+            if (pos[1] + 1 < nums2.length) {
+                pq.add(new int[] { pos[0], pos[1] + 1 });
             }
-            if (cur[1] + 1 < nums2.length && !visited.contains(cur[0] * nums2.length + cur[1] + 1)) {
-                visited.add(cur[0] * nums2.length + cur[1] + 1);
-                pq.add(new int[] { cur[0], cur[1] + 1 });
+            if (pos[1] == 0 && pos[0] + 1 < nums1.length) {
+                pq.add(new int[] { pos[0] + 1, pos[1] });
             }
         }
-
-        return ans;
+        return result;
     }
 }
