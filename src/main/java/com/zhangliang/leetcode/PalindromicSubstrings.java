@@ -1,4 +1,5 @@
 package com.zhangliang.leetcode;
+
 /*
 Given a string, your task is to count how many palindromic substrings 
 in this string.
@@ -24,22 +25,20 @@ The input string length won't exceed 1000.
 */
 
 public class PalindromicSubstrings {
-    private int expand(String s, int i, int j) {
-        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
-            i--;
-            j++;
-        }
-        return j - i + 1 - 2;
-    }
-
     public int countSubstrings(String s) {
-        int result = 0;
-        for (int i = 0; i < s.length(); i++) {
-            result += (expand(s, i, i) + 1) / 2;
-            if (i + 1 < s.length()) {
-                result += expand(s, i, i + 1) / 2;
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        int count = 0;
+        for (int len = 1; len <= s.length(); len++) {
+            for (int i = 0; i + len - 1 < s.length(); i++) {
+                int j = i + len - 1;
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = len <= 2 || dp[i + 1][j - 1];
+                    if (dp[i][j]) {
+                        count++;
+                    }
+                }
             }
         }
-        return result;
+        return count;
     }
 }
