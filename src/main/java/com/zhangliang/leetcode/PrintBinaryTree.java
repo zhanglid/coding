@@ -62,40 +62,44 @@ import java.util.*;
 import com.zhangliang.utils.TreeNode;
 
 public class PrintBinaryTree {
-    private int getWidth(TreeNode root) {
-        if (root == null) {
+    private int getWidth(TreeNode node) {
+        if (node == null) {
             return 0;
         }
-        return Math.max(getWidth(root.left), getWidth(root.right)) * 2 + 1;
+        return 2 * Math.max(getWidth(node.left), getWidth(node.right)) + 1;
     }
 
-    private int getDepth(TreeNode root) {
-        return root == null ? 0 : Math.max(getDepth(root.left), getDepth(root.right)) + 1;
+    private int getDepth(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return Math.max(getDepth(node.left), getDepth(node.right)) + 1;
     }
 
-    private void build(TreeNode root, int center, int width, int index, List<List<String>> result) {
+    private void buildPrintTree(TreeNode root, int index, int width, int depth, List<List<String>> result) {
         if (root == null) {
             return;
         }
-        List<String> level = result.get(index);
-        level.set(center, Integer.toString(root.val));
-        int nextWidth = (width - 1) / 2;
-        build(root.left, center - (nextWidth - 1) / 2 - 1, nextWidth, index + 1, result);
-        build(root.right, center + (nextWidth - 1) / 2 + 1, nextWidth, index + 1, result);
+        result.get(depth).set(index, Integer.toString(root.val));
+        buildPrintTree(root.left, index - (width / 2) / 2 - 1, width / 2, depth + 1, result);
+        buildPrintTree(root.right, index + (width / 2) / 2 + 1, width / 2, depth + 1, result);
     }
 
     public List<List<String>> printTree(TreeNode root) {
-        int width = getWidth(root);
-        int depth = getDepth(root);
         List<List<String>> result = new ArrayList<>();
+        int width = getWidth(root);
+        if (width == 0) {
+            return result;
+        }
+        int depth = getDepth(root);
         for (int i = 0; i < depth; i++) {
             List<String> level = new ArrayList<>();
-            result.add(level);
             for (int j = 0; j < width; j++) {
                 level.add("");
             }
+            result.add(level);
         }
-        build(root, width / 2, width, 0, result);
+        buildPrintTree(root, width / 2, width, 0, result);
         return result;
     }
 }
