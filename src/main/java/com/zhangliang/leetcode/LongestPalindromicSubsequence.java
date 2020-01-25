@@ -23,16 +23,20 @@ One possible longest palindromic subsequence is "bb".
 public class LongestPalindromicSubsequence {
     public int longestPalindromeSubseq(String s) {
         int[][] dp = new int[s.length()][s.length()];
-        for (int size = 1; size <= s.length(); size++) {
-            for (int i = 0; i + size - 1 < s.length(); i++) {
-                char a = s.charAt(i);
-                char b = s.charAt(i + size - 1);
-                int j = i + size - 1;
-                if (a == b && size > 1) {
-                    dp[i][j] = 2 + (size > 2 ? dp[i + 1][j - 1] : 0);
+        for (int len = 1; len <= s.length(); len++) {
+            for (int i = 0; i + len - 1 < s.length(); i++) {
+                int j = i + len - 1;
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (len > 2) {
+                        dp[i][j] = dp[i + 1][j - 1] + 2;
+                    } else if (len < 2) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = 2;
+                    }
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
                 }
-                dp[i][j] = Math.max(dp[i][j], size == 1 ? 1 : dp[i][j - 1]);
-                dp[i][j] = Math.max(dp[i][j], size == 1 ? 1 : dp[i + 1][j]);
             }
         }
         return dp[0][s.length() - 1];
