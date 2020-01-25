@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class CanIWinTest {
@@ -25,5 +24,12 @@ public class CanIWinTest {
         CanIWin s = new CanIWin();
         boolean ans = s.canIWin(5, 50);
         assertEquals(false, ans);
+    }
+
+    @Test
+    public void errCase3() {
+        CanIWin s = new CanIWin();
+        boolean ans = s.canIWin(4, 6);
+        assertEquals(true, ans);
     }
 }

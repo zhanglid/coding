@@ -36,53 +36,47 @@ The second player will win by choosing 10 and get a total = 11, which
 is >= desiredTotal.
 Same with other integers chosen by the first player, the second player 
 will always win.
-*/ import java.util.*;
+*/
+
+import java.util.*;
 
 public class CanIWin {
-    // Number chosen status set is limited, so we can use dp to optimize it.
-    private Map<Integer, Boolean> cache = new HashMap<>();
-
-    private boolean helper(int status, int sum, int desiredTotal) {
-        if (cache.containsKey(status)) {
-            return cache.get(status);
+    private void dfs(int[] dp, int status, int chs, int target) {
+        if (dp[status] != 0) {
+            return;
         }
-        if (sum >= desiredTotal) {
-            cache.put(status, false);
-            return false;
+        if (chs >= target) {
+            dp[status] = -1;
+            return;
         }
-        int base = 1;
-        int num = 1;
-        while (base <= status) {
-            if ((status & base) != 0) {
-                status -= base;
-                boolean willWin = helper(status, sum + num, desiredTotal);
-                status += base;
-                if (!willWin) {
-                    cache.put(status, true);
-                    return true;
+        int value = 1;
+        int mask = 1;
+        while ((status & ~(mask - 1)) != 0) {
+            if ((status & mask) != 0) {
+                dfs(dp, status ^ mask, chs + value, target);
+                if (dp[status ^ mask] == -1) {
+                    dp[status] = 1;
+                    return;
                 }
             }
-            base *= 2;
-            num++;
+
+            mask = mask << 1;
+            value++;
         }
-        cache.put(status, false);
-        return false;
+        dp[status] = -1;
     }
 
     public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
-        if (desiredTotal == 0) {
+        if (desiredTotal <= 0) {
             return true;
         }
-        // Attention: If desiredTotal is too larger, neither player will win.
-        if ((1 + maxChoosableInteger) * maxChoosableInteger / 2 < desiredTotal) {
+        int size = 1 << maxChoosableInteger;
+        int sum = (1 + maxChoosableInteger) * maxChoosableInteger / 2;
+        int[] dp = new int[size];
+        if (sum < desiredTotal) {
             return false;
         }
-        int status = 0;
-        int base = 1;
-        for (int i = 0; i < maxChoosableInteger; i++) {
-            status += base;
-            base *= 2;
-        }
-        return helper(status, 0, desiredTotal);
+        dfs(dp, size - 1, 0, desiredTotal);
+        return dp[size - 1] == 1;
     }
 }
