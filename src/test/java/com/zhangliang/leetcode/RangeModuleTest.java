@@ -1,7 +1,6 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertEquals;
-import java.util.*;
 import org.junit.Test;
 
 public class RangeModuleTest {
@@ -111,7 +110,7 @@ public class RangeModuleTest {
         s.removeRange(40, 73);
         s.removeRange(14, 26);
         s.removeRange(71, 86);
-        assertEquals(true, s.queryRange(34, 41));
+        assertEquals(false, s.queryRange(34, 41));
         s.removeRange(10, 25);
         s.queryRange(27, 68);
         s.queryRange(18, 32);

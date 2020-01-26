@@ -33,106 +33,81 @@ The total number of calls to removeRange in a single test case is at most 1000.
 import java.util.*;
 
 public class RangeModule {
-    List<int[]> intervals = new ArrayList<>();
+    class Interval implements Comparable<Interval> {
+        int left;
+        int right;
+
+        public Interval(int left, int right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        public int compareTo(Interval that) {
+            if (this.right != that.right) {
+                return this.right - that.right;
+            }
+            return this.left - that.left;
+        }
+    }
+
+    TreeSet<Interval> ts = new TreeSet<>();
 
     public RangeModule() {
+
     }
 
     public void addRange(int left, int right) {
         right--;
-        if (left > right) {
-            return;
-        }
-        int[] interval = new int[] { left, right };
-        if (intervals.isEmpty() || left > intervals.get(intervals.size() - 1)[1] + 1) {
-            intervals.add(interval);
-            return;
-        }
-        if (right < intervals.get(0)[0] - 1) {
-            intervals.add(0, interval);
-            return;
-        }
-        int i = 0;
-        for (; i < intervals.size(); i++) {
-            if (intervals.get(i)[1] >= left - 1) {
-                // Attention: It is possible that two intervals do not have intersection.
-                intervals.add(i, new int[] { left, right });
-                i++;
+        SortedSet<Interval> tailSet = ts.tailSet(new Interval(0, left - 1));
+        List<Interval> toRemove = new ArrayList<>();
+        for (Interval interval : tailSet) {
+            if (interval.left > right + 1) {
                 break;
             }
+            left = Math.min(left, interval.left);
+            right = Math.max(right, interval.right);
+            toRemove.add(interval);
         }
-        while (i < intervals.size() && intervals.get(i)[0] <= intervals.get(i - 1)[1] + 1) {
-            intervals.get(i - 1)[1] = Math.max(intervals.get(i)[1], intervals.get(i - 1)[1]);
-            intervals.get(i - 1)[0] = Math.min(intervals.get(i)[0], intervals.get(i - 1)[0]);
-            intervals.remove(i);
+        for (Interval it : toRemove) {
+            ts.remove(it);
         }
+        ts.add(new Interval(left, right));
     }
 
     public boolean queryRange(int left, int right) {
-        right--;
-        if (intervals.isEmpty() || left > right) {
+        SortedSet<Interval> tailSet = ts.tailSet(new Interval(0, left));
+        if (tailSet.isEmpty()) {
             return false;
         }
-        int l = 0;
-        int r = intervals.size() - 1;
-        while (l + 1 < r) {
-            int mid = l + (r - l) / 2;
-            int[] interval = intervals.get(mid);
-            if (interval[1] >= left) {
-                r = mid;
-            } else {
-                l = mid;
-            }
-        }
-        int index = intervals.get(l)[1] >= left ? l : r;
-        int[] target = intervals.get(index);
-        return left >= target[0] && right <= target[1];
+        Interval target = tailSet.first();
+        return target.left <= left && target.right >= right - 1;
     }
 
     public void removeRange(int left, int right) {
-        right--;
-        // Not a valid interval.
-        if (left > right) {
-            return;
-        }
-        // The interval is out of range.
-        if (intervals.isEmpty() || right < intervals.get(0)[0] || left > intervals.get(intervals.size() - 1)[1]) {
-            return;
-        }
-        int i = 0;
-        for (; i < intervals.size(); i++) {
-            int[] interval = intervals.get(i);
-            if (interval[1] >= left) {
-                // Remove whole
-                if (interval[0] >= left && interval[1] <= right) {
-                    intervals.remove(i);
-                    i--;
-                    continue;
-                }
-
-                // Keep upper part
-                // Attention: interval can have no intersection.
-                if (interval[1] > right && left <= interval[0] && right >= interval[0]) {
-                    interval[0] = right + 1;
-                    break;
-                }
-
-                // Keep lower part
-                if (interval[1] <= right && left > interval[0]) {
-                    interval[1] = left - 1;
-                    continue;
-                }
-
-                // Split into two parts
-                if (left > interval[0] && right < interval[1]) {
-                    intervals.add(i + 1, new int[] { right + 1, interval[1] });
-                    interval[1] = left - 1;
-                    break;
-                }
+        SortedSet<Interval> tailSet = ts.tailSet(new Interval(0, left));
+        List<Interval> toAdd = new ArrayList<>();
+        List<Interval> toRemove = new ArrayList<>();
+        for (Interval interval : tailSet) {
+            if (interval.left >= right) {
+                break;
             }
+            if (interval.left < left) {
+                toAdd.add(new Interval(interval.left, left - 1));
+            }
+            if (interval.right >= right) {
+                toAdd.add(new Interval(right, interval.right));
+            }
+            toRemove.add(interval);
+        }
+        for (Interval it : toRemove) {
+            ts.remove(it);
+        }
+        for (Interval it : toAdd) {
+            ts.add(it);
         }
     }
 }
+
 /**
  * Your RangeModule object will be instantiated and called as such: RangeModule
  * obj = new RangeModule(); obj.addRange(left,right); boolean param_2 =
