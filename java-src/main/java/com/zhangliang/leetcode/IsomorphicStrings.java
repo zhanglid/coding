@@ -28,17 +28,23 @@ import java.util.*;
 
 public class IsomorphicStrings {
     public boolean isIsomorphic(String s, String t) {
-        Map<Character, Character> mapST = new HashMap<>();
-        Map<Character, Character> mapTS = new HashMap<>();
+        if (s == null || t == null || s.length() != t.length()) {
+            return s == t;
+        }
+
+        Map<Character, Character> map = new HashMap<>();
+        Map<Character, Character> reversedMap = new HashMap<>();
+
         for (int i = 0; i < s.length(); i++) {
             char a = s.charAt(i);
             char b = t.charAt(i);
-            if (mapST.containsKey(a) && mapST.get(a) != b || mapTS.containsKey(b) && mapTS.get(b) != a) {
+            if (map.containsKey(a) && map.get(a) != b || reversedMap.containsKey(b) && reversedMap.get(b) != a) {
                 return false;
             }
-            mapST.put(a, b);
-            mapTS.put(b, a);
+            map.put(a, b);
+            reversedMap.put(b, a);
         }
+
         return true;
     }
 }
