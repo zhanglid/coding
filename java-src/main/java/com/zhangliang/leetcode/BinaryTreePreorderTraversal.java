@@ -15,33 +15,47 @@ Output: [1,2,3]
 Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class BinaryTreePreorderTraversal {
+    class NodeStatus {
+        TreeNode root;
+        boolean leftVisited;
+        boolean rightVisited;
+
+        public NodeStatus(TreeNode root) {
+            this.root = root;
+        }
+    }
+
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        Stack<NodeStatus> stack = new Stack<>();
         if (root == null) {
-            return ans;
+            return result;
         }
-
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
+        stack.push(new NodeStatus(root));
         while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            ans.add(node.val);
-            if (node.right != null) {
-                stack.push(node.right);
+            NodeStatus nodeStatus = stack.peek();
+            if (!nodeStatus.leftVisited && !nodeStatus.rightVisited) {
+                result.add(nodeStatus.root.val);
             }
-
-            if (node.left != null) {
-                stack.push(node.left);
+            if (!nodeStatus.leftVisited) {
+                nodeStatus.leftVisited = true;
+                if (nodeStatus.root.left != null) {
+                    stack.push(new NodeStatus(nodeStatus.root.left));
+                }
+            } else if (!nodeStatus.rightVisited) {
+                nodeStatus.rightVisited = true;
+                if (nodeStatus.root.right != null) {
+                    stack.push(new NodeStatus(nodeStatus.root.right));
+                }
+            } else {
+                stack.pop();
             }
         }
-
-        return ans;
+        return result;
     }
 }
