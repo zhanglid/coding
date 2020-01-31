@@ -42,34 +42,39 @@ Explanation: This is neither a IPv4 address nor a IPv6 address.
 */
 
 public class ValidateIpAddress {
-    private boolean checkIpV4(String Ip) {
-        String[] parts = Ip.split("\\.", -1);
+    private boolean validateIpV4(String ip) {
+        String[] parts = ip.split("\\.", -1);
         if (parts.length != 4) {
             return false;
         }
-
         for (String part : parts) {
-            if (part.length() < 1 || part.length() > 3) {
+            // Validate length.
+            if (part.length() == 0 || part.length() > 3) {
                 return false;
             }
+            // All valid digit character.
             for (char x : part.toCharArray()) {
                 if (!Character.isDigit(x)) {
                     return false;
                 }
             }
-            int val = Integer.parseInt(part);
-            if (part.charAt(0) == '0' && (val != 0 || part.length() != 1)) {
+            int value = Integer.parseInt(part);
+
+            // No leading zero.
+            if (part.length() != 1 && part.charAt(0) == '0') {
                 return false;
             }
-            if (val > 255) {
+
+            // Value range.
+            if (value < 0 || value > 255) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean checkIpV6(String Ip) {
-        String[] parts = Ip.split("\\:", -1);
+    private boolean validateIpV6(String ip) {
+        String[] parts = ip.split(":", -1);
         if (parts.length != 8) {
             return false;
         }
@@ -78,7 +83,7 @@ public class ValidateIpAddress {
                 return false;
             }
             for (char x : part.toCharArray()) {
-                if (!Character.isDigit(x) && (x < 'a' || x > 'f') && (x < 'A' || x > 'F')) {
+                if (!Character.isDigit(x) && !(x >= 'a' && x <= 'f' || x >= 'A' && x <= 'F')) {
                     return false;
                 }
             }
@@ -86,17 +91,7 @@ public class ValidateIpAddress {
         return true;
     }
 
-    public String validIPAddress(String IP) {
-        if (IP.indexOf(":") >= 0) {
-            if (checkIpV6(IP)) {
-                return "IPv6";
-            }
-        } else if (IP.indexOf(".") >= 0) {
-            if (checkIpV4(IP)) {
-                return "IPv4";
-            }
-        }
-
-        return "Neither";
+    public String validIPAddress(String ip) {
+        return validateIpV4(ip) ? "IPv4" : (validateIpV6(ip) ? "IPv6" : "Neither");
     }
 }
