@@ -25,18 +25,17 @@ public class SearchA2dMatrixII {
         if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
             return false;
         }
-        int i = matrix.length - 1;
-        int j = 0;
-        while (j < matrix[0].length && i >= 0) {
-            if (matrix[i][j] == target) {
-                return true;
-            }
+        int i = 0, j = matrix[0].length - 1;
+        while (matrix[i][j] != target) {
             if (matrix[i][j] > target) {
-                i--;
+                j--;
             } else {
-                j++;
+                i++;
+            }
+            if (j < 0 || i >= matrix.length) {
+                return false;
             }
         }
-        return false;
+        return matrix[i][j] == target;
     }
 }
