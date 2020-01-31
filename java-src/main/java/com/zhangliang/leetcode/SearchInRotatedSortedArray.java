@@ -23,32 +23,31 @@ Output: -1
 
 public class SearchInRotatedSortedArray {
     public int search(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length - 1;
         if (nums == null || nums.length < 1) {
             return -1;
         }
-        int l = 0;
-        int r = nums.length - 1;
         while (l + 1 < r) {
             int mid = l + (r - l) / 2;
-            if (nums[mid] > nums[l]) {
-                if (nums[mid] < target || target < nums[l]) {
+            if (target >= nums[l]) {
+                if (nums[mid] > target) {
+                    r = mid;
+                } else if (nums[mid] >= nums[l]) {
                     l = mid;
                 } else {
                     r = mid;
                 }
             } else {
-                if (nums[mid] > target || target >= nums[l]) {
-                    r = mid;
-                } else {
+                if (nums[mid] < target) {
                     l = mid;
+                } else if (nums[mid] >= nums[l]) {
+                    l = mid;
+                } else {
+                    r = mid;
                 }
             }
         }
-        if (nums[l] == target) {
-            return l;
-        } else if (nums[r] == target) {
-            return r;
-        }
-        return -1;
+        return nums[l] == target ? l : nums[r] == target ? r : -1;
     }
 }
