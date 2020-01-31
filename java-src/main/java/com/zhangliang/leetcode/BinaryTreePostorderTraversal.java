@@ -15,35 +15,47 @@ Output: [3,2,1]
 Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class BinaryTreePostorderTraversal {
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        if (root == null) {
-            return ans;
+    class NodeStatus {
+        TreeNode root;
+        boolean leftVisited;
+        boolean rightVisited;
+
+        public NodeStatus(TreeNode root) {
+            this.root = root;
+            leftVisited = false;
+            rightVisited = false;
         }
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Stack<NodeStatus> stack = new Stack<>();
+        stack.push(new NodeStatus(root));
         while (!stack.isEmpty()) {
-            if (stack.peek().left != null) {
-                TreeNode left = stack.peek().left;
-                stack.peek().left = null;
-                stack.push(left);
-            } else if (stack.peek().right != null) {
-                TreeNode right = stack.peek().right;
-                stack.peek().right = null;
-                stack.push(right);
+            NodeStatus nodeStatus = stack.peek();
+            if (nodeStatus.leftVisited && nodeStatus.rightVisited) {
+                result.add(nodeStatus.root.val);
+                stack.pop();
+            } else if (!nodeStatus.leftVisited) {
+                nodeStatus.leftVisited = true;
+                if (nodeStatus.root.left != null) {
+                    stack.push(new NodeStatus(nodeStatus.root.left));
+                }
             } else {
-                TreeNode cur = stack.pop();
-                ans.add(cur.val);
+                nodeStatus.rightVisited = true;
+                if (nodeStatus.root.right != null) {
+                    stack.push(new NodeStatus(nodeStatus.root.right));
+                }
             }
         }
-
-        return ans;
+        return result;
     }
 }
