@@ -55,29 +55,31 @@ public class FlattenAMultilevelDoublyLinkedList {
     }
 
     private Node helper(Node head) {
+        if (head == null) {
+            return head;
+        }
         Node cur = head;
-        Node last = cur;
+        Node prev = null;
         while (cur != null) {
             if (cur.child != null) {
                 Node tail = helper(cur.child);
-                Node next = cur.next;
+                tail.next = cur.next;
+                if (tail.next != null) {
+                    tail.next.prev = tail;
+                }
                 cur.next = cur.child;
                 cur.child.prev = cur;
-                tail.next = next;
-                if (next != null) {
-                    next.prev = tail;
-                }
                 cur.child = null;
                 cur = tail;
             }
-            last = cur;
+            prev = cur;
             cur = cur.next;
         }
-        return last;
+        return prev;
     }
 
     public Node flatten(Node head) {
         helper(head);
-        return head;
+        rerurn head;
     }
 }
