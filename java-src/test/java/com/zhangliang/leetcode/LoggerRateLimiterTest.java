@@ -7,7 +7,7 @@ public class LoggerRateLimiterTest {
 
     @Test
     public void testCase() {
-        LoggerRateLimiter s = new LoggerRateLimiter();
+        LoggerRateLimiter.Logger s = new LoggerRateLimiter.Logger();
         assertEquals(true, s.shouldPrintMessage(1, "foo"));
         assertEquals(true, s.shouldPrintMessage(2, "bar"));
         assertEquals(false, s.shouldPrintMessage(3, "foo"));
