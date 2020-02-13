@@ -29,37 +29,30 @@ Note: You may assume that the secret number and your friend's guess only contain
 equal.
 */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BullsAndCows {
     public String getHint(String secret, String guess) {
-        if (secret == null || guess == null || secret.length() != guess.length()) {
-            return "";
-        }
-
-        int bull = 0;
-        int cow = 0;
-
-        Map<Character, Integer> count = new HashMap<>();
-        List<Character> list = new ArrayList<>();
+        int bullCount = 0;
+        int cowCount = 0;
+        int[] counts = new int[256];
         for (int i = 0; i < secret.length(); i++) {
-            if (secret.charAt(i) == guess.charAt(i)) {
-                bull++;
-                continue;
-            }
-            list.add(guess.charAt(i));
-            count.put(secret.charAt(i), count.getOrDefault(secret.charAt(i), 0) + 1);
-        }
+            char s = secret.charAt(i);
+            char g = guess.charAt(i);
 
-        for (char x : list) {
-            if (count.getOrDefault(x, 0) > 0) {
-                cow++;
-                count.put(x, count.getOrDefault(x, 0) - 1);
+            if (s == g) {
+                bullCount++;
+            } else {
+                if (counts[s] < 0) {
+                    cowCount++;
+                }
+                counts[s]++;
+                if (counts[g] > 0) {
+                    cowCount++;
+                }
+                counts[g]--;
             }
         }
-        return bull + "A" + cow + "B";
+        return bullCount + "A" + cowCount + "B";
     }
 }
