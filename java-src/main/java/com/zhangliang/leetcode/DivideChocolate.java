@@ -37,6 +37,7 @@ Constraints:
 
 import java.util.*;
 
+// BinarySearch Time O(n * log(Integer.MAX_VALUE))
 public class DivideChocolate {
     private int[] maxDivideNum(int[] nums, int value) {
         int count = 0;
