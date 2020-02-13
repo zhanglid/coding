@@ -1,7 +1,7 @@
 package com.zhangliang.leetcode;
 
 import static org.junit.Assert.assertArrayEquals;
-import java.util.List;
+import java.util.*;
 
 import org.junit.Test;
 

@@ -56,7 +56,6 @@ Output: []
 Explanation:
 The user finished the input, the sentence "i a" should be saved as a historical sentence in system. And the following 
 input will be counted as a new search.
-
  
 Note:
 
@@ -73,112 +72,98 @@ persisted across multiple test cases. Please see here for more details.
 import java.util.*;
 
 public class DesignSearchAutocompleteSystem {
-    public static class AutocompleteSystem {
-        class TrieNode {
-            String value;
-            TrieNode[] children = new TrieNode[256];
-            List<String> descendants = new ArrayList<>();
+    static class AutocompleteSystem {
+        class Node {
+            class Sentence {
+                String text;
+                int count;
+
+                public Sentence(String text, int count) {
+                    this.text = text;
+                    this.count = count;
+                }
+            }
+
+            public Node[] children = new Node[256];
+            public int count = 0;
+
+            List<Sentence> sentenceList = new ArrayList<>();
+
+            public List<String> getSentences() {
+                List<String> result = new ArrayList<>();
+                for (Sentence s : sentenceList) {
+                    result.add(s.text);
+                }
+                return result;
+            }
+
+            public void addSentence(String text, int count) {
+                boolean has = false;
+                for (Sentence s : sentenceList) {
+                    if (s.text.equals(text)) {
+                        has = true;
+                        s.count = count;
+                        break;
+                    }
+                }
+                if (!has) {
+                    sentenceList.add(new Sentence(text, count));
+                }
+                Collections.sort(sentenceList, new Comparator<Sentence>() {
+                    public int compare(Sentence a, Sentence b) {
+                        int countDiff = b.count - a.count;
+                        if (countDiff == 0) {
+                            return a.text.compareTo(b.text);
+                        }
+                        return countDiff;
+                    }
+                });
+                if (sentenceList.size() > 3) {
+                    sentenceList.remove(3);
+                }
+            }
         }
 
-        class Trie {
-            TrieNode root;
+        Node head = new Node();
+        StringBuilder sb = new StringBuilder();
+        Node cur = head;
 
-            public Trie() {
-                root = new TrieNode();
-            }
-
-            public void insert(String s) {
-                TrieNode cur = root;
-                for (char c : s.toCharArray()) {
-                    cur.descendants.add(s);
-                    if (cur.children[c] == null) {
-                        cur.children[c] = new TrieNode();
-                    }
-                    cur = cur.children[c];
+        private void insert(String text, int time) {
+            Node node = head;
+            node.addSentence(text, time);
+            for (char x : text.toCharArray()) {
+                if (node.children[x] == null) {
+                    node.children[x] = new Node();
                 }
-                cur.value = s;
-                cur.descendants.add(s);
+                node.children[x].addSentence(text, time);
+                node = node.children[x];
             }
-
-            public TrieNode findNode(String s) {
-                TrieNode cur = root;
-                for (char c : s.toCharArray()) {
-                    if (cur.children[c] == null) {
-                        return null;
-                    }
-                    cur = cur.children[c];
-                }
-
-                return cur;
-            }
-
-            public void refreshOrder(String s, Comparator<String> cmpr) {
-                TrieNode cur = root;
-                for (char c : s.toCharArray()) {
-                    Collections.sort(cur.descendants, cmpr);
-                    cur = cur.children[c];
-                }
-                Collections.sort(cur.descendants, cmpr);
-            }
-        }
-
-        private Trie words;
-        private Map<String, Integer> counts;
-        private StringBuilder currentInput;
-        private TrieNode currentTrieNode;
-
-        private Comparator<String> getComparator() {
-            return new Comparator<String>() {
-                public int compare(String a, String b) {
-                    int countDiff = counts.get(b) - counts.get(a);
-                    if (countDiff == 0) {
-                        return a.compareTo(b);
-                    }
-                    return countDiff;
-                }
-            };
-        }
-
-        private void closeSentence() {
-            if (currentInput.length() > 0) {
-                String target = currentInput.toString();
-                if (!counts.containsKey(target)) {
-                    words.insert(target);
-                }
-                counts.put(target, counts.getOrDefault(target, 0) + 1);
-                words.refreshOrder(target, this.getComparator());
-            }
-            currentInput = new StringBuilder();
-            currentTrieNode = words.root;
+            node.count = time;
         }
 
         public AutocompleteSystem(String[] sentences, int[] times) {
-            currentInput = new StringBuilder();
-            counts = new HashMap<>();
-            words = new Trie();
             for (int i = 0; i < sentences.length; i++) {
-                counts.put(sentences[i], times[i]);
-                words.insert(sentences[i]);
+                String s = sentences[i];
+                int time = times[i];
+                insert(s, time);
             }
-            for (String s : sentences) {
-                words.refreshOrder(s, this.getComparator());
-            }
-            currentTrieNode = words.root;
         }
 
         public List<String> input(char c) {
             if (c == '#') {
-                closeSentence();
+                if (sb.length() > 0) {
+                    insert(sb.toString(), cur.count + 1);
+                    sb = new StringBuilder();
+                    cur = head;
+                }
                 return new ArrayList<>();
             }
-            currentInput.append(c);
-            if (currentTrieNode != null) {
-                currentTrieNode = currentTrieNode.children[c];
-                if (currentTrieNode != null) {
-                    return currentTrieNode.descendants.subList(0, Math.min(3, currentTrieNode.descendants.size()));
-                }
+            sb.append(c);
+            if (cur.children[c] == null) {
+                cur.children[c] = new Node();
             }
-            return new ArrayList<>();
+            cur = cur.children[c];
+            return cur.getSentences();
         }
     }
 }
