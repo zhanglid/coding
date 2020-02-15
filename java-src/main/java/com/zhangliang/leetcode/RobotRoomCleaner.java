@@ -71,89 +71,77 @@ public class RobotRoomCleaner {
         public void clean();
     }
 
-    class StateRobot {
-        int offsetI;
-        int offsetJ;
-        int dir;
-        private Robot robot;
+    private static final int[][] DIRS = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 
-        public StateRobot(Robot _robot) {
-            robot = _robot;
+    // Top: 0, Right: 1, Bottom: 2, Left: 3. initial: 0
+    class StateRobot {
+        public int i = 0;
+        public int j = 0;
+        public int dir = 0;
+
+        Robot robot;
+
+        public StateRobot(Robot robot) {
+            this.robot = robot;
+        }
+
+        public int[] getNextPos() {
+            return new int[] { i + DIRS[dir][0], j + DIRS[dir][1] };
         }
 
         public boolean move() {
-            int nextI = offsetI + dirs[dir][0];
-            int nextJ = offsetJ + dirs[dir][1];
-            if (!robot.move()) {
-                return false;
+            boolean result = this.robot.move();
+            if (result) {
+                i += DIRS[dir][0];
+                j += DIRS[dir][1];
             }
-            offsetI = nextI;
-            offsetJ = nextJ;
-            return true;
-        }
-
-        public boolean moveIfNotCleaned() {
-            int nextI = offsetI + dirs[dir][0];
-            int nextJ = offsetJ + dirs[dir][1];
-            if (cleaned.containsKey(nextI) && cleaned.get(nextI).contains(nextJ) || !robot.move()) {
-                return false;
-            }
-            offsetI = nextI;
-            offsetJ = nextJ;
-            return true;
+            return result;
         }
 
         public void turnLeft() {
-            robot.turnLeft();
-            dir -= 1;
+            this.robot.turnLeft();
+            dir--;
             if (dir < 0) {
-                dir += dirs.length;
+                dir += 4;
             }
         }
 
         public void turnRight() {
-            robot.turnRight();
-            dir += 1;
-            if (dir >= dirs.length) {
-                dir -= dirs.length;
-            }
-        }
-
-        public void clean() {
-            robot.clean();
-            if (!cleaned.containsKey(offsetI)) {
-                cleaned.put(offsetI, new HashSet<>());
-            }
-            cleaned.get(offsetI).add(offsetJ);
-        }
-    }
-
-    static final int[][] dirs = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-
-    private Map<Integer, Set<Integer>> cleaned = new HashMap<>();
-
-    private void clean(StateRobot robot) {
-        robot.clean();
-        int oi = robot.offsetI;
-        int oj = robot.offsetJ;
-        for (int i = 0; i < 3; i++) {
-            if (robot.moveIfNotCleaned()) {
-                robot.turnLeft();
-                clean(robot);
-                robot.move();
-                robot.turnLeft();
-            } else {
-                robot.turnRight();
+            this.robot.turnRight();
+            dir++;
+            if (dir >= 4) {
+                dir -= 4;
             }
         }
     }
 
     public void cleanRoom(Robot robot) {
+        Map<Integer, Set<Integer>> visited = new HashMap<>();
+        visited.put(0, new HashSet<>());
+        visited.get(0).add(0);
         StateRobot sr = new StateRobot(robot);
-        clean(sr);
-        if (sr.move()) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        while (!stack.isEmpty()) {
+            int count = stack.pop();
+            if (count == 3) {
+                sr.robot.clean();
+                sr.move();
+                sr.turnLeft();
+                continue;
+            }
+            int[] nextPos = sr.getNextPos();
+            stack.push(count + 1);
+            if (visited.containsKey(nextPos[0]) && visited.get(nextPos[0]).contains(nextPos[1]) || !sr.move()) {
+                sr.turnRight();
+                continue;
+            }
             sr.turnLeft();
-            clean(sr);
+            stack.push(0);
+            if (!visited.containsKey(nextPos[0])) {
+                visited.put(nextPos[0], new HashSet<>());
+            }
+            visited.get(nextPos[0]).add(nextPos[1]);
         }
     }
 }

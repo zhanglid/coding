@@ -1,6 +1,5 @@
 package com.zhangliang.leetcode;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -58,7 +57,7 @@ public class RobotRoomCleanerTest {
         public boolean move() {
             int ni = i + dirs[dir][0];
             int nj = j + dirs[dir][1];
-            System.out.println(i + ", " + j + " => " + ", move: " + Arrays.toString(dirs[dir]));
+            System.out.println(i + ", " + j + " => " + ni + ", " + nj + ", move: " + Arrays.toString(dirs[dir]));
             if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != 1) {
                 return false;
             }
@@ -84,7 +83,7 @@ public class RobotRoomCleanerTest {
         }
 
         public void clean() {
-            System.out.println(i + ", " + j);
+            System.out.println(i + ", " + j + " => clean");
             cleaned[i][j] = true;
         }
     }
