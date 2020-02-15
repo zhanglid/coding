@@ -23,83 +23,46 @@ Note:
 1 <= W <= hand.length
 */
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class HandOfStraights {
-    public boolean isNStraightHand(int[] hand, int W) {
-        if (hand == null || W <= 0 || hand.length % W != 0) {
+    public boolean isNStraightHand(int[] nums, int W) {
+        if (nums.length % W != 0) {
             return false;
         }
-
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int x : hand) {
-            map.put(x, map.getOrDefault(x, 0) + 1);
+        if (W <= 1) {
+            return true;
         }
-
-        for (int x : hand) {
-            if (map.get(x) <= 0) {
-                continue;
+        Arrays.sort(nums);
+        int unresolvedCount = 0;
+        Map<Integer, Map<Integer, Integer>> dp = new HashMap<>();
+        for (int num : nums) {
+            if (!dp.containsKey(num)) {
+                dp.put(num, new HashMap<>());
             }
-
-            Map<Integer, Integer> counter = new HashMap<>();
-
-            counter.put(x, map.getOrDefault(x, 0));
-            map.put(x, 0);
-
-            int c = x - 1;
-            int total = counter.get(x);
-
-            // to left
-            while (map.getOrDefault(c, 0) > 0) {
-                counter.put(c, map.get(c));
-                total += map.get(c);
-                map.put(c, 0);
-                c--;
-            }
-
-            int smallest = c + 1;
-
-            // to right
-            c = x + 1;
-            while (map.getOrDefault(c, 0) > 0) {
-                counter.put(c, map.get(c));
-                total += map.get(c);
-                map.put(c, 0);
-                c++;
-            }
-
-            if (total % W != 0) {
-                return false;
-            }
-
-            for (int i = 0; i < total / W; i++) {
-                int next = smallest;
-                boolean foundNext = false;
-                for (int j = 0; j < W; j++) {
-                    int num = counter.getOrDefault(smallest + j, 0);
-                    if (num < 1) {
-                        return false;
+            if (dp.containsKey(num - 1)) {
+                boolean hasPrev = false;
+                for (int w = 0; w < W - 1; w++) {
+                    if (dp.get(num - 1).getOrDefault(w, 0) > 0) {
+                        dp.get(num - 1).put(w, dp.get(num - 1).get(w) - 1);
+                        if (dp.get(num))
+                            dp.get(num).put(w + 1, dp.get(num).getOrDefault(w + 1, 0) + 1);
+                        if (w + 1 == W - 1) {
+                            unresolvedCount--;
+                            dp.get(num).remove(W - 1);
+                        }
+                        hasPrev = true;
+                        break;
                     }
-
-                    if (num - 1 > 0 && !foundNext) {
-                        next = smallest + j;
-                        foundNext = true;
-                    }
-
-                    counter.put(smallest + j, num - 1);
                 }
-
-                if (foundNext) {
-                    smallest = next;
-                } else {
-                    smallest = smallest + W;
+                if (hasPrev) {
+                    continue;
                 }
+                dp.remove(num - 1);
             }
-
+            dp.get(num).put(0, dp.get(num).getOrDefault(0, 0) + 1);
+            unresolvedCount++;
         }
-
-        return true;
+        return unresolvedCount == 0;
     }
 }
