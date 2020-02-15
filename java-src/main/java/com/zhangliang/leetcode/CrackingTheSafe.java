@@ -35,48 +35,36 @@ k^n will be at most 4096.
 "0"  "1"    "0"   "1"
 */
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class CrackingTheSafe {
     public String crackSafe(int n, int k) {
-        if (n < 1 || k < 1) {
-            return "";
-        }
-
-        int totalCount = (int)Math.pow(k, n);
-        StringBuilder ansBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         Set<String> visited = new HashSet<>();
-        for (int i = 0; i < n; i++) {
-            ansBuilder.append('0');
+        for (int i = 0; i < n - 1; i++) {
+            sb.append('0');
         }
-        visited.add(ansBuilder.toString());
-
-        dfs(ansBuilder, visited, n, k, totalCount);
-
-        return ansBuilder.toString();
+        dfs(sb, visited, n, k, (int) Math.pow(k, n));
+        return sb.toString();
     }
-    
-    private boolean dfs(StringBuilder sb, Set<String> visited, int n, int k, int totalCount) {
-        if (visited.size() == totalCount) {
+
+    private boolean dfs(StringBuilder sb, Set<String> visited, int n, int k, int maxSize) {
+        if (visited.size() == maxSize) {
             return true;
         }
-
-        String last = sb.substring(sb.length() - n + 1, sb.length());
-
+        String prefix = sb.substring(sb.length() - n + 1, sb.length());
         for (int i = 0; i < k; i++) {
-            String choice = last + i;
-            if (!visited.contains(choice)) {
-                visited.add(choice);
+            String key = prefix + i;
+            if (!visited.contains(key)) {
+                visited.add(key);
                 sb.append(i);
-                if (dfs(sb, visited, n, k, totalCount)) {
+                if (dfs(sb, visited, n, k, maxSize)) {
                     return true;
                 }
-                visited.remove(choice);
                 sb.deleteCharAt(sb.length() - 1);
+                visited.remove(key);
             }
         }
-
         return false;
     }
 }
