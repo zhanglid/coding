@@ -38,54 +38,41 @@ Output:
 []
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class WordBreakII {
-    private Map<String, List<String>> cache = new HashMap<>();
+  private Map<Integer, List<List<String>>> cache = new HashMap<>();
 
-    public List<String> wordBreak(String s, List<String> wordDict) {
-        List<String> ans = new ArrayList<>();
-        if (s == null || wordDict == null) {
-            return ans;
+  private List<List<String>> helper(String s, int size, Set<String> dict) {
+    if (cache.containsKey(size)) {
+      return cache.get(size);
+    }
+    List<List<String>> result = new ArrayList<>();
+    for (int i = size - 1; i >= 0; i--) {
+      String last = s.substring(i, size);
+      if (dict.contains(last)) {
+        List<List<String>> rests = helper(s, i, dict);
+        for (List<String> rest : rests) {
+          List<String> path = new ArrayList<>(rest);
+          path.add(last);
+          result.add(path);
         }
-        Set<String> set = new HashSet<>();
-        for (String string : wordDict) {
-            set.add(string);
-        }
-        cache.put("", Arrays.asList(""));
-        return helper(s, set);
+      }
     }
 
-    private List<String> helper(String s, Set<String> set) {
-        if (cache.containsKey(s) || s.isEmpty()) {
-            return new ArrayList<>(cache.get(s));
-        }
+    cache.put(size, result);
+    return result;
+  }
 
-        List<String> ans = new ArrayList<>();
-        StringBuilder nextBuilder = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            nextBuilder.append(s.charAt(i));
-            String next = nextBuilder.toString();
-            if (set.contains(next)) {
-                List<String> rest = helper(s.substring(i + 1), set);
-                for (int j = 0; j < rest.size(); j++) {
-                    if (rest.get(j).length() > 0) {
-                        rest.set(j, next + " " + rest.get(j));
-                    } else {
-                        rest.set(j, next);
-                    }
-                }
-                ans.addAll(rest);
-            }
-        }
-
-        cache.put(s, new ArrayList<>(ans));
-        return ans;
+  public List<String> wordBreak(String s, List<String> wordDict) {
+    cache.put(0, new ArrayList<>());
+    cache.get(0).add(new ArrayList<>());
+    Set<String> dict = new HashSet<>(wordDict);
+    List<List<String>> result = helper(s, s.length(), dict);
+    List<String> ans = new ArrayList<>();
+    for (List<String> path : result) {
+      ans.add(String.join(" ", path));
     }
+    return ans;
+  }
 }
