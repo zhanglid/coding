@@ -17,19 +17,32 @@ export function getElementsByClassName(ele, className) {
     return result;
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {HTMLDomElement} ele
+ * @param {*} targetPath
+ * @returns
+ */
 export function getElementsByHierarchy(ele, targetPath) {
     const result = [];
+    const parts = targetPath.split(">");
     targetPath &&
-        (function find(target, path) {
-            if (
-                path.substring(path.length - targetPath.length) === targetPath
-            ) {
+        (function find(target, index) {
+            if (index >= parts.length) {
+                return;
+            }
+            if (target.classList && target.classList.contains(parts[index])) {
                 result.push(target);
+                for (const child of target.children) {
+                    find(child, index + 1);
+                }
+            } else {
+                for (const child of target.children) {
+                    find(child, index);
+                }
             }
-            for (const child of target.children) {
-                const name = child.className || "";
-                find(child, `${path} > ${name}`);
-            }
-        })(ele, ele.className || "");
+        })(ele, 0);
     return result;
 }
