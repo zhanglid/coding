@@ -45,47 +45,47 @@ Could you devise a constant space solution?
 
 */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.zhangliang.utils.TreeNode;
 
 public class RecoverBinarySearchTree {
+    private void swap(TreeNode a, TreeNode b) {
+        int temp = a.val;
+        a.val = b.val;
+        b.val = temp;
+    }
 
-    public void recoverTree(TreeNode root) {
-        if (root == null) {
+    private void check(TreeNode root, List<TreeNode> list) {
+        if (list.size() < 2) {
+            list.add(root);
             return;
         }
-
-        List<TreeNode> inorderList = getInOrderList(root);
-
-        int index = 0;
-        for (int i = 1; i < inorderList.size(); i++) {
-            if (inorderList.get(i).val < inorderList.get(i - 1).val) {
-                index = i;
-            }
-        }
-
-        for (int i = 0; i < index; i++) {
-            if (inorderList.get(i).val > inorderList.get(index).val) {
-                int bigVal = inorderList.get(i).val;
-                inorderList.get(i).val = inorderList.get(index).val;
-                inorderList.get(index).val = bigVal;
-                break;
+        if (list.get(0).val < list.get(1).val) {
+            list.remove(0);
+            list.add(root);
+        } else {
+            if (root != null && root.val < list.get(1).val) {
+                list.set(1, root);
             }
         }
     }
 
-    private List<TreeNode> getInOrderList(TreeNode root) {
+    private void inorder(TreeNode root, List<TreeNode> list) {
         if (root == null) {
-            return new ArrayList<>();
+            return;
         }
+        inorder(root.left, list);
+        check(root, list);
+        inorder(root.right, list);
+    }
 
-        List<TreeNode> left = getInOrderList(root.left);
-        List<TreeNode> right = getInOrderList(root.right);
-
-        left.add(root);
-        left.addAll(right);
-        return left;
+    public void recoverTree(TreeNode root) {
+        List<TreeNode> list = new ArrayList<>();
+        inorder(root, list);
+        check(null, list);
+        if (list.size() == 2 && list.get(1) != null) {
+            swap(list.get(0), list.get(1));
+        }
     }
 }
