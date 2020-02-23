@@ -44,4 +44,31 @@ public class Recursion {
             return result;
         }
     }
+
+    /**
+     * Find all combinations of [25, 10, 5, 1] to get 99. You can use as much times
+     * as you want for an element.
+     */
+    static class CoinDivision {
+        private void helper(int amount, int index, int[] cents, List<Integer> path, List<List<Integer>> result) {
+            if (amount == 0) {
+                result.add(new ArrayList<>(path));
+                return;
+            }
+            if (index >= cents.length) {
+                return;
+            }
+            for (int i = 0; amount - i * cents[index] >= 0; i++) {
+                path.add(i);
+                helper(amount - i * cents[index], index + 1, cents, path, result);
+                path.remove(path.size() - 1);
+            }
+        }
+
+        public List<List<Integer>> divide(int amount, int[] cents) {
+            List<List<Integer>> result = new ArrayList<>();
+            helper(amount, 0, cents, new ArrayList<>(), result);
+            return result;
+        }
+    }
 }
