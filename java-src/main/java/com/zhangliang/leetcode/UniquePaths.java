@@ -22,6 +22,7 @@ From the top-left corner, there are a total of 3 ways to reach the bottom-right 
 1. Right -> Right -> Down
 2. Right -> Down -> Right
 3. Down -> Right -> Right
+
 Example 2:
 
 Input: m = 7, n = 3
@@ -30,21 +31,16 @@ Output: 28
 
 public class UniquePaths {
     public int uniquePaths(int m, int n) {
-        if (m < 1 || n < 1) {
-            return 0;
-        }
-
-        int[][] dp = new int[m][n];
+        int[][] dp = new int[2][n];
         dp[0][0] = 1;
-
         for (int i = 0; i < m; i++) {
-            for (int j = i == 0 ? 1 : 0; j < n; j++) {
-                dp[i][j] = (i - 1 >= 0 ? dp[i - 1][j] : 0) + (j - 1 >= 0 ? dp[i][j - 1] : 0);
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                dp[i % 2][j] = (i - 1 >= 0 ? dp[(i - 1) % 2][j] : 0) + (j - 1 >= 0 ? dp[i % 2][j - 1] : 0);
             }
         }
-
-
-        return dp[m - 1][n - 1];
-
+        return dp[(m - 1) % 2][n - 1];
     }
 }
