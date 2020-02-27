@@ -29,31 +29,36 @@ import java.util.*;
 public class NumberOfIslands {
     private static final int[][] DIRS = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
 
-    private void dfs(char[][] grid, int i, int j) {
-        if (grid[i][j] != '1') {
-            return;
-        }
-        grid[i][j] = '0';
-        for (int[] dir : DIRS) {
-            int ni = i + dir[0];
-            int nj = j + dir[1];
-            if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length) {
-                continue;
+    private void bfs(char[][] grid, int i, int j) {
+        Queue<int[]> q = new LinkedList<>();
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        q.add(new int[] { i, j });
+        visited[i][j] = true;
+        while (!q.isEmpty()) {
+            int[] pos = q.poll();
+            grid[pos[0]][pos[1]] = '0';
+            for (int[] dir : DIRS) {
+                int ni = pos[0] + dir[0];
+                int nj = pos[1] + dir[1];
+                if (ni < 0 || ni >= grid.length || nj < 0 || nj >= grid[0].length || grid[ni][nj] != '1'
+                        || visited[ni][nj] == true) {
+                    continue;
+                }
+                q.add(new int[] { ni, nj });
             }
-            dfs(grid, ni, nj);
         }
     }
 
     public int numIslands(char[][] grid) {
-        int count = 0;
+        int num = 0;
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == '1') {
-                    count++;
-                    dfs(grid, i, j);
+                    num++;
+                    bfs(grid, i, j);
                 }
             }
         }
-        return count;
+        return num;
     }
 }

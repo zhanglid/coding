@@ -9,12 +9,8 @@ public class NumberOfIslandsTest {
     @Test
     public void testCase() {
         NumberOfIslands s = new NumberOfIslands();
-        char[][] input = new char[][] { 
-            { '1', '1', '1', '1', '0' }, 
-            { '1', '1', '0', '1', '0' },
-            { '1', '1', '0', '0', '0' }, 
-            { '0', '0', '0', '0', '0' } 
-        };
+        char[][] input = new char[][] { { '1', '1', '1', '1', '0' }, { '1', '1', '0', '1', '0' },
+                { '1', '1', '0', '0', '0' }, { '0', '0', '0', '0', '0' } };
         int ans = s.numIslands(input);
         assertEquals(1, ans);
     }
@@ -22,12 +18,8 @@ public class NumberOfIslandsTest {
     @Test
     public void testCase2() {
         NumberOfIslands s = new NumberOfIslands();
-        char[][] input = new char[][] { 
-            { '1', '1', '0', '0', '0' }, 
-            { '1', '1', '0', '0', '0' },
-            { '0', '0', '1', '0', '0' }, 
-            { '0', '0', '0', '1', '1' } 
-        };
+        char[][] input = new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' },
+                { '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } };
         int ans = s.numIslands(input);
         assertEquals(3, ans);
     }
