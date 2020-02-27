@@ -13,6 +13,7 @@ Input: 2, [[1,0]]
 Output: true
 Explanation: There are a total of 2 courses to take. 
              To take course 1 you should have finished course 0. So it is possible.
+
 Example 2:
 Input: 2, [[1,0],[0,1]]
 Output: false
@@ -29,35 +30,42 @@ You may assume that there are no duplicate edges in the input prerequisites.
 import java.util.*;
 
 public class CourseSchedule {
-    private boolean topoCheck(int node, Set<Integer> path, Set<Integer> visited, Map<Integer, Set<Integer>> graph) {
-        if (path.contains(node)) {
-            return false;
-        }
+
+    private boolean helper(Map<Integer, Set<Integer>> graph, int node, Set<Integer> path, Set<Integer> visited) {
         if (visited.contains(node)) {
             return true;
         }
-        visited.add(node);
-        path.add(node);
-        for (int neighbor : graph.get(node)) {
-            if (!topoCheck(neighbor, path, visited, graph)) {
-                return false;
-            }
+        if (path.contains(node)) {
+            return false;
         }
-        path.remove(node);
+        if (graph.containsKey(node)) {
+            path.add(node);
+            for (Integer next : graph.get(node)) {
+                if (!helper(graph, next, path, visited)) {
+                    return false;
+                }
+            }
+            path.remove(node);
+        }
+        visited.add(node);
         return true;
     }
 
+    /**
+     * Graph: <Integer, Set<Integer>> => to take a, you have to take all courses in
+     * the set.
+     */
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < numCourses; i++) {
-            graph.put(i, new HashSet<>());
-        }
-        for (int[] prerequisite : prerequisites) {
-            graph.get(prerequisite[1]).add(prerequisite[0]);
+        for (int[] edge : prerequisites) {
+            if (!graph.containsKey(edge[0])) {
+                graph.put(edge[0], new HashSet<>());
+            }
+            graph.get(edge[0]).add(edge[1]);
         }
         Set<Integer> visited = new HashSet<>();
         for (int i = 0; i < numCourses; i++) {
-            if (!topoCheck(i, new HashSet<>(), visited, graph)) {
+            if (!visited.contains(i) && !helper(graph, i, new HashSet<>(), visited)) {
                 return false;
             }
         }
