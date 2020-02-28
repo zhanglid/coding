@@ -20,6 +20,28 @@ The following diagram from wikipedia shows the complete merge sort process for a
     10}. If we take a closer look at the diagram, we can see that the array is recursively divided in two halves till the size 
     becomes 1. Once the size becomes 1, the merge processes comes into action and starts merging arrays back till the complete 
     array is merged.
+
+
+                 1,3,5,7,9|,8,6,4,2,0                     
+                 /                \                        o(1)
+            1,3,5|,7,9          8,6,4|,2,0
+            /       \             /   \                    o(2)
+        1,3|,5      7,|9        8,6,|4    2,|0             
+        /   \        / \         /  \      / \             o(4)
+      1,3    5      7   9      8,6   4    2   0
+      / \                      / \
+     1   3                    8   6                        o(n/2)
+    ==============================================
+    13       5     79           86   4     20              o(n)
+      \     /                 /     \     /
+        135     79         6789          024               o(n)
+          \              /           
+               135689                                      o(n)
+                 \                    /
+                      01                                   o(n)
+
+
+Time complexity: O(nlogn)
 */
 public class MergeSort {
 
