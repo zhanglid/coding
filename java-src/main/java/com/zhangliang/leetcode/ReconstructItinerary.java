@@ -38,16 +38,15 @@ import java.util.*;
 // JFK -> MUC -> LHR -> SFO -> SJC
 
 public class ReconstructItinerary {
-    private void dfs(Map<String, PriorityQueue<String>> graph, String site, Deque<String> result) {
+    private void helper(String site, Map<String, PriorityQueue<String>> graph, Deque<String> result) {
         while (graph.containsKey(site) && !graph.get(site).isEmpty()) {
             String next = graph.get(site).poll();
-            dfs(graph, next, result);
+            helper(next, graph, result);
         }
         result.addFirst(site);
     }
 
     public List<String> findItinerary(List<List<String>> tickets) {
-        LinkedList<String> result = new LinkedList<>();
         Map<String, PriorityQueue<String>> graph = new HashMap<>();
         for (List<String> ticket : tickets) {
             if (!graph.containsKey(ticket.get(0))) {
@@ -55,8 +54,8 @@ public class ReconstructItinerary {
             }
             graph.get(ticket.get(0)).add(ticket.get(1));
         }
-
-        dfs(graph, "JFK", result);
+        LinkedList<String> result = new LinkedList<>();
+        helper("JFK", graph, result);
         return result;
     }
 }
