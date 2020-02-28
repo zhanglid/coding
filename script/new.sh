@@ -33,6 +33,13 @@ createJava() {
 
     echo "package com.zhangliang.${FOLD_NAME};" >> $CLASS_FILE_PATH
     echo '/*' >> $CLASS_FILE_PATH
+    echo '  Assumptions: ' >> $CLASS_FILE_PATH
+    echo '  Approach: ' >> $CLASS_FILE_PATH
+    echo '  DataStructure: ' >> $CLASS_FILE_PATH
+    echo '  Complexity: ' >> $CLASS_FILE_PATH
+    echo '      Time: ' >> $CLASS_FILE_PATH
+    echo '      Space: ' >> $CLASS_FILE_PATH
+    echo '  !Remeber to comment ' >> $CLASS_FILE_PATH
     echo '*/' >> $CLASS_FILE_PATH
     echo '' >> $CLASS_FILE_PATH
     echo "public class $PROBLEM_NAME {" >> $CLASS_FILE_PATH
