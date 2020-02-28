@@ -3,14 +3,14 @@ package com.zhangliang.leetcode;
 import java.util.*;
 
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
     }
 
-    ListNode(int[] nums) {
+    public ListNode(int[] nums) {
         val = nums[0];
         ListNode cur = this;
         for (int i = 1; i < nums.length; i++) {

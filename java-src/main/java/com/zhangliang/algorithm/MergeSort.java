@@ -1,5 +1,7 @@
 package com.zhangliang.algorithm;
 
+import com.zhangliang.leetcode.ListNode;
+
 /*
 Like QuickSort, Merge Sort is a Divide and Conquer algorithm. It divides input array in two halves, calls 
 itself for the two halves and then merges the two sorted halves. The merge() function is used for merging two halves. 
@@ -44,6 +46,45 @@ The following diagram from wikipedia shows the complete merge sort process for a
 Time complexity: O(nlogn)
 */
 public class MergeSort {
+
+    public static class MergeSortLinkedList {
+        private ListNode merge(ListNode left, ListNode right) {
+            ListNode dummy = new ListNode(-1);
+            ListNode cur = dummy;
+            while (left != null || right != null) {
+                if (left != null && (right == null || left.val < right.val)) {
+                    cur.next = left;
+                    left = left.next;
+                    cur = cur.next;
+                    cur.next = null;
+                } else {
+                    cur.next = right;
+                    right = right.next;
+                    cur = cur.next;
+                    cur.next = null;
+                }
+            }
+            return dummy.next;
+        }
+
+        public ListNode sort(ListNode head) {
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast.next != null && fast.next.next != null) {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            ListNode mid = slow.next;
+            slow.next = null;
+            ListNode left = sort(head);
+            ListNode right = sort(mid);
+
+            return merge(left, right);
+        }
+    }
 
     public void sort(int[] arr) {
         sortRange(arr, 0, arr.length - 1);
