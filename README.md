@@ -2,7 +2,7 @@
 
 | No                                   | 1   | 2   | 3   |
 | ------------------------------------ | --- | --- | --- |
-| Array and Sorting Algorithm          |     |
+| Array and Sorting Algorithm          |     |     |     |
 | Recursion I                          |     |     |     |
 | BinarySearch                         |     |     |     |
 | Queue & Stack                        |     |     |     |
