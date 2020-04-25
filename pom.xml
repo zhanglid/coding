@@ -41,6 +41,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${src.dir}</directory>
+			</resource>
+		</resources>
+
 		<sourceDirectory>${src.dir}</sourceDirectory>
 		<testSourceDirectory>${test.dir}</testSourceDirectory>
 		<plugins>
