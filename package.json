@@ -1,0 +1,29 @@
+{
+  "name": "coding",
+  "version": "1.0.0",
+  "description": "Collection of my coding practices.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhanglid/coding.git"
+  },
+  "author": "Zhangliang Dong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhanglid/coding/issues"
+  },
+  "homepage": "https://github.com/zhanglid/coding#readme",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-jest": "^25.1.0",
+    "jsdom": "^16.2.0",
+    "prettier": "^1.19.1"
+  }
+}
