@@ -1,11 +1,11 @@
 import { JSDOM } from "jsdom";
 import {
   getElementsByClassName,
-  getElementsByHierarchy
+  getElementsByHierarchy,
 } from "../get-elements";
 
 describe("get-elements", () => {
-  const getDom = html => new JSDOM(html).window.document;
+  const getDom = (html) => new JSDOM(html).window.document;
   describe("getElementsByClassName", () => {
     test("testCase1", () => {
       const ele = getDom(
@@ -53,27 +53,16 @@ Array [
   describe("getElementsByHierarchy", () => {
     test("testCase1", () => {
       const ele = getDom(
-        `<div><div class="a"><div class="b">target</div></div></div>`
+        `<div>
+          <div class="a">
+            <div class="b">
+              target
+            </div>
+          </div>
+        </div>`
       );
       const result = getElementsByHierarchy(ele, "a>b");
-      expect(result).toMatchInlineSnapshot(`
-Array [
-  <div
-    class="a"
-  >
-    <div
-      class="b"
-    >
-      target
-    </div>
-  </div>,
-  <div
-    class="b"
-  >
-    target
-  </div>,
-]
-`);
+      expect(result.map((el) => el.className)).toEqual(["b"]);
     });
   });
 });

@@ -5,16 +5,16 @@
 */
 
 export function getElementsByClassName(ele, className) {
-    const result = [];
-    (function find(target) {
-        if (target.classList && target.classList.contains(className)) {
-            result.push(target);
-        }
-        for (const child of target.children) {
-            find(child);
-        }
-    })(ele);
-    return result;
+  const result = [];
+  (function find(target) {
+    if (target.classList && target.classList.contains(className)) {
+      result.push(target);
+    }
+    for (const child of target.children) {
+      find(child);
+    }
+  })(ele);
+  return result;
 }
 
 /**
@@ -26,23 +26,23 @@ export function getElementsByClassName(ele, className) {
  * @returns
  */
 export function getElementsByHierarchy(ele, targetPath) {
-    const result = [];
-    const parts = targetPath.split(">");
-    targetPath &&
-        (function find(target, index) {
-            if (index >= parts.length) {
-                return;
-            }
-            if (target.classList && target.classList.contains(parts[index])) {
-                result.push(target);
-                for (const child of target.children) {
-                    find(child, index + 1);
-                }
-            } else {
-                for (const child of target.children) {
-                    find(child, index);
-                }
-            }
-        })(ele, 0);
-    return result;
+  const result = [];
+  const parts = targetPath.split(">");
+  targetPath &&
+    (function find(target, index) {
+      if (target.classList && target.classList.contains(parts[index])) {
+        if (index == parts.length - 1) {
+          result.push(target);
+        } else {
+          for (const child of target.children) {
+            find(child, index + 1);
+          }
+        }
+      } else {
+        for (const child of target.children) {
+          find(child, index);
+        }
+      }
+    })(ele, 0);
+  return result;
 }
