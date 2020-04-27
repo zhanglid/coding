@@ -16,6 +16,10 @@ drop method 直接 O(m) 搞定。
 Followup: what to do if want to call drop function many times，我说可以做precomputation，需要O(mn)，然后每次drop method call需要O(1)
 Followup: 在此基础上，不仅要支持drop method，还要支持flip method，两个method次数大体一致，需要优化整体的 time complexity。其实还是做precomputation，但是flip call 时需要局部修改 precomputed results，最后应该是首次precompute需要O(mn)，后边flip需要O(m)，drop需要O(1)。楼主面试的时候只有个大概的思路，没有把细节想清楚。面试官说很多人无法搞定这一步，应该是安慰我。
 
+然后从第一行某个位置扔球，让你输出球最后从哪里滚下来。比如从[0, 1]扔，最终会从[2, 2] 滚下来。
+好像也没什么好方法，只能一行行模拟。followup是，如果把某一位置的 \ 变成 /，或者 / 变成 \，判断球落下来的位置会不会变。挺有意思的一道题。
+
+followup是matrix里面有flip怎么办，和地里的其他面筋一样，precompute
 */
 
 public class BallFalling {
