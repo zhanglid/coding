@@ -17,6 +17,8 @@ package com.zhangliang.google;
   比如 "heelloo"合法， "hellooo"不合法，写一个method来判断Input string是否合法。
   follow up是再给一个 boolean isIndictionary(String word)，如果之前的input string不合法，
   最少删几个字母可以让它变成一个indictionary的word, 比如"heeelloo"得删3个
+
+  https://leetcode.com/problems/expressive-words/
 */
 
 import java.util.*;
