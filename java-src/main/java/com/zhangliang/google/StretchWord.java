@@ -12,13 +12,14 @@ package com.zhangliang.google;
   eg helllllooo -> hello, helo,heloo,helloo
   backtracking。。。楼主用了recursive 的写法。。不过小哥哥想要iterative的写法
   但是最后讨论完time，space complex 一样就没写了。。时间也到了
+
+  给一个word(string)，比如 "hello" 单词里只要没有连续三个重复字母就算valid word, 
+  比如 "heelloo"合法， "hellooo"不合法，写一个method来判断Input string是否合法。
+  follow up是再给一个 boolean isIndictionary(String word)，如果之前的input string不合法，
+  最少删几个字母可以让它变成一个indictionary的word, 比如"heeelloo"得删3个
 */
 
 import java.util.*;
-
-import com.zhangliang.google.DecideCompleteBinaryTree.Rtn;
-
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties.ContainerType;
 
 public class StretchWord {
   public String shrank(String word) {
