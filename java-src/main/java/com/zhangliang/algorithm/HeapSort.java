@@ -1,6 +1,5 @@
 package com.zhangliang.algorithm;
 /*
-@TODO: Google
 Heap Sort
 Heap sort is a comparison based sorting technique based on Binary Heap data structure. It is similar to selection 
 sort where we first find the maximum element and place the maximum element at the end. We repeat the same process 
@@ -59,30 +58,32 @@ The heapify procedure calls itself recursively to build heap
 */
 
 public class HeapSort {
+    private void swap(int[] arr, int i, int j) {
+        int t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+    }
+
     public void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
+        if (arr.length < 2) {
             return;
         }
         int n = arr.length;
-
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(arr, i, n);
         }
 
         for (int i = 0; i < n; i++) {
-           int largest = arr[0]; 
-           arr[0] = arr[n - i - 1];
-           arr[n - i - 1] = largest;
-
-           heapify(arr, 0, n - i - 1);
+            swap(arr, 0, n - i - 1);
+            heapify(arr, 0, n - i - 1);
         }
     }
 
     private void heapify(int[] arr, int index, int size) {
         int l = 2 * index + 1;
         int r = 2 * index + 2;
-
         int largest = index;
+
         if (l >= size) {
             return;
         }
@@ -96,9 +97,7 @@ public class HeapSort {
         }
 
         if (largest != index) {
-            int tmp = arr[largest];
-            arr[largest] = arr[index];
-            arr[index] = tmp;
+            swap(arr, largest, index);
 
             heapify(arr, largest, size);
         }
