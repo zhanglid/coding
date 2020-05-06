@@ -1,7 +1,7 @@
 package com.zhangliang.google;
 
-import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import org.junit.Test;
 
 public class RemainPolesTest {
@@ -9,7 +9,7 @@ public class RemainPolesTest {
     @Test
     public void testCase() {
         RemainPoles s = new RemainPoles();
-        String ans = s.solve();
-        assertEquals("", ans);
+        int[] ans = s.solve(new int[] { 3, 3, 7, 2 });
+        assertArrayEquals(new int[] { 0, 2, 3 }, ans);
     }
 }
