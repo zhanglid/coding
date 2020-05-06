@@ -1,7 +1,6 @@
 package com.zhangliang.google;
 
 import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class ArrayCoverTest {
@@ -9,7 +8,7 @@ public class ArrayCoverTest {
     @Test
     public void testCase() {
         ArrayCover s = new ArrayCover();
-        String ans = s.solve();
-        assertEquals("", ans);
+        int ans = s.solve(new int[] { 1, 1, 2, 1, 1 });
+        assertEquals(1, ans);
     }
 }
