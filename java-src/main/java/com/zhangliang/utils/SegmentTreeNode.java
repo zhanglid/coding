@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * @TODO: Google
  */
 public class SegmentTreeNode {
     public int start, end;
