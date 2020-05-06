@@ -7,6 +7,8 @@ package com.zhangliang.google;
   2. 2D 里面求array
 */
 
+import java.util.*;
+
 public class NumberOfAllZeros {
   public int countZero(String s) {
     int res = 0;
@@ -23,5 +25,38 @@ public class NumberOfAllZeros {
   }
 
   public int countSubmatrixZero(int[][] grid) {
+    if (grid.length < 1) {
+      return 0;
+    }
+    int m = grid.length;
+    int n = grid[0].length;
+
+    int res = 0;
+
+    int[] zeros = new int[n];
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 0) {
+          zeros[j]++;
+        } else {
+          zeros[j] = 0;
+        }
+      }
+
+      Stack<Integer> stack = new Stack<>();
+      int c = 0;
+      for (int j = 0; j < n; j++) {
+        while (!stack.isEmpty() && zeros[j] < zeros[stack.peek()]) {
+          int index = stack.pop();
+          int li = stack.isEmpty() ? -1 : stack.peek();
+          c -= (index - li) * (zeros[index] - zeros[j]);
+        }
+        stack.push(j);
+        c += zeros[j];
+        res += c;
+      }
+    }
+
+    return res;
   }
 }
