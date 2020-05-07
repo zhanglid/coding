@@ -1,6 +1,5 @@
 package com.zhangliang.google;
 /*
-@TODO: Google
 maximum weight bipartite matching?
 匈牙利算法？
 最大权匹
@@ -30,20 +29,81 @@ maximum weight bipartite matching?
 import java.util.*;
 
 public class ToyMatching {
-  public static class Toy {
-    int id;
-    int category;
-    int color;
 
-    public Toy(int id, int category, int color) {
-      this.id = id;
-      this.category = category;
-      this.color = color;
-    }
-
+  interface Matcher {
+    public boolean canMatch(int[] toy1, int[] toy2);
   }
 
-  public int solve(List<Toy> toys) {
-    
+  private boolean dfs(int id, Map<Integer, Integer> matching, Set<Integer> checked, Map<Integer, Set<Integer>> graph) {
+    for (Integer other : graph.get(id)) {
+      if (checked.contains(other)) {
+        continue;
+      }
+      checked.add(other);
+      if (!matching.containsKey(other) || dfs(matching.get(other), matching, checked, graph)) {
+        matching.put(id, other);
+        matching.put(other, id);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private Map<Integer, Set<Integer>> createGraph(List<int[]> toys, Matcher matcher) {
+    Map<Integer, Set<Integer>> graph = new HashMap<>();
+    for (int[] toy : toys) {
+      for (int[] other : toys) {
+        if (toy == other || !matcher.canMatch(toy, other)) {
+          continue;
+        }
+        int a = toy[0];
+        int b = other[0];
+        if (!graph.containsKey(a)) {
+          graph.put(a, new HashSet<>());
+        }
+        if (!graph.containsKey(b)) {
+          graph.put(b, new HashSet<>());
+        }
+        graph.get(a).add(b);
+        graph.get(b).add(a);
+      }
+    }
+
+    return graph;
+  }
+
+  Matcher[] matchers = new Matcher[] { new Matcher() {
+    public boolean canMatch(int[] toy1, int[] toy2) {
+      return toy1[1] != toy2[1] && toy1[2] != toy2[2];
+    }
+  }, new Matcher() {
+    public boolean canMatch(int[] toy1, int[] toy2) {
+      return toy1[1] != toy2[1] || toy1[2] != toy2[2];
+    }
+  }, new Matcher() {
+    public boolean canMatch(int[] toy1, int[] toy2) {
+      return true;
+    }
+  } };
+
+  // [id, cat, color]
+  public Map<Integer, Integer> solve(int[][] input) {
+    List<int[]> toys = Arrays.asList(input);
+    Map<Integer, Integer> matching = new HashMap<>();
+    for (Matcher matcher : matchers) {
+      Map<Integer, Set<Integer>> graph = createGraph(toys, matcher);
+      for (Integer node : graph.keySet()) {
+        dfs(node, matching, new HashSet<>(), graph);
+      }
+      List<int[]> next = new ArrayList<>();
+      for (int[] toy : toys) {
+        if (!matching.containsKey(toy[0])) {
+          next.add(toy);
+        }
+      }
+      toys = next;
+    }
+
+    return matching;
   }
 }
