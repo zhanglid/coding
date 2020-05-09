@@ -1,7 +1,7 @@
 package com.zhangliang.google;
 
-import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import org.junit.Test;
 
 public class StringTokenizeTest {
@@ -9,7 +9,7 @@ public class StringTokenizeTest {
     @Test
     public void testCase() {
         StringTokenize s = new StringTokenize();
-        String ans = s.solve();
-        assertEquals("", ans);
+        String[] ans = s.tokenize("It is 'very good'");
+        assertArrayEquals(new String[] { "It", "is", "very good" }, ans);
     }
 }
