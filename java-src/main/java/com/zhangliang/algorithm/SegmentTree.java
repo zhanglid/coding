@@ -48,11 +48,11 @@ public class SegmentTree {
       return;
     }
     int mid = lo + (hi - lo) / 2;
-    int li = 2 * ti + 1;
-    int ri = 2 * ti + 2;
-    build(li, lo, mid, arr);
-    build(ri, mid + 1, hi, arr);
-    tree[ti] = merger.merge(tree[li], tree[ri]);
+    int lti = 2 * ti + 1;
+    int rti = 2 * ti + 2;
+    build(lti, lo, mid, arr);
+    build(rti, mid + 1, hi, arr);
+    tree[ti] = merger.merge(tree[lti], tree[rti]);
   }
 
   public SegmentTree(int[] arr, Merger merger) {
