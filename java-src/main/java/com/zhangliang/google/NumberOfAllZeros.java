@@ -24,34 +24,36 @@ public class NumberOfAllZeros {
   }
 
   public int countSubmatrixZero(int[][] grid) {
-    if (grid.length < 1) {
-      return 0;
+    int res = 0;
+    if (grid == null || grid.length < 1 || grid[0].length < 1) {
+      return res;
     }
+
     int m = grid.length;
     int n = grid[0].length;
 
-    int res = 0;
+    int[] dp = new int[n];
 
-    int[] zeros = new int[n];
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < n; j++) {
         if (grid[i][j] == 0) {
-          zeros[j]++;
+          dp[j]++;
         } else {
-          zeros[j] = 0;
+          dp[j] = 0;
         }
       }
 
       Stack<Integer> stack = new Stack<>();
       int c = 0;
       for (int j = 0; j < n; j++) {
-        while (!stack.isEmpty() && zeros[j] < zeros[stack.peek()]) {
+        while (!stack.isEmpty() && dp[j] <= dp[stack.peek()]) {
           int index = stack.pop();
           int li = stack.isEmpty() ? -1 : stack.peek();
-          c -= (index - li) * (zeros[index] - zeros[j]);
+          c -= (index - li) * (dp[index] - dp[j]);
         }
+
         stack.push(j);
-        c += zeros[j];
+        c += dp[j];
         res += c;
       }
     }
