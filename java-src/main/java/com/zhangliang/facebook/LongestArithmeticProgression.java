@@ -21,6 +21,9 @@ which is an arithmetic progression of length
 */
 
 public class LongestArithmeticProgression {
+  /**
+   * Time O(m + n)
+   */
   private int helper(int[] a, int[] b, int delta) {
     int res = 1;
     // for numbers in b smaller than a[0]
@@ -74,9 +77,11 @@ public class LongestArithmeticProgression {
 
   /**
    * 
-   * @param a length > 0, unique, sorted
-   * @param b length > 0, unique, sorted
-   * @return int
+   * @param a length m > 0, unique, sorted
+   * @param b length n > 0, unique, sorted
+   * @return max possible length
+   * 
+   *         Time: O(n * (m + n))
    */
   public int maxArithmeticLength(int[] a, int[] b) {
     int res = -1;
