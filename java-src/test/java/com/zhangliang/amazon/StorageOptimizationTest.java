@@ -11,6 +11,5 @@ public class StorageOptimizationTest {
         StorageOptimization s = new StorageOptimization();
         int ans = s.solve(2, 2, Arrays.asList(1), Arrays.asList(2));
         assertEquals(4, ans);
-        ;
     }
 }
